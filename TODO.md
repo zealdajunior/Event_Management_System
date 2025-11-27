@@ -1,0 +1,6 @@
+- Create migrations for events, venues, tickets, bookings, payments, event_requests
+- Edit migration files to add appropriate columns
+- Update models with fillable attributes and relationships
+- Add resource routes in web.php
+- Implement controller methods with basic CRUD
+- Create basic Blade views for listing, creating, editing resources
