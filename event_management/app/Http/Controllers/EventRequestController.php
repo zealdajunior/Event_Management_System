@@ -14,8 +14,19 @@ class EventRequestController extends Controller
      */
     public function index()
     {
-        $requests = EventRequest::where('user_id', auth()->id())->get();
+        $requests = EventRequest::where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
         return view('event_requests.index', compact('requests'));
+    }
+
+    /**
+     * Show the form for creating a new event request.
+     */
+    public function create()
+    {
+        return view('event_requests.create');
     }
 
     /**
@@ -24,19 +35,20 @@ class EventRequestController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'event_title' => 'required|string|max:255',
+            'event_title'       => 'required|string|max:255',
             'event_description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'venue' => 'required|string|max:255',
+            'start_date'        => 'required|date',
+            'end_date'          => 'required|date|after_or_equal:start_date',
+            'venue'             => 'required|string|max:255',
         ]);
 
         $data['user_id'] = auth()->id();
-        $data['status'] = 'pending';
+        $data['status']  = 'pending'; // use string instead of constant
 
         EventRequest::create($data);
 
-        return redirect()->route('event-requests.index')
+        return redirect()
+            ->route('event_requests.index')
             ->with('status', 'Your event request has been submitted and is pending approval.');
     }
 
@@ -45,7 +57,10 @@ class EventRequestController extends Controller
      */
     public function adminIndex()
     {
-        $requests = EventRequest::with('user')->get();
+        $requests = EventRequest::with('user')
+            ->latest()
+            ->get();
+
         return view('admin.event_requests.index', compact('requests'));
     }
 
@@ -55,8 +70,8 @@ class EventRequestController extends Controller
     public function approve($id)
     {
         $req = EventRequest::findOrFail($id);
-        $req->status = 'approved';
-        $req->save();
+
+        $req->update(['status' => EventRequest::STATUS_APPROVED]);
 
         // Handle venue: either find existing or create new
         $venue = Venue::firstOrCreate(
@@ -65,14 +80,17 @@ class EventRequestController extends Controller
         );
 
         Event::create([
-            'title' => $req->event_title,
+            'name'        => $req->event_title,
             'description' => $req->event_description,
-            'start_date' => $req->start_date,
-            'end_date' => $req->end_date,
-            'venue_id' => $venue->id,
+            'date'        => $req->start_date,
+            'end_date'    => $req->end_date,
+            'venue_id'    => $venue->id,
+            'user_id'     => $req->user_id, // link event to requester
         ]);
 
-        return back()->with('status', 'Event request approved and event created.');
+        return redirect()
+            ->route('admin.event_requests.index')
+            ->with('status', 'Event request approved and event created.');
     }
 
     /**
@@ -81,9 +99,11 @@ class EventRequestController extends Controller
     public function reject($id)
     {
         $req = EventRequest::findOrFail($id);
-        $req->status = 'rejected';
-        $req->save();
 
-        return back()->with('status', 'Event request rejected.');
+        $req->update(['status' => EventRequest::STATUS_REJECTED]);
+
+        return redirect()
+            ->route('admin.event_requests.index')
+            ->with('status', 'Event request rejected.');
     }
 }

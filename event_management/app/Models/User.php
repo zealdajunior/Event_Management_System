@@ -2,25 +2,67 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Event extends Model
+class User extends Authenticatable
 {
-    protected $table = 'events';
-    protected $fillable = ['title','description','start_date','end_date','venue_id'];
+    use HasFactory, Notifiable;
 
-    public function venue()
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return $this->belongsTo(Venue::class);
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 
-    public function tickets()
+    /**
+     * Check if user has a specific role.
+     */
+    public function hasRole($roles): bool
     {
-        return $this->hasMany(Ticket::class);
+        if (is_null($roles)) {
+            return false;
+        }
+
+        $roles = is_array($roles) ? $roles : explode('|', $roles);
+        return in_array($this->role, $roles, true);
     }
 
-    public function bookings()
+    /**
+     * Check if user is admin.
+     */
+    public function isAdmin(): bool
     {
-        return $this->hasMany(Booking::class);
+        return $this->role === 'admin';
     }
 }

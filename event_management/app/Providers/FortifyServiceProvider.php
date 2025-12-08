@@ -69,4 +69,26 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($throttleKey);
         });
     }
+
+    /**
+     * Configure redirects.
+     */
+    private function configureRedirects(): void
+    {
+        Fortify::redirects('login', function (Request $request) {
+            $user = auth()->user();
+            if ($user->isAdmin()) {
+                return route('admin.dashboard');
+            }
+            return route('user.dashboard');
+        });
+
+        Fortify::redirects('register', function (Request $request) {
+            $user = auth()->user();
+            if ($user->isAdmin()) {
+                return route('admin.dashboard');
+            }
+            return route('user.dashboard');
+        });
+    }
 }

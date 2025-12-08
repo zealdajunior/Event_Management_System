@@ -1,3 +1,4 @@
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -5,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 class EventRequest extends Model
 {
     protected $table = 'event_requests';
+
+    const STATUS_PENDING = 'pending';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_REJECTED = 'rejected';
 
     protected $fillable = [
         'user_id',
@@ -16,6 +21,9 @@ class EventRequest extends Model
         'status',
     ];
 
+    /**
+     * Get the user that made the request.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -9,14 +9,43 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'title',
-        'description',
-        'start_date',
-        'end_date',
+        'name',
         'venue_id',
+        'description',
+        'date',
+        'location',
+        'status',
+        'user_id',
+        'capacity',
+        'price',
+        'category',
+        'tags',
+        'image',
+        'end_date',
+        'agenda',
+        'organizer_name',
+        'organizer_email',
+        'organizer_phone',
+        'requirements',
+        'is_featured',
+        'allow_registrations',
+        'registration_deadline',
+        'additional_info',
+        'event_type',
+        'min_age',
+        'max_age',
+        'language',
+        'accessibility_info',
+        'contact_person',
+        'website',
     ];
 
     // Relationships
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function venue()
     {
         return $this->belongsTo(Venue::class);

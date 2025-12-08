@@ -1,0 +1,6 @@
+- Fix Event model fillable to match migration: 'name', 'venue_id', 'description', 'date', 'location' ✓
+- Update EventController validation to use 'name', 'date', 'location' instead of 'title', 'start_date', 'end_date' ✓
+- Add resource routes for events, venues, tickets, bookings, payments, event_requests under admin middleware in web.php ✓
+- Create basic Blade views for events (index, create, show, edit) ✓
+- Create views for other resources similarly (venues show and edit views created, controllers updated)
+- Run migrations if not already done (attempted, but database not configured)
