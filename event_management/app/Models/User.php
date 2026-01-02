@@ -65,4 +65,20 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    /**
+     * Get user's favorite events.
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Get user's favorited events.
+     */
+    public function favoritedEvents()
+    {
+        return $this->belongsToMany(Event::class, 'favorites');
+    }
 }

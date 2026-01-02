@@ -5,13 +5,9 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
+new class extends Component
 {
     public string $password = '';
-
-    /**
-     * Confirm the current user's password.
-     */
     public function confirmPassword(): void
     {
         $this->validate([
@@ -31,7 +27,9 @@ new #[Layout('layouts.guest')] class extends Component
 
         $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
-}; ?>
+};
+
+?>
 
 <div>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
@@ -39,7 +37,6 @@ new #[Layout('layouts.guest')] class extends Component
     </div>
 
     <form wire:submit="confirmPassword">
-        <!-- Password -->
         <div>
             <x-input-label for="password" :value="__('Password')" />
 

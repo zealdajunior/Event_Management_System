@@ -2,26 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Event extends Model
 {
-    protected $table = 'events';
+    use HasFactory;
 
     protected $fillable = [
         'name',
-        'venue_id',
         'description',
         'date',
-        'location',
-        'status',
+        'end_date',
+        'venue_id',
         'user_id',
+        'status',
         'capacity',
         'price',
         'category',
         'tags',
         'image',
-        'end_date',
         'agenda',
         'organizer_name',
         'organizer_email',
@@ -40,24 +43,83 @@ class Event extends Model
         'website',
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+        'end_date' => 'datetime',
+        'tags' => 'array',
+        'price' => 'decimal:2',
+        'is_featured' => 'boolean',
+        'allow_registrations' => 'boolean',
+        'registration_deadline' => 'datetime',
+        'min_age' => 'integer',
+        'max_age' => 'integer',
+    ];
+
     // Relationships
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function venue()
+    public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class);
     }
 
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class);
-    }
-
-    public function bookings()
+    public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function favoritedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
+
+    // Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
+    public function scopeUpcoming($query)
+    {
+        return $query->where('date', '>=', now());
+    }
+
+    public function scopePast($query)
+    {
+        return $query->where('date', '<', now());
+    }
+
+    // Accessors
+    public function getIsUpcomingAttribute()
+    {
+        return $this->date >= now();
+    }
+
+    public function getIsPastAttribute()
+    {
+        return $this->date < now();
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        return $this->date->format('M j, Y g:i A');
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return $this->price ? '$' . number_format($this->price, 2) : 'Free';
     }
 }

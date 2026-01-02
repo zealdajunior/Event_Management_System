@@ -35,11 +35,21 @@ class EventRequestController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'event_title'       => 'required|string|max:255',
-            'event_description' => 'required|string',
-            'start_date'        => 'required|date',
-            'end_date'          => 'required|date|after_or_equal:start_date',
-            'venue'             => 'required|string|max:255',
+            'event_title'          => 'required|string|max:255',
+            'event_description'    => 'required|string',
+            'start_date'           => 'required|date',
+            'end_date'             => 'required|date|after_or_equal:start_date',
+            'venue'                => 'required|string|max:255',
+            'expected_attendance'  => 'nullable|integer|min:1',
+            'event_category'       => 'nullable|string|max:255',
+            'target_audience'      => 'nullable|string',
+            'budget_estimate'      => 'nullable|numeric|min:0',
+            'ticket_pricing'       => 'nullable|string|max:255',
+            'special_requirements' => 'nullable|string',
+            'marketing_plan'       => 'nullable|string',
+            'contact_phone'        => 'nullable|string|max:255',
+            'contact_email'        => 'nullable|email|max:255',
+            'additional_notes'     => 'nullable|string',
         ]);
 
         $data['user_id'] = auth()->id();
@@ -86,6 +96,7 @@ class EventRequestController extends Controller
             'end_date'    => $req->end_date,
             'venue_id'    => $venue->id,
             'user_id'     => $req->user_id, // link event to requester
+            'status'      => 'active', // ensure event is active and visible to all users
         ]);
 
         return redirect()

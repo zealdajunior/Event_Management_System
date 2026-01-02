@@ -2,55 +2,34 @@
 
     {{-- ================= HEADER ================= --}}
     <x-slot name="header">
-        <div class="relative overflow-hidden bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 rounded-3xl p-8 mb-8 shadow-2xl">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-0 left-0 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-                <div class="absolute top-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-                <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-            </div>
-
-            <div class="relative flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                <div class="animate-slideInLeft">
-                    <div class="flex items-center gap-3 mb-2">
-                        <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl shadow-lg animate-pulse-slow">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-blue border-b border-black-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-10">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center justify-center w-15 h-15 ">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-4xl lg:text-5xl font-black bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                                Dashboard
-                            </h1>
-                            <div class="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mt-2"></div>
+                            <h1 class="text-2xl font-bold text-green-600">Dashboard</h1>
+                            <p class="text-sm text-green-600">Welcome back! Here's your event overview</p>
                         </div>
                     </div>
-                    <p class="text-lg text-white text-professional-medium flex items-center gap-3">
-                        <svg class="w-5 h-5 text-blue-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Manage your events and tickets with ease
-                    </p>
-                </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 animate-slideInRight">
-                    <a href="{{ route('events.create') }}"
-                       class="group relative bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 hover:from-blue-600 hover:via-blue-700 hover:to-purple-700
-                              active:scale-95 transition-all duration-500
-                              text-white px-8 py-4 rounded-2xl font-bold shadow-2xl shadow-blue-500/30
-                              hover:shadow-3xl hover:shadow-blue-500/50 flex items-center gap-3
-                              overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        <span class="relative z-10">Create Event</span>
-                        <div class="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                    </a>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2 text-sm text-green-600">
+                            <div class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></div>
+                            <span>Live</span>
+                        </div>
 
-                    <div class="flex items-center gap-2 text-slate-400">
-                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="text-sm font-medium">Live Dashboard</span>
+                        <a href="{{ route('event-requests.create') }}"
+                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-green-600 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 shadow-sm hover:shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Request Event
+                        </a>
                     </div>
                 </div>
             </div>
@@ -58,50 +37,43 @@
     </x-slot>
 
     {{-- ================= PAGE CONTAINER ================= --}}
-    <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 min-h-screen py-12">
+    <div class="bg-gradient-to-br from-purple-900 via-pink-900 to-green-900 min-h-screen py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             {{-- ================= STATS OVERVIEW ================= --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-on-scroll">
-                @php
-                $stats = [
-                    ['label' => 'Upcoming Events', 'value' => $upcomingEventsCount, 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'gradient' => 'from-blue-400 to-blue-500', 'delay' => '0s'],
-                    ['label' => 'Total Attendees', 'value' => $totalAttendees, 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', 'gradient' => 'from-indigo-400 to-indigo-500', 'delay' => '0.1s'],
-                    ['label' => 'Revenue', 'value' => '$'.number_format($totalRevenue,2), 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'gradient' => 'from-blue-500 to-blue-600', 'delay' => '0.2s'],
-                    ['label' => 'Notifications', 'value' => $notificationsCount, 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'gradient' => 'from-blue-400 to-cyan-400', 'delay' => '0.3s']
-                ];
-                @endphp
+            <div class="bg-blue-600 rounded-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @php
+                    $stats = [
+                        ['label' => 'Upcoming Events', 'value' => $upcomingEventsCount, 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
+                        ['label' => 'Total Attendees', 'value' => $totalAttendees, 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
+                        ['label' => 'Revenue', 'value' => '$'.number_format($totalRevenue,2), 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
+                        ['label' => 'Notifications', 'value' => $notificationsCount, 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600']
+                    ];
+                    @endphp
 
-                @foreach($stats as $stat)
-                <div class="relative group animate-fadeInUp" style="animation-delay: {{ $stat['delay'] }}">
-                    <div class="absolute inset-0 bg-gradient-to-r {{ $stat['gradient'] }} rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse-slow"></div>
-                    <div class="relative bg-gradient-to-br from-blue-800/80 to-blue-900/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl p-6
-                                border border-blue-500/30 hover:border-blue-400/50
-                                transform hover:-translate-y-2 hover:scale-105 transition-all duration-500">
-                        <div class="flex items-start justify-between">
-                            <div class="flex-1">
-                                <p class="text-xs font-semibold text-white uppercase tracking-wider mb-2 animate-fadeIn">
-                                    {{ $stat['label'] }}
-                                </p>
-                                <p class="text-3xl font-black bg-gradient-to-r {{ $stat['gradient'] }} bg-clip-text text-transparent animate-countUp">
-                                    {{ $stat['value'] }}
-                                </p>
+                    @foreach($stats as $stat)
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition-all duration-200 group">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 mb-1">{{ $stat['label'] }}</p>
+                                <p class="text-3xl font-bold text-gray-900">{{ $stat['value'] }}</p>
                             </div>
-                            <div class="p-3 rounded-2xl bg-gradient-to-br {{ $stat['gradient'] }} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="p-3 rounded-lg {{ $stat['bgColor'] }} group-hover:scale-110 transition-transform duration-200">
+                                <svg class="w-6 h-6 {{ $stat['textColor'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}"></path>
                                 </svg>
                             </div>
                         </div>
-                        <div class="mt-4 h-1 bg-gradient-to-r {{ $stat['gradient'] }} rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-x-0 group-hover:scale-x-100"></div>
+                        <div class="mt-4 h-1 bg-gradient-to-r from-{{ $stat['color'] }}-200 to-{{ $stat['color'] }}-300 rounded-full"></div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
 
             {{-- ================= TAB NAVIGATION ================= --}}
-            <div class="bg-gradient-to-r from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-2 border border-blue-500/30 animate-fadeIn">
-                <div class="flex flex-wrap gap-2">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
+                <div class="flex flex-wrap gap-4">
                     @php
                     $tabs = [
                         'events' => ['label' => 'Events', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
@@ -113,16 +85,15 @@
 
                     @foreach($tabs as $key => $tab)
                     <a href="#{{ $key }}" data-tab="{{ $key }}"
-                       class="tab-link flex-1 min-w-[140px] py-4 px-4 text-center rounded-2xl
-                              font-bold text-blue-200
-                              hover:bg-blue-700/50 hover:text-white
-                              transition-all duration-300 relative group
+                       class="tab-link flex-1 min-w-[140px] py-4 px-6 text-center rounded-xl
+                              font-semibold text-gray-600 bg-gray-50
+                              hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200
+                              transition-all duration-200 relative group border border-gray-200
                               flex flex-col items-center gap-2">
-                        <svg class="w-5 h-5 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-purple-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $tab['icon'] }}"></path>
                         </svg>
                         <span class="text-sm">{{ $tab['label'] }}</span>
-                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full group-hover:w-3/4 transition-all duration-300"></div>
                     </a>
                     @endforeach
                 </div>
@@ -130,14 +101,14 @@
 
             {{-- ================= FEATURED EVENTS ================= --}}
             @if($featuredEvents->count())
-            <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-blue-500/30 animate-fadeInUp animate-on-scroll">
+            <div class="bg-gradient-to-br from-purple-900/60 via-pink-900/60 to-green-900/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-purple-500/30 animate-fadeInUp animate-on-scroll">
                 <div class="flex items-center gap-3 mb-8">
                     <div class="p-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl shadow-lg animate-bounce-slow">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent">
+                    <h3 class="text-2xl font-black bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
                         Featured Events
                     </h3>
                 </div>
@@ -145,11 +116,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($featuredEvents as $event)
             <div class="group relative animate-fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
-                <div class="relative bg-gradient-to-br from-blue-800/80 to-blue-900/80 backdrop-blur-xl border border-blue-500/30 rounded-3xl p-6
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+                <div class="relative bg-gradient-to-br from-purple-800/80 to-pink-900/80 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-6
                                     hover:shadow-2xl hover:-translate-y-3 hover:rotate-1 group-hover:shadow-2xl group-hover:-translate-y-3 group-hover:rotate-1
                                     transition-all duration-500 overflow-hidden">
-                            
+
                             <div class="absolute top-4 right-4 animate-pulse-slow">
                                 <span class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                                     ⭐ Featured
@@ -167,7 +138,7 @@
 
                             <div class="space-y-2 mb-6">
                                 <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300">
-                                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                     <span class="font-medium">
@@ -175,7 +146,7 @@
                                     </span>
                                 </div>
                                 <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300" style="transition-delay: 50ms">
-                                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
@@ -185,7 +156,7 @@
 
                             <a href="{{ route('events.show', $event) }}"
                                class="inline-flex items-center gap-2 w-full justify-center
-                                      bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                                      bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700
                                       text-white px-6 py-3 rounded-2xl font-bold
                                       transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                                 View Details
@@ -201,26 +172,26 @@
             @endif
 
             {{-- ================= SEARCH & FILTER ================= --}}
-            <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-blue-500/30 animate-fadeIn">
+            <div class="bg-gradient-to-br from-purple-900/60 via-pink-900/60 to-green-900/60 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-purple-500/30 animate-fadeIn">
                 <form method="GET" action="{{ route('user.dashboard') }}"
                       class="flex flex-col lg:flex-row gap-4">
 
                     <div class="flex-1 relative group">
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-400 group-focus-within:text-blue-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-400 group-focus-within:text-purple-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                         <input type="text" name="search"
                                value="{{ $currentSearch }}"
                                placeholder="Search events by name, description, or venue..."
-                               class="w-full pl-12 pr-5 py-4 rounded-2xl border-2 border-blue-500/30 bg-blue-900/30
-                                      focus:ring-4 focus:ring-blue-400/20 focus:border-blue-400 placeholder-blue-300/50 text-blue-100
+                               class="w-full pl-12 pr-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
+                                      focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 placeholder-purple-300/50 text-purple-100
                                       transition-all duration-300 text-sm backdrop-blur-sm">
                     </div>
 
                     <select name="category"
-                            class="px-5 py-4 rounded-2xl border-2 border-blue-500/30 bg-blue-900/30
-                                   focus:ring-4 focus:ring-blue-400/20 focus:border-blue-400 text-blue-100
-                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-blue-400/50">
+                            class="px-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
+                                   focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 text-purple-100
+                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-purple-400/50">
                         <option value="">All Categories</option>
                         @foreach($allCategories as $category)
                         <option value="{{ $category }}" {{ $currentCategory==$category?'selected':'' }}>
@@ -230,16 +201,16 @@
                     </select>
 
                     <select name="type"
-                            class="px-5 py-4 rounded-2xl border-2 border-blue-500/30 bg-blue-900/30
-                                   focus:ring-4 focus:ring-blue-400/20 focus:border-blue-400 text-blue-100
-                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-blue-400/50">
+                            class="px-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
+                                   focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 text-purple-100
+                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-purple-400/50">
                         <option value="">All Types</option>
                         <option value="free" {{ $currentType=='free'?'selected':'' }}>Free Events</option>
                         <option value="paid" {{ $currentType=='paid'?'selected':'' }}>Paid Events</option>
                     </select>
 
                     <button type="submit"
-                            class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                            class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700
                                    active:scale-95 transition-all duration-300
                                    text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl
                                    flex items-center justify-center gap-2 hover:gap-3">
@@ -251,7 +222,7 @@
 
                     @if($currentSearch || $currentCategory || $currentType)
                     <a href="{{ route('user.dashboard') }}"
-                       class="bg-blue-700/50 hover:bg-blue-600/50 text-blue-100 border border-blue-500/30
+                       class="bg-purple-700/50 hover:bg-purple-600/50 text-purple-100 border border-purple-500/30
                               px-6 py-4 rounded-2xl font-bold transition-all duration-300
                               flex items-center justify-center gap-2 backdrop-blur-sm hover:scale-105">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,8 +236,8 @@
 
             {{-- ================= EVENTS TAB ================= --}}
             <div id="events-tab" class="tab-content animate-fadeIn">
-                <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-blue-500/30">
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent mb-6">Available Events</h3>
+                <div class="">
+                    <h3 class="text-white">Available Events</h3>
                     
                     <!-- ADD YOUR EVENTS LISTING HERE -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -310,16 +281,29 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('events.show', $event) }}"
-                       class="inline-flex items-center gap-2 w-full justify-center
-                              bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
-                              text-white px-6 py-3 rounded-2xl font-bold
-                              transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                        View Details
-                        <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
+                    <div class="space-y-3">
+                        <a href="{{ route('bookings.create.for.event', $event) }}"
+                           class="inline-flex items-center gap-2 w-full justify-center
+                                  bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700
+                                  text-white px-6 py-3 rounded-2xl font-bold
+                                  transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            Book Now
+                            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13l-1.1-5M7 13h10m0 0v8a2 2 0 01-2 2H9a2 2 0 01-2-2v-8z"></path>
+                            </svg>
+                        </a>
+
+                        <a href="{{ route('events.show', $event) }}"
+                           class="inline-flex items-center gap-2 w-full justify-center
+                                  bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                                  text-white px-6 py-3 rounded-2xl font-bold
+                                  transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            View Details
+                            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
                         @endforeach
@@ -329,8 +313,8 @@
 
             {{-- ================= TICKETS TAB ================= --}}
             <div id="tickets-tab" class="tab-content hidden animate-fadeIn">
-                <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-blue-500/30">
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent mb-6">My Tickets</h3>
+                <div class="">
+                    <h3 class="text-white">My Tickets</h3>
                     
                     <!-- ADD YOUR JAVASCRIPT FOR TICKET DISPLAY HERE -->
                     <div class="space-y-4">
@@ -360,20 +344,105 @@
 
             {{-- ================= FAVORITES TAB ================= --}}
             <div id="favorites-tab" class="tab-content hidden animate-fadeIn">
-                <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-blue-500/30">
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent mb-6">My Favorites</h3>
-                    
-                    <!-- ADD YOUR JAVASCRIPT FOR FAVORITES DISPLAY HERE -->
-                    <div id="favorites-content" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Favorites will be populated by JavaScript -->
+                <div class="">
+                    <h3 class="text-white">My Favorites</h3>
+
+                    @if($myFavorites->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach($myFavorites as $event)
+            <div class="group relative animate-fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s">
+                <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-pink-400 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+                <div class="relative bg-gradient-to-br from-red-800/80 to-pink-900/80 backdrop-blur-xl border border-red-500/30 rounded-3xl p-6
+                                    hover:shadow-2xl hover:-translate-y-3 hover:rotate-1 group-hover:shadow-2xl group-hover:-translate-y-3 group-hover:rotate-1
+                                    transition-all duration-500 overflow-hidden">
+
+                    <div class="absolute top-4 right-4 animate-pulse-slow">
+                        <span class="bg-gradient-to-r from-red-400 to-pink-400 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                            ⭐ Favorite
+                        </span>
                     </div>
+
+                    <h4 class="text-professional-black text-xl text-white mb-3 pr-20 leading-tight
+                               group-hover:text-white transition-colors duration-300">
+                        {{ $event->name }}
+                    </h4>
+
+                    <p class="text-professional text-sm text-white leading-relaxed mb-4 line-clamp-2">
+                        {{ Str::limit($event->description, 80) }}
+                    </p>
+
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-medium">
+                                {{ $event->date ? \Carbon\Carbon::parse($event->date)->format('M d, Y H:i') : 'N/A' }}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300" style="transition-delay: 50ms">
+                            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span class="font-medium">{{ $event->venue->name ?? 'TBD' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <a href="{{ route('bookings.create.for.event', $event) }}"
+                           class="inline-flex items-center gap-2 w-full justify-center
+                                  bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700
+                                  text-white px-6 py-3 rounded-2xl font-bold
+                                  transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            Book Now
+                            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13l-1.1-5M7 13h10m0 0v8a2 2 0 01-2 2H9a2 2 0 01-2-2v-8z"></path>
+                            </svg>
+                        </a>
+
+                        <a href="{{ route('events.show', $event) }}"
+                           class="inline-flex items-center gap-2 w-full justify-center
+                                  bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                                  text-white px-6 py-3 rounded-2xl font-bold
+                                  transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            View Details
+                            <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-16">
+                            <div class="p-6 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-3xl inline-block mb-6 border border-white/10">
+                                <svg class="w-16 h-16 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-2">No Favorites Yet</h4>
+                            <p class="text-white/70 text-lg mb-6">Start adding events to your favorites to see them here</p>
+                            <a href="#events"
+                               class="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700
+                                      text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-red-500/30
+                                      hover:shadow-xl hover:shadow-red-500/50 transition-all duration-300 hover:scale-105 active:scale-95">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <span>Browse Events</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
 
             {{-- ================= CALENDAR TAB ================= --}}
             <div id="calendar-tab" class="tab-content hidden animate-fadeIn">
-                <div class="bg-gradient-to-br from-blue-800/60 to-indigo-800/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-blue-500/30">
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent mb-6">Event Calendar</h3>
+                <div class="">
+                    <h3 class="text-white">Event Calendar</h3>
                     
                     <!-- ADD YOUR JAVASCRIPT FOR CALENDAR DISPLAY HERE -->
                     <div id="calendar" class="grid grid-cols-7 gap-2">

@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Booking;
 use App\Models\Ticket;
 use App\Models\Payment;
+use App\Models\Favorite;
 
 class UserDashboardController extends Controller
 {
@@ -73,6 +74,9 @@ class UserDashboardController extends Controller
         $myBookings = Booking::where('user_id', $user->id)->get();
         $myTickets = Ticket::where('user_id', $user->id)->get();
 
+        // User's favorite events
+        $myFavorites = Favorite::where('user_id', $user->id)->with('event')->get()->pluck('event');
+
         return view('user-dashboard', [
             'upcomingEventsCount' => $upcomingEventsCount,
             'totalAttendees' => $totalAttendees,
@@ -83,6 +87,7 @@ class UserDashboardController extends Controller
             'featuredEvents' => $featuredEvents,
             'myBookings' => $myBookings,
             'myTickets' => $myTickets,
+            'myFavorites' => $myFavorites,
             'currentSearch' => $search,
             'currentCategory' => $categoryFilter,
             'currentType' => $typeFilter,

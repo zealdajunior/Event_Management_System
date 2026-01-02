@@ -19,6 +19,16 @@ class EventRequest extends Model
         'end_date',
         'venue',
         'status',
+        'expected_attendance',
+        'event_category',
+        'target_audience',
+        'budget_estimate',
+        'ticket_pricing',
+        'special_requirements',
+        'marketing_plan',
+        'contact_phone',
+        'contact_email',
+        'additional_notes',
     ];
 
     /**
