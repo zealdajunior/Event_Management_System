@@ -118,7 +118,5 @@
         </flux:sidebar>
 
         {{ $slot }}
-
-        @fluxScripts
     </body>
 </html>

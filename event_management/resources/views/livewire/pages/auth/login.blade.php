@@ -12,7 +12,7 @@ new class extends Component
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
+    public function login()
     {
         $this->validate();
 
@@ -20,13 +20,22 @@ new class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = auth()->user();
+        return $this->redirect(route('dashboard'), navigate: true);
+    }
+
+    /**
+     * Compatibility stub: some Livewire clients call `toJSON` on components.
+     * Provide a harmless response to avoid MethodNotFoundException.
+     */
+    public function toJSON()
+    {
+        return [];
     }
 };
 
 ?>
 
-<x-guest-layout>
     <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center px-4">
         <div class="w-full max-w-md">
             <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
@@ -76,4 +85,3 @@ new class extends Component
             </div>
         </div>
     </div>
-</x-guest-layout>

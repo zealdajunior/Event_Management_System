@@ -67,6 +67,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine if the user has two-factor authentication enabled.
+     */
+    public function hasEnabledTwoFactorAuthentication(): bool
+    {
+        return ! is_null($this->two_factor_secret) && ! is_null($this->two_factor_confirmed_at);
+    }
+
+    /**
      * Get user's favorite events.
      */
     public function favorites()

@@ -46,13 +46,13 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn () => view('livewire.pages.auth.login'));
-        Fortify::verifyEmailView(fn () => view('livewire.auth.verify-email'));
-        Fortify::twoFactorChallengeView(fn () => view('livewire.auth.two-factor-challenge'));
-        Fortify::confirmPasswordView(fn () => view('livewire.pages.auth.confirm-password'));
-        Fortify::registerView(fn () => view('livewire.pages.auth.register'));
-        Fortify::resetPasswordView(fn () => view('livewire.pages.auth.reset-password'));
-        Fortify::requestPasswordResetLinkView(fn () => view('livewire.auth.forgot-password'));
+        Fortify::loginView(fn () => view('auth.login'));
+        Fortify::verifyEmailView(fn () => view('auth.verify-email'));
+        Fortify::twoFactorChallengeView(fn () => view('auth.two-factor-challenge'));
+        Fortify::confirmPasswordView(fn () => view('auth.confirm-password'));
+        Fortify::registerView(fn () => view('auth.register'));
+        Fortify::resetPasswordView(fn () => view('auth.reset-password'));
+        Fortify::requestPasswordResetLinkView(fn () => view('auth.forgot-password'));
     }
 
     /**
@@ -76,20 +76,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureRedirects(): void
     {
-        Fortify::redirects('login', function (Request $request) {
-            $user = auth()->user();
-            if ($user->isAdmin()) {
-                return route('admin.dashboard');
-            }
-            return route('user.dashboard');
-        });
-
-        Fortify::redirects('register', function (Request $request) {
-            $user = auth()->user();
-            if ($user->isAdmin()) {
-                return route('admin.dashboard');
-            }
-            return route('user.dashboard');
-        });
+        // Redirects are handled by Livewire components
     }
 }

@@ -58,7 +58,7 @@ class EventRequestController extends Controller
         EventRequest::create($data);
 
         return redirect()
-            ->route('event_requests.index')
+            ->route('event-requests.index')
             ->with('status', 'Your event request has been submitted and is pending approval.');
     }
 

@@ -678,34 +678,40 @@
     </div>
 
 <script>
-    document.querySelectorAll('.tab-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const tab = this.dataset.tab;
+    (function () {
+        // Prevent double-initialization when Livewire swaps DOM fragments
+        if (window.__adminDashboardInit) return;
+        window.__adminDashboardInit = true;
 
-            // Update URL hash without reloading
-            history.replaceState(null, null, '#' + tab);
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tab = this.dataset.tab;
 
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
+                // Update URL hash without reloading
+                history.replaceState(null, null, '#' + tab);
+
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Show selected tab
+                document.getElementById(tab + '-tab').classList.remove('hidden');
+
+                // Update active styling
+                document.querySelectorAll('.tab-link').forEach(l => {
+                    l.classList.remove('bg-blue-100', 'text-blue-700');
+                });
+                this.classList.add('bg-blue-100', 'text-blue-700');
             });
-
-            // Show selected tab
-            document.getElementById(tab + '-tab').classList.remove('hidden');
-
-            // Update active styling
-            document.querySelectorAll('.tab-link').forEach(l => {
-                l.classList.remove('bg-blue-100', 'text-blue-700');
-            });
-            this.classList.add('bg-blue-100', 'text-blue-700');
         });
-    });
 
-    // Load tab from URL hash on refresh
-    const currentTab = window.location.hash.replace('#', '') || 'events';
-    document.getElementById(currentTab + '-tab').classList.remove('hidden');
-    document.querySelector('.tab-link[data-tab="' + currentTab + '"]').classList.add('bg-blue-100', 'text-blue-700');
+        // Load tab from URL hash on refresh
+        const currentTab = window.location.hash.replace('#', '') || 'events';
+        document.getElementById(currentTab + '-tab').classList.remove('hidden');
+        document.querySelector('.tab-link[data-tab="' + currentTab + '"]').classList.add('bg-blue-100', 'text-blue-700');
+    })();
 </script>
 
 </x-app-layout>

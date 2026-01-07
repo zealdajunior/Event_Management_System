@@ -152,5 +152,6 @@
     </head>
     <body class="font-sans antialiased bg-gradient-to-br from-gray-50 to-blue-50">
         {{ $slot }}
+        @fluxScripts
     </body>
 </html>

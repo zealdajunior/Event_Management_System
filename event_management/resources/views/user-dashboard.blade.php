@@ -2,29 +2,29 @@
 
     {{-- ================= HEADER ================= --}}
     <x-slot name="header">
-        <div class="bg-blue border-b border-black-200">
+        <div class="bg-white border-b border-blue-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-10">
+                <div class="flex justify-between items-center py-8">
                     <div class="flex items-center space-x-4">
-                        <div class="flex items-center justify-center w-15 h-15 ">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-50">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-green-600">Dashboard</h1>
-                            <p class="text-sm text-green-600">Welcome back! Here's your event overview</p>
+                            <h1 class="text-2xl font-bold text-blue-700">Dashboard</h1>
+                            <p class="text-sm text-slate-500">Welcome back! Here's your event overview</p>
                         </div>
                     </div>
 
                     <div class="flex items-center space-x-4">
-                        <div class="flex items-center space-x-2 text-sm text-green-600">
-                            <div class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></div>
+                        <div class="flex items-center space-x-2 text-sm text-blue-600">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                             <span>Live</span>
                         </div>
 
                         <a href="{{ route('event-requests.create') }}"
-                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-green-600 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 shadow-sm hover:shadow-md">
+                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-200 shadow-sm hover:shadow-md">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
@@ -37,18 +37,18 @@
     </x-slot>
 
     {{-- ================= PAGE CONTAINER ================= --}}
-    <div class="bg-gradient-to-br from-purple-900 via-pink-900 to-green-900 min-h-screen py-12">
+    <div class="bg-gradient-to-br from-blue-50 via-white to-blue-50 min-h-screen py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             {{-- ================= STATS OVERVIEW ================= --}}
-            <div class="bg-blue-600 rounded-2xl">
+            <div class="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-sm border border-blue-50 p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     @php
                     $stats = [
-                        ['label' => 'Upcoming Events', 'value' => $upcomingEventsCount, 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
-                        ['label' => 'Total Attendees', 'value' => $totalAttendees, 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
-                        ['label' => 'Revenue', 'value' => '$'.number_format($totalRevenue,2), 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600'],
-                        ['label' => 'Notifications', 'value' => $notificationsCount, 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'color' => 'green', 'bgColor' => 'bg-green-50', 'textColor' => 'text-green-600']
+                        ['label' => 'Upcoming Events', 'value' => $upcomingEventsCount, 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'color' => 'blue', 'bgColor' => 'bg-blue-50', 'textColor' => 'text-blue-600'],
+                        ['label' => 'Total Attendees', 'value' => $totalAttendees, 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', 'color' => 'blue', 'bgColor' => 'bg-blue-50', 'textColor' => 'text-blue-600'],
+                        ['label' => 'Revenue', 'value' => '$'.number_format($totalRevenue,2), 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'blue', 'bgColor' => 'bg-blue-50', 'textColor' => 'text-blue-600'],
+                        ['label' => 'Notifications', 'value' => $notificationsCount, 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'color' => 'blue', 'bgColor' => 'bg-blue-50', 'textColor' => 'text-blue-600']
                     ];
                     @endphp
 
@@ -86,11 +86,11 @@
                     @foreach($tabs as $key => $tab)
                     <a href="#{{ $key }}" data-tab="{{ $key }}"
                        class="tab-link flex-1 min-w-[140px] py-4 px-6 text-center rounded-xl
-                              font-semibold text-gray-600 bg-gray-50
-                              hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200
+                              font-semibold text-gray-600 bg-white
+                              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
                               transition-all duration-200 relative group border border-gray-200
                               flex flex-col items-center gap-2">
-                        <svg class="w-5 h-5 text-gray-500 group-hover:text-purple-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $tab['icon'] }}"></path>
                         </svg>
                         <span class="text-sm">{{ $tab['label'] }}</span>
@@ -101,14 +101,14 @@
 
             {{-- ================= FEATURED EVENTS ================= --}}
             @if($featuredEvents->count())
-            <div class="bg-gradient-to-br from-purple-900/60 via-pink-900/60 to-green-900/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-purple-500/30 animate-fadeInUp animate-on-scroll">
+            <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50 animate-fadeInUp animate-on-scroll">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="p-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl shadow-lg animate-bounce-slow">
+                    <div class="p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-2xl shadow-md">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-black bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                    <h3 class="text-2xl font-black text-slate-900">
                         Featured Events
                     </h3>
                 </div>
@@ -116,37 +116,37 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($featuredEvents as $event)
             <div class="group relative animate-fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s">
-                <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
-                <div class="relative bg-gradient-to-br from-purple-800/80 to-pink-900/80 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-6
-                                    hover:shadow-2xl hover:-translate-y-3 hover:rotate-1 group-hover:shadow-2xl group-hover:-translate-y-3 group-hover:rotate-1
+                <div class="absolute inset-0 bg-gradient-to-r from-sky-200 to-blue-200 rounded-3xl blur-xl opacity-15 group-hover:opacity-35 transition-opacity duration-500"></div>
+                <div class="relative bg-white border border-blue-50 rounded-3xl p-6
+                                    hover:shadow-2xl hover:-translate-y-2 group-hover:shadow-2xl group-hover:-translate-y-2
                                     transition-all duration-500 overflow-hidden">
 
                             <div class="absolute top-4 right-4 animate-pulse-slow">
-                                <span class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                <span class="bg-gradient-to-r from-sky-500 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
                                     ⭐ Featured
                                 </span>
                             </div>
 
-                            <h4 class="text-professional-black text-xl text-white mb-3 pr-20 leading-tight
-                                       group-hover:text-white transition-colors duration-300">
+                            <h4 class="text-professional-black text-xl text-slate-900 mb-3 pr-20 leading-tight
+                                       group-hover:text-slate-900 transition-colors duration-300">
                                 {{ $event->name }}
                             </h4>
 
-                            <p class="text-professional text-sm text-white leading-relaxed mb-4 line-clamp-2">
+                            <p class="text-professional text-sm text-slate-600 leading-relaxed mb-4 line-clamp-2">
                                 {{ Str::limit($event->description, 80) }}
                             </p>
 
                             <div class="space-y-2 mb-6">
-                                <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300">
-                                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-center gap-2 text-professional-medium text-sm text-slate-600 group-hover:translate-x-1 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                     <span class="font-medium">
                                         {{ $event->date ? \Carbon\Carbon::parse($event->date)->format('M d, Y H:i') : 'N/A' }}
                                     </span>
                                 </div>
-                                <div class="flex items-center gap-2 text-professional-medium text-sm text-white group-hover:translate-x-1 transition-transform duration-300" style="transition-delay: 50ms">
-                                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-center gap-2 text-professional-medium text-sm text-slate-600 group-hover:translate-x-1 transition-transform duration-300" style="transition-delay: 50ms">
+                                    <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
@@ -156,9 +156,9 @@
 
                             <a href="{{ route('events.show', $event) }}"
                                class="inline-flex items-center gap-2 w-full justify-center
-                                      bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700
+                                      bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                       text-white px-6 py-3 rounded-2xl font-bold
-                                      transform group-hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                      transform group-hover:scale-105 transition-all duration-300 shadow-md">
                                 View Details
                                 <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -172,26 +172,26 @@
             @endif
 
             {{-- ================= SEARCH & FILTER ================= --}}
-            <div class="bg-gradient-to-br from-purple-900/60 via-pink-900/60 to-green-900/60 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-purple-500/30 animate-fadeIn">
+            <div class="bg-white rounded-3xl shadow-sm p-6 border border-blue-50 animate-fadeIn">
                 <form method="GET" action="{{ route('user.dashboard') }}"
                       class="flex flex-col lg:flex-row gap-4">
 
                     <div class="flex-1 relative group">
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-400 group-focus-within:text-purple-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sky-400 group-focus-within:text-sky-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                         <input type="text" name="search"
                                value="{{ $currentSearch }}"
                                placeholder="Search events by name, description, or venue..."
-                               class="w-full pl-12 pr-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
-                                      focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 placeholder-purple-300/50 text-purple-100
-                                      transition-all duration-300 text-sm backdrop-blur-sm">
+                               class="w-full pl-12 pr-5 py-4 rounded-2xl border-2 border-blue-100 bg-white
+                                      focus:ring-4 focus:ring-sky-100 focus:border-blue-200 placeholder-slate-400
+                                      transition-all duration-300 text-sm">
                     </div>
 
                     <select name="category"
-                            class="px-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
-                                   focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 text-purple-100
-                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-purple-400/50">
+                            class="px-5 py-4 rounded-2xl border-2 border-blue-100 bg-white
+                                   focus:ring-4 focus:ring-sky-100 focus:border-blue-200 text-slate-700
+                                   transition-all duration-300 text-sm font-medium hover:border-blue-200">
                         <option value="">All Categories</option>
                         @foreach($allCategories as $category)
                         <option value="{{ $category }}" {{ $currentCategory==$category?'selected':'' }}>
@@ -201,18 +201,18 @@
                     </select>
 
                     <select name="type"
-                            class="px-5 py-4 rounded-2xl border-2 border-purple-500/30 bg-purple-900/30
-                                   focus:ring-4 focus:ring-purple-400/20 focus:border-purple-400 text-purple-100
-                                   transition-all duration-300 text-sm font-medium backdrop-blur-sm hover:border-purple-400/50">
+                            class="px-5 py-4 rounded-2xl border-2 border-blue-100 bg-white
+                                   focus:ring-4 focus:ring-sky-100 focus:border-blue-200 text-slate-700
+                                   transition-all duration-300 text-sm font-medium hover:border-blue-200">
                         <option value="">All Types</option>
                         <option value="free" {{ $currentType=='free'?'selected':'' }}>Free Events</option>
                         <option value="paid" {{ $currentType=='paid'?'selected':'' }}>Paid Events</option>
                     </select>
 
                     <button type="submit"
-                            class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700
+                            class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                    active:scale-95 transition-all duration-300
-                                   text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl
+                                   text-white px-8 py-4 rounded-2xl font-bold shadow-md
                                    flex items-center justify-center gap-2 hover:gap-3">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -456,57 +456,64 @@
 
     {{-- ================= JAVASCRIPT (ADD YOUR TAB SWITCHING LOGIC HERE) ================= --}}
     <script>
-        // Tab switching functionality
-        const tabLinks = document.querySelectorAll('.tab-link');
-        const tabContents = document.querySelectorAll('.tab-content');
+        // Wrap everything in an IIFE so const/let declarations don't pollute the global scope
+        (function () {
+            // Prevent double-initialization when Livewire swaps DOM fragments
+            if (window.__userDashboardInit) return;
+            window.__userDashboardInit = true;
 
-        tabLinks.forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
+            // Tab switching functionality
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-                // Remove active state from all tabs
-                tabLinks.forEach(l => {
-                    l.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
-                    l.classList.add('text-blue-200');
+            tabLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+
+                    // Remove active state from all tabs
+                    tabLinks.forEach(l => {
+                        l.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
+                        l.classList.add('text-blue-200');
+                    });
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(c => c.classList.add('hidden'));
+
+                    // Activate clicked tab
+                    const tab = link.dataset.tab;
+                    document.getElementById(`${tab}-tab`).classList.remove('hidden');
+
+                    // Style active tab
+                    link.classList.remove('text-blue-200');
+                    link.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
                 });
-                
-                // Hide all tab contents
-                tabContents.forEach(c => c.classList.add('hidden'));
-
-                // Activate clicked tab
-                const tab = link.dataset.tab;
-                document.getElementById(`${tab}-tab`).classList.remove('hidden');
-
-                // Style active tab
-                link.classList.remove('text-blue-200');
-                link.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
             });
-        });
 
-        // Initialize first tab as active
-        if (tabLinks.length > 0) {
-            tabLinks[0].classList.remove('text-blue-200');
-            tabLinks[0].classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
-        }
+            // Initialize first tab as active
+            if (tabLinks.length > 0) {
+                tabLinks[0].classList.remove('text-blue-200');
+                tabLinks[0].classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-600', 'text-white', 'shadow-lg', 'scale-105');
+            }
 
-        // Scroll-triggered animations using Intersection Observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            // Scroll-triggered animations using Intersection Observer
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-visible');
-                }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animate-on-scroll class
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
             });
-        }, observerOptions);
-
-        // Observe all elements with animate-on-scroll class
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        })();
     </script>
 
     {{-- ================= ANIMATIONS ================= --}}

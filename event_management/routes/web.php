@@ -8,11 +8,13 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     $upcomingEvents = \App\Models\Event::where('date', '>=', now())->orderBy('date')->take(6)->get();
-    return view('welcome', compact('upcomingEvents'));
+    $pastEvents     = \App\Models\Event::past()->with('venue','bookings')->orderByDesc('date')->take(3)->get();
+    return view('welcome', compact('upcomingEvents', 'pastEvents'));
 })->name('home');
 
 // Password Reset Routes
@@ -30,10 +32,21 @@ Route::middleware('auth')->get('/dashboard', function () {
     return redirect()->route('user.dashboard');
 })->name('dashboard');
 
-    // Profile route
+    // Profile route (legacy)
     Route::get('/profile', function () {
         return view('profile');
     })->name('profile');
+
+    // Settings pages (wrappers that mount settings Livewire components)
+    Route::middleware('auth')->group(function () {
+        Route::get('/settings/profile', fn () => view('settings.profile'))->name('profile.edit');
+        Route::get('/settings/password', fn () => view('settings.password'))->name('user-password.edit');
+        // two-factor requires password confirmation
+        Route::get('/settings/two-factor', fn () => view('settings.two-factor'))
+            ->middleware('password.confirm')
+            ->name('two-factor.show');
+        Route::get('/settings/appearance', fn () => view('settings.appearance'))->name('appearance.edit');
+    });
 
     // User Dashboard Routes
     Route::middleware('role:user')->group(function () {
