@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Event;
+use App\Models\EventRequest;
+use App\Models\User;
+use App\Models\Booking;
+use Livewire\Component;
+
+class AdminDashboard extends Component
+{
+    public function render()
+    {
+        $pendingRequests = EventRequest::where('status', 'pending')->count();
+        $totalEvents = Event::count();
+        $totalUsers = User::count();
+        $totalBookings = Booking::count();
+        $recentEvents = Event::latest()->take(5)->get();
+        $pendingReqs = EventRequest::where('status', 'pending')->latest()->take(5)->get();
+
+        return view('livewire.admin-dashboard', [
+            'pendingRequests' => $pendingRequests,
+            'totalEvents' => $totalEvents,
+            'totalUsers' => $totalUsers,
+            'totalBookings' => $totalBookings,
+            'recentEvents' => $recentEvents,
+            'pendingReqs' => $pendingReqs,
+        ]);
+    }
+}

@@ -1,0 +1,4 @@
+- [x] Create default admin user (admin@example.com / admin123)
+- [x] Ensure event requests reach admin dashboard
+- [x] Ensure approved events appear on user dashboards as available events
+- [x] Test the full flow: user submits request -> admin sees and approves -> event appears for all users
