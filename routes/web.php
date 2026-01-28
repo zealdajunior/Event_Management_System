@@ -138,6 +138,14 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::get('/attendance/statistics/{event}', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
         // Admin feedback routes
         Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
+        
+        // Super Admin Management Routes
+        Route::get('/admin/management', [\App\Http\Controllers\AdminManagementController::class, 'index'])->name('admin.management.index');
+        Route::post('/admin/users/{user}/promote', [\App\Http\Controllers\AdminManagementController::class, 'promoteToAdmin'])->name('admin.users.promote');
+        Route::post('/admin/users/{user}/demote', [\App\Http\Controllers\AdminManagementController::class, 'demoteToUser'])->name('admin.users.demote');
+        Route::delete('/admin/users/{user}', [\App\Http\Controllers\AdminManagementController::class, 'deleteUser'])->name('admin.users.delete');
+        Route::post('/admin/admins/create', [\App\Http\Controllers\AdminManagementController::class, 'createAdmin'])->name('admin.admins.create');
+        Route::post('/admin/users/{user}/toggle-super', [\App\Http\Controllers\AdminManagementController::class, 'toggleSuperAdmin'])->name('admin.users.toggle-super');
         Route::post('/feedback/{id}/approve', [FeedbackController::class, 'approve'])->name('feedback.approve');
         Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
     });
