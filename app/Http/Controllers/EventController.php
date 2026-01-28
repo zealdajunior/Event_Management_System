@@ -84,12 +84,24 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
+        // Check if the current admin is the creator of the event
+        if ($event->user_id !== auth()->id()) {
+            return redirect()->route('events.index')
+                ->with('error', 'You can only edit events that you created. Events from event requests can only be edited by their creators.');
+        }
+
         $venues = Venue::all();
         return view('events.edit', compact('event', 'venues'));
     }
 
     public function update(Request $request, Event $event)
     {
+        // Check if the current admin is the creator of the event
+        if ($event->user_id !== auth()->id()) {
+            return redirect()->route('events.index')
+                ->with('error', 'You can only update events that you created. Events from event requests can only be updated by their creators.');
+        }
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',

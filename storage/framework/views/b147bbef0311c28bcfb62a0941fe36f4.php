@@ -1,5 +1,14 @@
-<x-app-layout>
-    <x-slot name="header">
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+     <?php $__env->slot('header', null, []); ?> 
         <div class="bg-gradient-to-r from-blue-50 to-white rounded-2xl p-4 mb-6 shadow-lg">
             <div class="flex items-center gap-3">
                 <div class="p-2 bg-blue-500 rounded-xl shadow-md">
@@ -16,56 +25,58 @@
                 </div>
             </div>
         </div>
-    </x-slot>
+     <?php $__env->endSlot(); ?>
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Hero Section with Featured Image -->
-            @php
+            <?php
                 $featuredImage = $event->images->first();
-            @endphp
+            ?>
             <div class="relative h-96 overflow-hidden rounded-3xl shadow-2xl mb-8">
-                @if($featuredImage)
-                    <img src="{{ Storage::url($featuredImage->file_path) }}" 
-                         alt="{{ $event->name }}" 
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($featuredImage): ?>
+                    <img src="<?php echo e(Storage::url($featuredImage->file_path)); ?>" 
+                         alt="<?php echo e($event->name); ?>" 
                          class="w-full h-full object-cover object-center"
                          style="object-fit: cover; object-position: center;"
                     />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
-                @else
+                <?php else: ?>
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800"></div>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 
                 <!-- Event Title Overlay -->
                 <div class="absolute bottom-0 left-0 right-0 p-8">
                     <div class="max-w-4xl">
                         <div class="flex items-center gap-3 mb-3">
-                            @if($event->category)
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->category): ?>
                                 <span class="px-4 py-2 bg-blue-600 text-white font-black rounded-full text-sm uppercase shadow-xl" style="text-shadow: 0 2px 8px rgba(0,0,0,0.7);">
-                                    {{ $event->category }}
+                                    <?php echo e($event->category); ?>
+
                                 </span>
-                            @endif
-                            @if($event->price == 0)
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->price == 0): ?>
                                 <span class="px-4 py-2 bg-green-600 text-white font-black rounded-full text-sm shadow-xl" style="text-shadow: 0 2px 8px rgba(0,0,0,0.7);">
                                     🎉 FREE
                                 </span>
-                            @endif
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         </div>
                         <h1 class=\"text-5xl font-black text-white mb-4 drop-shadow-lg\" style=\"text-shadow: 0 4px 12px rgba(0,0,0,0.9);\">
-                            {{ $event->name }}
+                            <?php echo e($event->name); ?>
+
                         </h1>
                         <div class="flex items-center gap-6 text-white/90" style="text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
                             <div class="flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span class="font-bold">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y • g:i A') : 'Date TBA' }}</span>
+                                <span class="font-bold"><?php echo e($event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y • g:i A') : 'Date TBA'); ?></span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
                                 </svg>
-                                <span class="font-bold">{{ $event->venue ? $event->venue->name : $event->location }}</span>
+                                <span class="font-bold"><?php echo e($event->venue ? $event->venue->name : $event->location); ?></span>
                             </div>
                         </div>
                     </div>
@@ -77,8 +88,8 @@
                 shareEvent() { 
                     if (navigator.share) {
                         navigator.share({
-                            title: '{{ $event->name }}',
-                            text: 'Check out this event: {{ $event->name }}',
+                            title: '<?php echo e($event->name); ?>',
+                            text: 'Check out this event: <?php echo e($event->name); ?>',
                             url: window.location.href
                         });
                     } else {
@@ -89,16 +100,16 @@
             }">
                 <div class="flex items-center justify-between flex-wrap gap-4">
                     <div class="flex items-center gap-4">
-                        @if($event->capacity)
-                            @php
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->capacity): ?>
+                            <?php
                                 $bookingsCount = $event->bookings_count ?? 0;
                                 $spotsLeft = $event->capacity - $bookingsCount;
                                 $percentFilled = $event->capacity > 0 ? ($bookingsCount / $event->capacity) * 100 : 0;
-                            @endphp
+                            ?>
                             <!-- Attendee Count -->
                             <div class="flex items-center gap-2">
                                 <span class="text-sm font-semibold text-gray-700">
-                                    <span class="text-blue-600">{{ $bookingsCount }}</span> attending
+                                    <span class="text-blue-600"><?php echo e($bookingsCount); ?></span> attending
                                 </span>
                             </div>
 
@@ -110,21 +121,22 @@
                                         <circle cx="16" cy="16" r="14" stroke="#E5E7EB" stroke-width="4" fill="none"/>
                                         <circle 
                                             cx="16" cy="16" r="14" 
-                                            stroke="{{ $percentFilled > 80 ? '#EF4444' : '#3B82F6' }}" 
+                                            stroke="<?php echo e($percentFilled > 80 ? '#EF4444' : '#3B82F6'); ?>" 
                                             stroke-width="4" 
                                             fill="none"
-                                            stroke-dasharray="{{ 2 * 3.14159 * 14 }}"
-                                            stroke-dashoffset="{{ 2 * 3.14159 * 14 * (1 - $percentFilled / 100) }}"
+                                            stroke-dasharray="<?php echo e(2 * 3.14159 * 14); ?>"
+                                            stroke-dashoffset="<?php echo e(2 * 3.14159 * 14 * (1 - $percentFilled / 100)); ?>"
                                             stroke-linecap="round"
                                         />
                                     </svg>
-                                    <span class="absolute inset-0 flex items-center justify-center text-xs font-bold {{ $percentFilled > 80 ? 'text-red-600' : 'text-blue-600' }}">
-                                        {{ $spotsLeft }}
+                                    <span class="absolute inset-0 flex items-center justify-center text-xs font-bold <?php echo e($percentFilled > 80 ? 'text-red-600' : 'text-blue-600'); ?>">
+                                        <?php echo e($spotsLeft); ?>
+
                                     </span>
                                 </div>
                                 <span class="text-sm font-semibold text-gray-700">spots left</span>
                             </div>
-                        @endif
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
 
                     <!-- Action Buttons -->
@@ -140,23 +152,23 @@
                             Share
                         </button>
 
-                        @if($event->price !== null)
-                            @if($event->capacity && ($event->bookings_count ?? 0) >= $event->capacity)
+                        <?php if($event->price !== null): ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->capacity && ($event->bookings_count ?? 0) >= $event->capacity): ?>
                                 <div class="px-8 py-3 bg-gray-400 text-white font-bold rounded-xl cursor-not-allowed">
                                     ❌ Sold Out
                                 </div>
-                            @else
-                                <a href="{{ route('bookings.create.for.event', $event) }}" 
+                            <?php else: ?>
+                                <a href="<?php echo e(route('bookings.create.for.event', $event)); ?>" 
                                    class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                     🎫 Book Now
-                                    @if($event->price > 0)
-                                        <span class="ml-2">${{ number_format($event->price, 2) }}</span>
-                                    @else
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->price > 0): ?>
+                                        <span class="ml-2">$<?php echo e(number_format($event->price, 2)); ?></span>
+                                    <?php else: ?>
                                         <span class="ml-2 text-yellow-300">FREE</span>
-                                    @endif
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </a>
-                            @endif
-                        @endif
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -180,7 +192,7 @@
                                     <h4 class="font-black text-gray-900 text-lg">Description</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl">
-                                    <p class="text-gray-700 leading-relaxed text-sm">{{ $event->description ?: 'No description provided.' }}</p>
+                                    <p class="text-gray-700 leading-relaxed text-sm"><?php echo e($event->description ?: 'No description provided.'); ?></p>
                                 </div>
                             </div>
 
@@ -198,10 +210,10 @@
                                     <h4 class="font-black text-gray-900 text-base">Date & Time</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl text-center">
-                                    <p class="text-gray-900 text-sm font-bold">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y') : 'N/A' }}</p>
-                                    @if($event->date)
-                                        <p class="text-blue-600 text-xs font-semibold mt-1">{{ \Carbon\Carbon::parse($event->date)->format('g:i A') }}</p>
-                                    @endif
+                                    <p class="text-gray-900 text-sm font-bold"><?php echo e($event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y') : 'N/A'); ?></p>
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->date): ?>
+                                        <p class="text-blue-600 text-xs font-semibold mt-1"><?php echo e(\Carbon\Carbon::parse($event->date)->format('g:i A')); ?></p>
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </div>
                             </div>
 
@@ -218,7 +230,7 @@
                                     <h4 class="font-black text-gray-900 text-base">Location</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl text-center">
-                                    <p class="text-gray-900 font-bold text-sm">{{ $event->location }}</p>
+                                    <p class="text-gray-900 font-bold text-sm"><?php echo e($event->location); ?></p>
                                 </div>
                             </div>
 
@@ -236,7 +248,7 @@
                                     <h4 class="font-black text-gray-900 text-base">Venue</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl text-center">
-                                    <p class="text-gray-900 font-bold text-sm">{{ $event->venue ? $event->venue->name : 'N/A' }}</p>
+                                    <p class="text-gray-900 font-bold text-sm"><?php echo e($event->venue ? $event->venue->name : 'N/A'); ?></p>
                                 </div>
                             </div>
 
@@ -252,15 +264,16 @@
                                     <h4 class="font-black text-gray-900 text-base">Status</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl flex justify-center">
-                                    @if(strtolower($event->status) == 'active')
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(strtolower($event->status) == 'active'): ?>
                                         <span class="px-4 py-2 inline-flex text-sm leading-5 font-black rounded-xl bg-blue-500 text-white shadow-md">
                                             Active
                                         </span>
-                                    @else
+                                    <?php else: ?>
                                         <span class="px-4 py-2 inline-flex text-sm leading-5 font-black rounded-xl bg-gray-400 text-white shadow-md">
-                                            {{ ucfirst($event->status) }}
+                                            <?php echo e(ucfirst($event->status)); ?>
+
                                         </span>
-                                    @endif
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </div>
                             </div>
 
@@ -277,7 +290,7 @@
                                     <h4 class="font-black text-gray-900 text-base">Created By</h4>
                                 </div>
                                 <div class="bg-blue-50 px-4 py-3 rounded-xl text-center">
-                                    <p class="text-gray-900 font-bold text-sm">{{ $event->user ? $event->user->name : 'N/A' }}</p>
+                                    <p class="text-gray-900 font-bold text-sm"><?php echo e($event->user ? $event->user->name : 'N/A'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -289,12 +302,13 @@
                     </div>
 
                     <!-- Enhanced Image Gallery with Lightbox -->
-                    @if($event->images && $event->images->count() > 0)
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($event->images && $event->images->count() > 0): ?>
                         <div class="mb-8" x-data="{ 
                             lightbox: false, 
                             currentImage: 0,
-                            images: {{ $event->images->pluck('file_path')->toJson() }},
-                            captions: {{ $event->images->pluck('caption')->toJson() }}
+                            images: <?php echo e($event->images->pluck('file_path')->toJson()); ?>,
+                            captions: <?php echo e($event->images->pluck('caption')->toJson()); ?>
+
                         }">
                             <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
@@ -303,14 +317,14 @@
                                 Event Gallery
                             </h3>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                @foreach($event->images as $index => $image)
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $event->images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div 
-                                        @click="lightbox = true; currentImage = {{ $index }}"
+                                        @click="lightbox = true; currentImage = <?php echo e($index); ?>"
                                         class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
                                     >
                                         <img 
-                                            src="{{ Storage::url($image->file_path) }}" 
-                                            alt="{{ $image->caption }}" 
+                                            src="<?php echo e(Storage::url($image->file_path)); ?>" 
+                                            alt="<?php echo e($image->caption); ?>" 
                                             class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
                                             style="object-fit: cover; object-position: center;"
                                         />
@@ -320,13 +334,13 @@
                                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                                             </svg>
                                         </div>
-                                        @if($image->caption)
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($image->caption): ?>
                                             <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
-                                                <p class="text-white text-xs font-bold truncate" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">{{ $image->caption }}</p>
+                                                <p class="text-white text-xs font-bold truncate" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);"><?php echo e($image->caption); ?></p>
                                             </div>
-                                        @endif
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                             </div>
 
                             <!-- Lightbox Modal -->
@@ -382,7 +396,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                     <!-- Divider -->
                     <div class="my-6">
@@ -391,23 +405,24 @@
 
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap items-center justify-center gap-3">
-                        @auth
-                            <form method="POST" action="{{ route('favorites.toggle', $event) }}" class="inline">
-                                @csrf
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                            <form method="POST" action="<?php echo e(route('favorites.toggle', $event)); ?>" class="inline">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit"
-                                        class="group relative {{ auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-blue-50 hover:bg-blue-100 text-blue-600' }}
+                                        class="group relative <?php echo e(auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-blue-50 hover:bg-blue-100 text-blue-600'); ?>
+
                                                active:scale-95 transition-all duration-300
                                                px-5 py-2.5 rounded-xl font-bold text-sm
                                                shadow-md hover:shadow-lg
                                                flex items-center gap-2">
-                                    <svg class="w-4 h-4 {{ auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'group-hover:scale-110' : 'group-hover:animate-pulse' }} transition-transform duration-300" fill="{{ auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 <?php echo e(auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'group-hover:scale-110' : 'group-hover:animate-pulse'); ?> transition-transform duration-300" fill="<?php echo e(auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'currentColor' : 'none'); ?>" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                     </svg>
-                                    <span>{{ auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'Remove from Favorites' : 'Add to Favorites' }}</span>
+                                    <span><?php echo e(auth()->user()->favoritedEvents()->where('event_id', $event->id)->exists() ? 'Remove from Favorites' : 'Add to Favorites'); ?></span>
                                 </button>
                             </form>
-                        @endauth
-                        <a href="{{ route('user.dashboard') }}"
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <a href="<?php echo e(route('user.dashboard')); ?>"
                            class="group relative bg-blue-50 hover:bg-blue-100
                                   active:scale-95 transition-all duration-300
                                   text-gray-900 px-5 py-2.5 rounded-xl font-bold text-sm
@@ -423,4 +438,14 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php /**PATH C:\Users\Zealda Junior\Desktop\Event\event_management\resources\views/events/show.blade.php ENDPATH**/ ?>
