@@ -21,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'role',
+        'is_super_admin',
         'onboarding_completed',
         'interests',
         'favorite_event_types',
@@ -53,6 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'interests' => 'array',
             'date_of_birth' => 'date',
             'onboarding_completed' => 'boolean',
+            'is_super_admin' => 'boolean',
         ];
     }
 
@@ -75,6 +77,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is super admin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->is_super_admin === true && $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is admin or super admin.
+     */
+    public function isAdminOrSuperAdmin(): bool
+    {
+        return $this->isAdmin() || $this->isSuperAdmin();
     }
 
     /**
