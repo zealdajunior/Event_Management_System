@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Notifications\EventRequestStatusNotification;
 use App\Notifications\NewEventRequestNotification;
+use App\Services\AuditLogger;
 
 class EventRequestController extends Controller
 {
@@ -160,6 +161,13 @@ class EventRequestController extends Controller
             $req->user->notify(new EventRequestStatusNotification($req, 'approved'));
         }
 
+        // Log audit action
+        AuditLogger::log('approved', 'EventRequest', $req->id, [
+            'event_id' => $event->id,
+            'event_title' => $event->name,
+            'requester' => $req->user->name ?? 'Unknown'
+        ]);
+
         return redirect()
             ->route('admin.event_requests.index')
             ->with('status', 'Event request approved, event created with all media files.');
@@ -181,6 +189,12 @@ class EventRequestController extends Controller
         if ($req->user) {
             $req->user->notify(new EventRequestStatusNotification($req, 'rejected', $reason));
         }
+
+        // Log audit action
+        AuditLogger::log('rejected', 'EventRequest', $req->id, [
+            'reason' => $reason,
+            'requester' => $req->user->name ?? 'Unknown'
+        ]);
 
         return redirect()
             ->route('admin.event_requests.index')

@@ -8,6 +8,7 @@ use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Services\AuditLogger;
 
 class EventController extends Controller
 {
@@ -65,6 +66,13 @@ class EventController extends Controller
             }
         }
 
+        // Log audit action
+        AuditLogger::log('created', 'Event', $event->id, [
+            'name' => $event->name,
+            'date' => $event->date,
+            'venue' => $event->venue->name ?? $event->location
+        ]);
+
         return redirect()->route('events.index')->with('status', 'Event created successfully with media files.');
     }
 
@@ -92,11 +100,24 @@ class EventController extends Controller
         ]);
 
         $event->update($data);
+        
+        // Log audit action
+        AuditLogger::log('updated', 'Event', $event->id, [
+            'name' => $event->name,
+            'status' => $data['status']
+        ]);
+        
         return redirect()->route('events.index')->with('status', 'Event updated successfully.');
     }
 
     public function destroy(Event $event)
     {
+        // Log audit action before deletion
+        AuditLogger::log('deleted', 'Event', $event->id, [
+            'name' => $event->name,
+            'date' => $event->date
+        ]);
+        
         $event->delete();
         return redirect()->route('events.index')->with('status', 'Event deleted successfully.');
     }

@@ -915,6 +915,113 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Activity Audit Log Section --}}
+                    @php
+                        $auditLogs = \App\Services\AuditLogger::getRecentLogs(30);
+                    @endphp
+
+                    @if(!empty($auditLogs))
+                    <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-md mt-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-black text-gray-900 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Activity Audit Log
+                            </h4>
+                            <button onclick="window.location.reload()" class="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-semibold rounded-lg transition-colors duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                Refresh
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200 bg-blue-50">
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Timestamp</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">User</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Action</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Resource</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-100">
+                                    @foreach($auditLogs as $log)
+                                    <tr class="hover:bg-blue-50 transition-colors duration-150">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-600">
+                                            {{ \Carbon\Carbon::parse($log['timestamp'])->format('M d, H:i:s') }}
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                                    <span class="text-blue-600 font-bold text-sm">{{ substr($log['user_name'], 0, 1) }}</span>
+                                                </div>
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-semibold text-gray-900">{{ $log['user_name'] }}</p>
+                                                    <p class="text-xs text-gray-500">ID: {{ $log['user_id'] }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            @php
+                                                $badgeColor = \App\Services\AuditLogger::getActionBadgeColor($log['action']);
+                                                $badgeClasses = match($badgeColor) {
+                                                    'green' => 'bg-green-100 text-green-800',
+                                                    'blue' => 'bg-blue-100 text-blue-800',
+                                                    'red' => 'bg-red-100 text-red-800',
+                                                    'orange' => 'bg-orange-100 text-orange-800',
+                                                    'purple' => 'bg-purple-100 text-purple-800',
+                                                    'teal' => 'bg-teal-100 text-teal-800',
+                                                    default => 'bg-gray-100 text-gray-800',
+                                                };
+                                                $iconPath = \App\Services\AuditLogger::getActionIcon($log['action']);
+                                            @endphp
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $badgeClasses }}">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $iconPath }}"></path>
+                                                </svg>
+                                                {{ $log['action'] }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <div class="text-sm">
+                                                <p class="text-gray-900 font-medium">{{ $log['resource_type'] }}</p>
+                                                <p class="text-gray-500 text-xs">ID: {{ $log['resource_id'] }}</p>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">
+                                            {{ $log['details'] ?? '—' }}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @if(count($auditLogs) === 0)
+                        <div class="text-center py-8">
+                            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="text-gray-500 font-medium">No audit logs available yet</p>
+                            <p class="text-gray-400 text-sm mt-1">Admin actions will be tracked and displayed here</p>
+                        </div>
+                        @endif
+
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <p class="text-xs text-gray-500 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Showing last 30 audit log entries. Logs are stored in <code class="px-1 py-0.5 bg-gray-100 rounded text-xs">storage/logs/audit.log</code>
+                            </p>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 </div>
             </div>

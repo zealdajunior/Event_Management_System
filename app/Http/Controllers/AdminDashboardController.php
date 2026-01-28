@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\BulkEmailNotification;
+use App\Services\AuditLogger;
 
 class AdminDashboardController extends Controller
 {
@@ -139,6 +140,13 @@ class AdminDashboardController extends Controller
                 \Log::error('Bulk email failed: ' . $e->getMessage());
             }
         }
+
+        // Log audit action
+        AuditLogger::log('sent', 'BulkEmail', 'N/A', [
+            'recipient_type' => $request->recipient_type,
+            'subject' => $request->subject,
+            'recipients_count' => $sentCount
+        ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'Bulk email sent to ' . $sentCount . ' users successfully!');
     }
