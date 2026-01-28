@@ -145,7 +145,7 @@
                                     ❌ Sold Out
                                 </div>
                             @else
-                                <a href="{{ route('bookings.create') }}?event={{ $event->id }}" 
+                                <a href="{{ route('bookings.create.for.event', $event) }}" 
                                    class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                     🎫 Book Now
                                     @if($event->price > 0)
