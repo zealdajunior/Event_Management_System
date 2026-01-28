@@ -24,37 +24,38 @@
                 <div class="p-8">
                     <!-- Progress Indicator -->
                     <div x-data="{ currentStep: 1, totalSteps: 6 }" class="mb-8">
-                        <div class="relative">
-                            <div class="overflow-hidden h-2 text-xs flex rounded-full bg-gray-200">
-                                <div 
-                                    :style="'width: ' + ((currentStep / totalSteps) * 100) + '%'" 
-                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500"
-                                ></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-600 mt-2 font-semibold">
-                                Step <span x-text="currentStep"></span> of <span x-text="totalSteps"></span>
-                                (<span x-text="Math.round((currentStep / totalSteps) * 100)"></span>% complete)
-                            </p>
-                        </div>
-
-                        <!-- Step Indicators -->
-                        <div class="mt-6 grid grid-cols-6 gap-2">
+                        <!-- Compact Horizontal Step Indicators -->
+                        <div class="flex items-center justify-between gap-2">
                             <template x-for="step in totalSteps" :key="step">
-                                <div class="text-center">
-                                    <div 
-                                        :class="step <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'"
-                                        class="w-10 h-10 mx-auto rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300"
-                                    >
-                                        <span x-text="step"></span>
+                                <div class="flex items-center gap-2">
+                                    <div class="flex items-center">
+                                        <div 
+                                            :class="step <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'"
+                                            class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-300"
+                                        >
+                                            <span x-text="step"></span>
+                                        </div>
+                                        <span 
+                                            :class="step === currentStep ? 'text-blue-600 font-bold' : 'text-gray-500'"
+                                            class="text-xs ml-2 transition-colors duration-300 hidden sm:inline"
+                                            x-text="['Basic', 'Details', 'Date', 'Location', 'Media', 'Review'][step - 1]"
+                                        ></span>
                                     </div>
-                                    <p 
-                                        :class="step === currentStep ? 'text-blue-600 font-bold' : 'text-gray-500'"
-                                        class="text-xs mt-2 transition-colors duration-300"
-                                        x-text="['Basic', 'Details', 'Date', 'Location', 'Media', 'Review'][step - 1]"
-                                    ></p>
+                                    <!-- Connector Line -->
+                                    <div 
+                                        x-show="step < totalSteps"
+                                        :class="step < currentStep ? 'bg-blue-600' : 'bg-gray-300'"
+                                        class="hidden md:block h-0.5 w-8 transition-all duration-300"
+                                    ></div>
                                 </div>
                             </template>
                         </div>
+                        
+                        <!-- Progress Text -->
+                        <p class="text-center text-sm text-gray-600 mt-3 font-semibold">
+                            Step <span x-text="currentStep"></span> of <span x-text="totalSteps"></span>
+                            (<span x-text="Math.round((currentStep / totalSteps) * 100)"></span>% complete)
+                        </p>
                     </div>
 
                     <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" x-data="{
