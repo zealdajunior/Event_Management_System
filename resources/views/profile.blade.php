@@ -14,15 +14,21 @@
                     <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
                         {{-- Avatar --}}
                         <div class="relative group">
-                            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-black shadow-2xl ring-4 ring-white">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
-                            <div class="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center cursor-pointer">
+                            @if(auth()->user()->profile_photo_path)
+                                <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" 
+                                     alt="{{ auth()->user()->name }}" 
+                                     class="w-32 h-32 rounded-full object-cover shadow-2xl ring-4 ring-white">
+                            @else
+                                <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-black shadow-2xl ring-4 ring-white">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                            <a href="#photo-upload" class="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center cursor-pointer">
                                 <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
-                            </div>
+                            </a>
                         </div>
 
                         {{-- User Info --}}
@@ -162,6 +168,25 @@
                 {{-- LEFT COLUMN - Main Content --}}
                 <div class="lg:col-span-2 space-y-6">
                     
+                    {{-- Profile Photo Upload Card --}}
+                    <div id="photo-upload" class="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden">
+                        <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-100">
+                            <h3 class="text-lg font-black text-gray-900 flex items-center gap-2">
+                                <div class="p-2 bg-white rounded-xl shadow-sm">
+                                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                Profile Photo
+                            </h3>
+                            <p class="text-sm text-gray-600 mt-1">Upload or update your profile picture.</p>
+                        </div>
+                        <div class="p-6">
+                            <livewire:profile.update-profile-photo />
+                        </div>
+                    </div>
+
                     {{-- Profile Information Card --}}
                     <div class="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden">
                         <div class="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-100">
