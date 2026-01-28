@@ -128,6 +128,8 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::get('/attendance/scanner', [AttendanceController::class, 'scanner'])->name('attendance.scanner');
         Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
         Route::post('/attendance/verify', [AttendanceController::class, 'verify'])->name('attendance.verify');
+        // Admin bulk email route
+        Route::post('/admin/send-bulk-email', [AdminDashboardController::class, 'sendBulkEmail'])->name('admin.send-bulk-email');
         Route::get('/attendance/statistics/{event}', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
         // Admin feedback routes
         Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');

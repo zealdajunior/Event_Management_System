@@ -8,6 +8,10 @@ use App\Models\EventRequest;
 use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\BulkEmailNotification;
 
 class AdminDashboardController extends Controller
 {
@@ -92,5 +96,50 @@ class AdminDashboardController extends Controller
             'monthlyBookings' => $monthlyBookings,
             'topEvents' => $topEvents,
         ]);
+    }
+
+    /**
+     * Send bulk email to users
+     */
+    public function sendBulkEmail(Request $request)
+    {
+        $request->validate([
+            'recipient_type' => 'required|in:all,recent_bookings,upcoming_events',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        $users = collect();
+        
+        switch ($request->recipient_type) {
+            case 'all':
+                $users = User::where('role', 'user')->get();
+                break;
+            case 'recent_bookings':
+                $userIds = Booking::where('created_at', '>=', now()->subDays(30))
+                    ->pluck('user_id')->unique();
+                $users = User::whereIn('id', $userIds)->get();
+                break;
+            case 'upcoming_events':
+                $userIds = Booking::whereHas('event', function($query) {
+                    $query->where('date', '>', now());
+                })->pluck('user_id')->unique();
+                $users = User::whereIn('id', $userIds)->get();
+                break;
+        }
+
+        $sentCount = 0;
+        foreach ($users as $user) {
+            try {
+                Mail::raw($request->message, function ($message) use ($user, $request) {
+                    $message->to($user->email)->subject($request->subject);
+                });
+                $sentCount++;
+            } catch (\Exception $e) {
+                \Log::error('Bulk email failed: ' . $e->getMessage());
+            }
+        }
+
+        return redirect()->route('admin.dashboard')->with('success', 'Bulk email sent to ' . $sentCount . ' users successfully!');
     }
 }

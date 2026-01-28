@@ -78,12 +78,15 @@
             </div>
 
             {{-- ================= NAVIGATION TABS ================= --}}
-            <div class="grid grid-cols-2 md:grid-cols-7 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-10 gap-4">
                 @php
                 $tabs = [
                     'events' => ['label' => 'Events', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
                     'bookings' => ['label' => 'Bookings', 'icon' => 'M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z'],
                     'users' => ['label' => 'Users', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+                    'revenue' => ['label' => 'Revenue', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
+                    'notifications' => ['label' => 'Alerts', 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9'],
+                    'emails' => ['label' => 'Emails', 'icon' => 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
                     'checkin' => ['label' => 'Check-in', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'],
                     'feedback' => ['label' => 'Feedback', 'icon' => 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'],
                     'requests' => ['label' => 'Requests', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
@@ -886,6 +889,395 @@
                         </div>
                     </div>
                 </div>
+                </div>
+            </div>
+
+            {{-- ================= REVENUE TAB ================= --}}
+            <div id="revenue-tab" class="tab-content hidden animate-fadeIn">
+                <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+                        <div>
+                            <h3 class="text-2xl font-black text-black mb-2">
+                                Revenue & Financial Dashboard
+                            </h3>
+                            <p class="text-gray-600">Track earnings, payments, and financial performance</p>
+                        </div>
+                        <button onclick="window.print()" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_8px_20px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                            </svg>
+                            Print Report
+                        </button>
+                    </div>
+
+                    @php
+                        $totalRevenue = \App\Models\Booking::where('payment_status', 'completed')->sum('total_price');
+                        $thisMonthRevenue = \App\Models\Booking::where('payment_status', 'completed')
+                            ->whereMonth('created_at', now()->month)
+                            ->whereYear('created_at', now()->year)
+                            ->sum('total_price');
+                        $todayRevenue = \App\Models\Booking::where('payment_status', 'completed')
+                            ->whereDate('created_at', today())
+                            ->sum('total_price');
+                        $pendingRevenue = \App\Models\Booking::where('payment_status', 'pending')->sum('total_price');
+                        $totalTransactions = \App\Models\Booking::where('payment_status', 'completed')->count();
+                        $avgTransactionValue = $totalTransactions > 0 ? $totalRevenue / $totalTransactions : 0;
+                    @endphp
+
+                    <!-- Revenue Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-green-50 to-white rounded-xl p-6 border border-green-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600 mb-1 text-sm font-semibold">Total Revenue</p>
+                            <p class="text-3xl font-black text-green-600">${{ number_format($totalRevenue, 2) }}</p>
+                            <p class="text-xs text-gray-500 mt-2">All time earnings</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-white rounded-xl p-6 border border-blue-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600 mb-1 text-sm font-semibold">This Month</p>
+                            <p class="text-3xl font-black text-blue-600">${{ number_format($thisMonthRevenue, 2) }}</p>
+                            <p class="text-xs text-gray-500 mt-2">{{ now()->format('F Y') }}</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl p-6 border border-purple-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600 mb-1 text-sm font-semibold">Today's Revenue</p>
+                            <p class="text-3xl font-black text-purple-600">${{ number_format($todayRevenue, 2) }}</p>
+                            <p class="text-xs text-gray-500 mt-2">{{ now()->format('M d, Y') }}</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-orange-50 to-white rounded-xl p-6 border border-orange-100">
+                            <div class="flex items-center justify-between mb-3">
+                                <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-600 mb-1 text-sm font-semibold">Pending Payments</p>
+                            <p class="text-3xl font-black text-orange-600">${{ number_format($pendingRevenue, 2) }}</p>
+                            <p class="text-xs text-gray-500 mt-2">Awaiting completion</p>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                            <p class="text-gray-600 text-sm font-semibold mb-2">Total Transactions</p>
+                            <p class="text-4xl font-black text-gray-800">{{ number_format($totalTransactions) }}</p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                            <p class="text-gray-600 text-sm font-semibold mb-2">Average Transaction</p>
+                            <p class="text-4xl font-black text-gray-800">${{ number_format($avgTransactionValue, 2) }}</p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl p-6">
+                            <p class="text-gray-600 text-sm font-semibold mb-2">Success Rate</p>
+                            <p class="text-4xl font-black text-gray-800">{{ $totalTransactions > 0 ? number_format(($totalTransactions / (\App\Models\Booking::count() ?: 1)) * 100, 1) : 0 }}%</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h4 class="text-lg font-black text-gray-800 mb-4">Recent Transactions</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Booking ID</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">User</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Event</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Amount</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Status</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $recentTransactions = \App\Models\Booking::with(['user', 'event'])
+                                            ->where('payment_status', 'completed')
+                                            ->orderBy('created_at', 'desc')
+                                            ->take(10)
+                                            ->get();
+                                    @endphp
+                                    @forelse($recentTransactions as $transaction)
+                                    <tr class="border-b border-gray-100 hover:bg-white transition-colors">
+                                        <td class="py-3 px-4 text-sm font-semibold text-gray-800">#{{ $transaction->id }}</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">{{ $transaction->user->name }}</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">{{ Str::limit($transaction->event->title, 30) }}</td>
+                                        <td class="py-3 px-4 text-sm font-bold text-green-600">${{ number_format($transaction->total_price, 2) }}</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                                                {{ ucfirst($transaction->payment_status) }}
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-500">{{ $transaction->created_at->format('M d, Y') }}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="py-8 text-center text-gray-500">No transactions yet</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- ================= NOTIFICATIONS TAB ================= --}}
+            <div id="notifications-tab" class="tab-content hidden animate-fadeIn">
+                <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+                        <div>
+                            <h3 class="text-2xl font-black text-black mb-2">
+                                Admin Notifications & Alerts
+                            </h3>
+                            <p class="text-gray-600">Stay updated with important system events</p>
+                        </div>
+                        <button onclick="location.reload()" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
+
+                    @php
+                        $todayBookings = \App\Models\Booking::whereDate('created_at', today())->count();
+                        $pendingBookings = \App\Models\Booking::where('payment_status', 'pending')->count();
+                        $newUsers = \App\Models\User::whereDate('created_at', today())->count();
+                        $pendingRequests = \App\Models\EventRequest::where('status', 'pending')->count();
+                        $upcomingEvents = \App\Models\Event::where('date', '>', now())->where('date', '<', now()->addWeek())->count();
+                    @endphp
+
+                    <!-- Alert Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-xl p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-blue-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-black text-blue-600">{{ $todayBookings }}</p>
+                                    <p class="text-sm text-gray-600 font-semibold">Bookings Today</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-orange-50 to-white border border-orange-200 rounded-xl p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-orange-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-black text-orange-600">{{ $pendingBookings }}</p>
+                                    <p class="text-sm text-gray-600 font-semibold">Pending Payments</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-white border border-purple-200 rounded-xl p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-purple-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-black text-purple-600">{{ $newUsers }}</p>
+                                    <p class="text-sm text-gray-600 font-semibold">New Users Today</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Feed -->
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-black text-gray-800 mb-4">Recent Activity</h4>
+
+                        @if($pendingRequests > 0)
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-yellow-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                                <div class="flex-1">
+                                    <p class="font-bold text-yellow-800">{{ $pendingRequests }} Pending Event Requests</p>
+                                    <p class="text-sm text-yellow-700 mt-1">Review and approve pending event requests</p>
+                                    <a href="#requests" data-tab="requests" class="text-yellow-600 font-semibold text-sm hover:underline mt-2 inline-block">View Requests →</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        @if($upcomingEvents > 0)
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-xl">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <div class="flex-1">
+                                    <p class="font-bold text-blue-800">{{ $upcomingEvents }} Events This Week</p>
+                                    <p class="text-sm text-blue-700 mt-1">You have upcoming events in the next 7 days</p>
+                                    <a href="#events" data-tab="events" class="text-blue-600 font-semibold text-sm hover:underline mt-2 inline-block">View Events →</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        @php
+                            $recentActivity = [
+                                ['type' => 'booking', 'count' => $todayBookings, 'text' => 'bookings received today'],
+                                ['type' => 'user', 'count' => $newUsers, 'text' => 'new users registered'],
+                                ['type' => 'payment', 'count' => $pendingBookings, 'text' => 'payments pending'],
+                            ];
+                        @endphp
+
+                        @foreach($recentActivity as $activity)
+                        @if($activity['count'] > 0)
+                        <div class="bg-gray-50 border border-gray-200 p-4 rounded-xl flex items-center gap-3">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <p class="text-gray-700"><span class="font-bold text-gray-900">{{ $activity['count'] }}</span> {{ $activity['text'] }}</p>
+                            <span class="ml-auto text-xs text-gray-500">{{ now()->format('M d, Y') }}</span>
+                        </div>
+                        @endif
+                        @endforeach
+
+                        @if($todayBookings == 0 && $newUsers == 0 && $pendingBookings == 0 && $pendingRequests == 0)
+                        <div class="bg-gray-50 rounded-xl p-8 text-center">
+                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <p class="text-gray-500 font-semibold">No new notifications</p>
+                            <p class="text-sm text-gray-400 mt-1">All caught up!</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            {{-- ================= EMAILS TAB ================= --}}
+            <div id="emails-tab" class="tab-content hidden animate-fadeIn">
+                <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+                        <div>
+                            <h3 class="text-2xl font-black text-black mb-2">
+                                Bulk Email Manager
+                            </h3>
+                            <p class="text-gray-600">Send announcements and updates to your users</p>
+                        </div>
+                    </div>
+
+                    <!-- Email Form -->
+                    <form action="{{ route('admin.send-bulk-email') }}" method="POST" class="space-y-6">
+                        @csrf
+                        
+                        <!-- Recipient Selection -->
+                        <div class="bg-blue-50 rounded-xl p-6">
+                            <label class="block text-sm font-bold text-gray-700 mb-3">Send To</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="recipient_type" value="all" checked class="w-4 h-4 text-blue-600">
+                                    <span class="text-gray-700 font-semibold">All Users ({{ \App\Models\User::where('role', 'user')->count() }} users)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="recipient_type" value="recent_bookings" class="w-4 h-4 text-blue-600">
+                                    <span class="text-gray-700 font-semibold">Users with Recent Bookings</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="recipient_type" value="upcoming_events" class="w-4 h-4 text-blue-600">
+                                    <span class="text-gray-700 font-semibold">Users with Upcoming Events</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Email Subject -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Email Subject *</label>
+                            <input type="text" name="subject" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                   placeholder="Enter email subject...">
+                        </div>
+
+                        <!-- Email Message -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Message *</label>
+                            <textarea name="message" required rows="8"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                      placeholder="Compose your message..."></textarea>
+                            <p class="text-xs text-gray-500 mt-2">Tip: Keep your message clear and concise. Include a call-to-action if needed.</p>
+                        </div>
+
+                        <!-- Quick Templates -->
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <p class="text-sm font-bold text-gray-700 mb-3">Quick Templates</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <button type="button" onclick="useTemplate('new_event')" 
+                                        class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 text-sm font-semibold text-gray-700 transition-colors">
+                                    📅 New Event Announcement
+                                </button>
+                                <button type="button" onclick="useTemplate('maintenance')"
+                                        class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 text-sm font-semibold text-gray-700 transition-colors">
+                                    🔧 System Maintenance
+                                </button>
+                                <button type="button" onclick="useTemplate('reminder')"
+                                        class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 text-sm font-semibold text-gray-700 transition-colors">
+                                    ⏰ Event Reminder
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Send Button -->
+                        <div class="flex items-center gap-4">
+                            <button type="submit"
+                                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Send Email
+                            </button>
+                            <p class="text-sm text-gray-500">Emails will be sent immediately</p>
+                        </div>
+                    </form>
+
+                    <script>
+                        function useTemplate(type) {
+                            const templates = {
+                                new_event: {
+                                    subject: '🎉 New Event Alert: Check Out Our Latest Event!',
+                                    message: 'Dear Valued User,\n\nWe\'re excited to announce a new event! Don\'t miss out on this amazing opportunity.\n\nVisit our platform to view details and book your tickets today.\n\nBest regards,\nEvent Management Team'
+                                },
+                                maintenance: {
+                                    subject: '⚠️ Scheduled System Maintenance Notice',
+                                    message: 'Dear User,\n\nWe\'ll be performing scheduled maintenance to improve our services. The platform may be temporarily unavailable.\n\nMaintenance Window: [Date and Time]\n\nWe apologize for any inconvenience.\n\nThank you for your understanding.'
+                                },
+                                reminder: {
+                                    subject: '⏰ Reminder: Your Event is Coming Up!',
+                                    message: 'Hi there!\n\nThis is a friendly reminder about your upcoming event. Don\'t forget to bring your ticket!\n\nWe look forward to seeing you there.\n\nBest regards,\nEvent Management Team'
+                                }
+                            };
+
+                            if (templates[type]) {
+                                document.querySelector('input[name="subject"]').value = templates[type].subject;
+                                document.querySelector('textarea[name="message"]').value = templates[type].message;
+                            }
+                        }
+                    </script>
                 </div>
             </div>
 
