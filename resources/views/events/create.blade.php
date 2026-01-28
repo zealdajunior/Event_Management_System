@@ -92,21 +92,21 @@
                             </div>
                             <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
+                                    <div x-data="{ eventName: '{{ old('name') }}', isValidName: {{ old('name') && strlen(old('name')) >= 3 ? 'true' : 'false' }} }">
                                         <x-input-label for="name" :value="__('Event Name *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input 
+                                        <input 
                                             id="name" 
-                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
+                                            :class="eventName.length > 0 && !isValidName ? 'border-red-500' : (isValidName ? 'border-green-500' : '')"
                                             type="text" 
                                             name="name" 
-                                            :value="old('name')" 
+                                            :value="eventName"
+                                            x-model="eventName"
+                                            @input="isValidName = eventName.length >= 3"
                                             required 
                                             autofocus 
                                             autocomplete="name" 
                                             placeholder="e.g., Annual Tech Conference 2026"
-                                            x-model="eventName"
-                                            @input="isValidName = eventName.length >= 3"
-                                            :class="eventName.length > 0 && !isValidName ? 'border-red-500' : (isValidName ? 'border-green-500' : '')"
                                         />
                                         <p class="text-xs text-gray-500 mt-1">Choose a clear, descriptive name that tells people what your event is about</p>
                                         <p x-show="eventName.length > 0 && !isValidName" class="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -271,14 +271,14 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <x-input-label for="date" :value="__('Start Date & Time *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input 
+                                        <input 
                                             id="date" 
-                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
                                             type="datetime-local" 
                                             name="date" 
-                                            :value="old('date')" 
-                                            required
+                                            value="{{ old('date') }}"
                                             x-model="startDate"
+                                            required
                                         />
                                         <p class="text-xs text-gray-500 mt-1">When does the event begin?</p>
                                         <x-input-error :messages="$errors->get('date')" class="mt-2" />
@@ -286,15 +286,15 @@
 
                                     <div>
                                         <x-input-label for="end_date" :value="__('End Date & Time *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input 
+                                        <input 
                                             id="end_date" 
-                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
+                                            :class="!validateDates() && endDate ? 'border-red-500' : ''"
                                             type="datetime-local" 
                                             name="end_date" 
-                                            :value="old('end_date')" 
-                                            required
+                                            value="{{ old('end_date') }}"
                                             x-model="endDate"
-                                            :class="!validateDates() && endDate ? 'border-red-500' : ''"
+                                            required
                                         />
                                         <p class="text-xs text-gray-500 mt-1">When does the event end?</p>
                                         <p x-show="!validateDates() && endDate" class="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -374,17 +374,17 @@
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
                                         <x-input-label for="capacity" :value="__('Maximum Capacity *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input 
+                                        <input 
                                             id="capacity" 
-                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
                                             type="number" 
                                             name="capacity" 
-                                            :value="old('capacity', 100)" 
+                                            value="{{ old('capacity', 100) }}"
+                                            x-model.number="capacity"
+                                            @input="expectedAttendance = Math.floor(capacity * 0.7)"
                                             min="1" 
                                             required 
                                             placeholder="e.g., 100"
-                                            x-model="capacity"
-                                            @input="expectedAttendance = Math.floor(capacity * 0.7)"
                                         />
                                         <p class="text-xs text-gray-500 mt-1">Total number of people who can attend</p>
                                         <x-input-error :messages="$errors->get('capacity')" class="mt-2" />
@@ -392,17 +392,17 @@
 
                                     <div>
                                         <x-input-label for="price" :value="__('Ticket Price ($) *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input 
+                                        <input 
                                             id="price" 
-                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
                                             type="number" 
                                             step="0.01" 
                                             name="price" 
-                                            :value="old('price', 0)" 
+                                            value="{{ old('price', 0) }}"
+                                            x-model.number="price"
                                             min="0" 
                                             required 
                                             placeholder="0.00"
-                                            x-model="price"
                                         />
                                         <p class="text-xs text-gray-500 mt-1">Enter 0.00 for free events</p>
                                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
