@@ -130,6 +130,11 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::post('/attendance/verify', [AttendanceController::class, 'verify'])->name('attendance.verify');
         // Admin bulk email route
         Route::post('/admin/send-bulk-email', [AdminDashboardController::class, 'sendBulkEmail'])->name('admin.send-bulk-email');
+        // Admin export routes
+        Route::get('/admin/export/revenue', [AdminDashboardController::class, 'exportRevenue'])->name('admin.export.revenue');
+        Route::get('/admin/export/bookings', [AdminDashboardController::class, 'exportBookings'])->name('admin.export.bookings');
+        Route::get('/admin/export/users', [AdminDashboardController::class, 'exportUsers'])->name('admin.export.users');
+        Route::get('/admin/export/events', [AdminDashboardController::class, 'exportEvents'])->name('admin.export.events');
         Route::get('/attendance/statistics/{event}', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
         // Admin feedback routes
         Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');

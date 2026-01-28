@@ -119,14 +119,23 @@
                             </h3>
                             <p class="text-gray-600">Manage and monitor your events</p>
                         </div>
-                        <a href="{{ route('events.index') }}"
-                           class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            View All Events
-                        </a>
+                        <div class="flex gap-3">
+                            <a href="{{ route('admin.export.events') }}"
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Export CSV
+                            </a>
+                            <a href="{{ route('events.index') }}"
+                               class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                View All
+                            </a>
+                        </div>
                     </div>
 
                     @if($recentEvents->count() > 0)
@@ -211,13 +220,22 @@
                             </h3>
                             <p class="text-gray-600">Monitor ticket sales and booking activity</p>
                         </div>
-                        <a href="{{ route('bookings.index') }}"
-                           class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
-                            View All Bookings
-                        </a>
+                        <div class="flex gap-3">
+                            <a href="{{ route('admin.export.bookings') }}"
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Export CSV
+                            </a>
+                            <a href="{{ route('bookings.index') }}"
+                               class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                </svg>
+                                View All
+                            </a>
+                        </div>
                     </div>
 
                     @if($recentBookings->count() > 0)
@@ -315,19 +333,28 @@
                             </h3>
                             <p class="text-gray-600">Monitor and manage user accounts and roles</p>
                         </div>
-                        <a href="{{ route('users.index') }}"
+                        <div class="flex gap-3">
+                            <a href="{{ route('admin.export.users') }}"
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Export CSV
+                            </a>
+                            <a href="{{ route('users.index') }}"
                                class="group relative bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                       active:scale-95 transition-all duration-500
-                                      text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/30
-                                      hover:shadow-xl hover:shadow-blue-500/50 flex items-center gap-3
+                                      text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30
+                                      hover:shadow-xl hover:shadow-blue-500/50 flex items-center gap-2
                                       overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            <span class="relative z-10">Manage Users</span>
-                            <div class="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                        </a>
+                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                                <span class="relative z-10">Manage Users</span>
+                                <div class="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -902,25 +929,33 @@
                             </h3>
                             <p class="text-gray-600">Track earnings, payments, and financial performance</p>
                         </div>
-                        <button onclick="window.print()" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_8px_20px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-                            </svg>
-                            Print Report
-                        </button>
+                        <div class="flex gap-3">
+                            <a href="{{ route('admin.export.revenue') }}" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Export CSV
+                            </a>
+                            <button onclick="window.print()" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_8px_20px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                                </svg>
+                                Print
+                            </button>
+                        </div>
                     </div>
 
                     @php
-                        $totalRevenue = \App\Models\Booking::where('payment_status', 'completed')->sum('total_price');
-                        $thisMonthRevenue = \App\Models\Booking::where('payment_status', 'completed')
+                        $totalRevenue = \App\Models\Payment::where('status', 'completed')->sum('amount');
+                        $thisMonthRevenue = \App\Models\Payment::where('status', 'completed')
                             ->whereMonth('created_at', now()->month)
                             ->whereYear('created_at', now()->year)
-                            ->sum('total_price');
-                        $todayRevenue = \App\Models\Booking::where('payment_status', 'completed')
+                            ->sum('amount');
+                        $todayRevenue = \App\Models\Payment::where('status', 'completed')
                             ->whereDate('created_at', today())
-                            ->sum('total_price');
-                        $pendingRevenue = \App\Models\Booking::where('payment_status', 'pending')->sum('total_price');
-                        $totalTransactions = \App\Models\Booking::where('payment_status', 'completed')->count();
+                            ->sum('amount');
+                        $pendingRevenue = \App\Models\Payment::where('status', 'pending')->sum('amount');
+                        $totalTransactions = \App\Models\Payment::where('status', 'completed')->count();
                         $avgTransactionValue = $totalTransactions > 0 ? $totalRevenue / $totalTransactions : 0;
                     @endphp
 
@@ -983,7 +1018,7 @@
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl p-6">
                             <p class="text-gray-600 text-sm font-semibold mb-2">Success Rate</p>
-                            <p class="text-4xl font-black text-gray-800">{{ $totalTransactions > 0 ? number_format(($totalTransactions / (\App\Models\Booking::count() ?: 1)) * 100, 1) : 0 }}%</p>
+                            <p class="text-4xl font-black text-gray-800">{{ $totalTransactions > 0 ? number_format(($totalTransactions / (\App\Models\Payment::count() ?: 1)) * 100, 1) : 0 }}%</p>
                         </div>
                     </div>
 
@@ -994,7 +1029,7 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="border-b border-gray-200">
-                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Booking ID</th>
+                                        <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Payment ID</th>
                                         <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">User</th>
                                         <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Event</th>
                                         <th class="text-left py-3 px-4 text-sm font-bold text-gray-600">Amount</th>
@@ -1004,8 +1039,8 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        $recentTransactions = \App\Models\Booking::with(['user', 'event'])
-                                            ->where('payment_status', 'completed')
+                                        $recentTransactions = \App\Models\Payment::with(['booking.user', 'booking.event'])
+                                            ->where('status', 'completed')
                                             ->orderBy('created_at', 'desc')
                                             ->take(10)
                                             ->get();
@@ -1013,12 +1048,12 @@
                                     @forelse($recentTransactions as $transaction)
                                     <tr class="border-b border-gray-100 hover:bg-white transition-colors">
                                         <td class="py-3 px-4 text-sm font-semibold text-gray-800">#{{ $transaction->id }}</td>
-                                        <td class="py-3 px-4 text-sm text-gray-600">{{ $transaction->user->name }}</td>
-                                        <td class="py-3 px-4 text-sm text-gray-600">{{ Str::limit($transaction->event->title, 30) }}</td>
-                                        <td class="py-3 px-4 text-sm font-bold text-green-600">${{ number_format($transaction->total_price, 2) }}</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">{{ $transaction->booking->user->name ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">{{ Str::limit($transaction->booking->event->title ?? 'N/A', 30) }}</td>
+                                        <td class="py-3 px-4 text-sm font-bold text-green-600">${{ number_format($transaction->amount, 2) }}</td>
                                         <td class="py-3 px-4">
                                             <span class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
-                                                {{ ucfirst($transaction->payment_status) }}
+                                                {{ ucfirst($transaction->status) }}
                                             </span>
                                         </td>
                                         <td class="py-3 px-4 text-sm text-gray-500">{{ $transaction->created_at->format('M d, Y') }}</td>
@@ -1055,7 +1090,7 @@
 
                     @php
                         $todayBookings = \App\Models\Booking::whereDate('created_at', today())->count();
-                        $pendingBookings = \App\Models\Booking::where('payment_status', 'pending')->count();
+                        $pendingBookings = \App\Models\Payment::where('status', 'pending')->count();
                         $newUsers = \App\Models\User::whereDate('created_at', today())->count();
                         $pendingRequests = \App\Models\EventRequest::where('status', 'pending')->count();
                         $upcomingEvents = \App\Models\Event::where('date', '>', now())->where('date', '<', now()->addWeek())->count();

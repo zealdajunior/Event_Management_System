@@ -142,4 +142,178 @@ class AdminDashboardController extends Controller
 
         return redirect()->route('admin.dashboard')->with('success', 'Bulk email sent to ' . $sentCount . ' users successfully!');
     }
+
+    /**
+     * Export revenue data as CSV
+     */
+    public function exportRevenue()
+    {
+        $payments = Payment::with(['booking.user', 'booking.event'])
+            ->where('status', 'completed')
+            ->orderBy('payment_date', 'desc')
+            ->get();
+
+        $filename = 'revenue-export-' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($payments) {
+            $file = fopen('php://output', 'w');
+            
+            // CSV Headers
+            fputcsv($file, ['Payment ID', 'Booking ID', 'User Name', 'User Email', 'Event Title', 'Amount', 'Payment Method', 'Transaction ID', 'Payment Date', 'Status']);
+            
+            foreach ($payments as $payment) {
+                fputcsv($file, [
+                    $payment->id,
+                    $payment->booking_id,
+                    $payment->booking->user->name ?? 'N/A',
+                    $payment->booking->user->email ?? 'N/A',
+                    $payment->booking->event->title ?? 'N/A',
+                    $payment->amount,
+                    $payment->payment_method,
+                    $payment->transaction_id ?? 'N/A',
+                    $payment->payment_date,
+                    $payment->status,
+                ]);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export bookings data as CSV
+     */
+    public function exportBookings()
+    {
+        $bookings = Booking::with(['user', 'event', 'ticket', 'payment'])
+            ->orderBy('booking_date', 'desc')
+            ->get();
+
+        $filename = 'bookings-export-' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($bookings) {
+            $file = fopen('php://output', 'w');
+            
+            // CSV Headers
+            fputcsv($file, ['Booking ID', 'Ticket ID', 'User Name', 'User Email', 'Event Title', 'Event Date', 'Quantity', 'Booking Date', 'Status', 'Payment Amount', 'Payment Status']);
+            
+            foreach ($bookings as $booking) {
+                fputcsv($file, [
+                    $booking->id,
+                    $booking->ticket_id ?? 'N/A',
+                    $booking->user->name ?? 'N/A',
+                    $booking->user->email ?? 'N/A',
+                    $booking->event->title ?? 'N/A',
+                    $booking->event->date ?? 'N/A',
+                    $booking->quantity ?? 1,
+                    $booking->booking_date,
+                    $booking->status ?? 'confirmed',
+                    $booking->payment->amount ?? '0',
+                    $booking->payment->status ?? 'N/A',
+                ]);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export users data as CSV
+     */
+    public function exportUsers()
+    {
+        $users = User::withCount('bookings')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $filename = 'users-export-' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($users) {
+            $file = fopen('php://output', 'w');
+            
+            // CSV Headers
+            fputcsv($file, ['User ID', 'Name', 'Email', 'Role', 'Total Bookings', 'Email Verified', 'Created At', 'Last Login']);
+            
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->id,
+                    $user->name,
+                    $user->email,
+                    $user->role ?? 'user',
+                    $user->bookings_count ?? 0,
+                    $user->email_verified_at ? 'Yes' : 'No',
+                    $user->created_at,
+                    $user->last_login_at ?? 'Never',
+                ]);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export events data as CSV
+     */
+    public function exportEvents()
+    {
+        $events = Event::withCount(['bookings', 'feedback'])
+            ->with('venue')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $filename = 'events-export-' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($events) {
+            $file = fopen('php://output', 'w');
+            
+            // CSV Headers
+            fputcsv($file, ['Event ID', 'Title', 'Date', 'Time', 'Venue', 'Capacity', 'Price', 'Total Bookings', 'Total Feedback', 'Status', 'Created At']);
+            
+            foreach ($events as $event) {
+                fputcsv($file, [
+                    $event->id,
+                    $event->title,
+                    $event->date,
+                    $event->time ?? 'N/A',
+                    $event->venue->name ?? 'N/A',
+                    $event->capacity ?? 'Unlimited',
+                    $event->price ?? '0',
+                    $event->bookings_count ?? 0,
+                    $event->feedback_count ?? 0,
+                    $event->date >= now() ? 'Upcoming' : 'Past',
+                    $event->created_at,
+                ]);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
