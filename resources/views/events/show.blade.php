@@ -28,9 +28,10 @@
                 @if($featuredImage)
                     <img src="{{ Storage::url($featuredImage->file_path) }}" 
                          alt="{{ $event->name }}" 
-                         class="w-full h-full object-cover"
+                         class="w-full h-full object-cover object-center"
+                         style="object-fit: cover; object-position: center;"
                     />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
                 @else
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800"></div>
                 @endif
@@ -40,31 +41,31 @@
                     <div class="max-w-4xl">
                         <div class="flex items-center gap-3 mb-3">
                             @if($event->category)
-                                <span class="px-4 py-2 bg-blue-500 text-white font-bold rounded-full text-sm uppercase">
+                                <span class="px-4 py-2 bg-blue-600 text-white font-black rounded-full text-sm uppercase shadow-xl" style="text-shadow: 0 2px 8px rgba(0,0,0,0.7);">
                                     {{ $event->category }}
                                 </span>
                             @endif
                             @if($event->price == 0)
-                                <span class="px-4 py-2 bg-green-500 text-white font-bold rounded-full text-sm">
+                                <span class="px-4 py-2 bg-green-600 text-white font-black rounded-full text-sm shadow-xl" style="text-shadow: 0 2px 8px rgba(0,0,0,0.7);">
                                     🎉 FREE
                                 </span>
                             @endif
                         </div>
-                        <h1 class="text-5xl font-black text-white mb-4 drop-shadow-lg">
+                        <h1 class=\"text-5xl font-black text-white mb-4 drop-shadow-lg\" style=\"text-shadow: 0 4px 12px rgba(0,0,0,0.9);\">
                             {{ $event->name }}
                         </h1>
-                        <div class="flex items-center gap-6 text-white/90">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        <div class=\"flex items-center gap-6 text-white/90\" style=\"text-shadow: 0 2px 8px rgba(0,0,0,0.8);\">
+                            <div class=\"flex items-center gap-2\">
+                                <svg class=\"w-5 h-5\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                    <path fill-rule=\"evenodd\" d=\"M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z\" clip-rule=\"evenodd\"/>
                                 </svg>
-                                <span class="font-semibold">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y • g:i A') : 'Date TBA' }}</span>
+                                <span class=\"font-bold\">{{ $event->date ? \\Carbon\\Carbon::parse($event->date)->format('F j, Y • g:i A') : 'Date TBA' }}</span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            <div class=\"flex items-center gap-2\">
+                                <svg class=\"w-5 h-5\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                    <path fill-rule=\"evenodd\" d=\"M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z\" clip-rule=\"evenodd\"/>
                                 </svg>
-                                <span class="font-semibold">{{ $event->venue ? $event->venue->name : $event->location }}</span>
+                                <span class=\"font-bold\">{{ $event->venue ? $event->venue->name : $event->location }}</span>
                             </div>
                         </div>
                     </div>
@@ -310,17 +311,18 @@
                                         <img 
                                             src="{{ Storage::url($image->file_path) }}" 
                                             alt="{{ $image->caption }}" 
-                                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                            class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                                            style="object-fit: cover; object-position: center;"
                                         />
                                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                                            <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-2xl" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                                             </svg>
                                         </div>
                                         @if($image->caption)
-                                            <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
-                                                <p class="text-white text-xs font-semibold truncate">{{ $image->caption }}</p>
+                                            <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+                                                <p class="text-white text-xs font-bold truncate" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">{{ $image->caption }}</p>
                                             </div>
                                         @endif
                                     </div>
@@ -355,12 +357,14 @@
                                     <img 
                                         :src="'/storage/' + images[currentImage]" 
                                         :alt="captions[currentImage]"
-                                        class="max-h-[85vh] max-w-full object-contain mx-auto"
+                                        class="max-h-[85vh] max-w-full object-contain mx-auto rounded-lg shadow-2xl"
+                                        style="object-fit: contain;"
                                     />
                                     <p 
                                         x-show="captions[currentImage]"
                                         x-text="captions[currentImage]"
-                                        class="text-white text-center mt-4 text-lg"
+                                        class="text-white text-center mt-4 text-lg font-bold"
+                                        style="text-shadow: 0 2px 8px rgba(0,0,0,0.9);"
                                     ></p>
                                 </div>
                                 
@@ -373,7 +377,7 @@
                                     </svg>
                                 </button>
                                 
-                                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white font-bold bg-black/50 px-4 py-2 rounded-lg">
+                                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white font-black bg-black/70 px-5 py-2 rounded-xl shadow-xl backdrop-blur-sm" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
                                     <span x-text="currentImage + 1"></span> / <span x-text="images.length"></span>
                                 </div>
                             </div>

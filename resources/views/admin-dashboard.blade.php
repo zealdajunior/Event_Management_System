@@ -142,10 +142,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 @foreach($recentEvents as $event)
                                     <div class="group relative bg-white p-6 rounded-2xl shadow-lg border border-blue-100
-                                                hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden">
+                                                hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden
+                                                flex flex-col min-h-[320px]">
                                         <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                         <div class="absolute top-0 right-0 w-20 h-20 bg-blue-100/30 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-700"></div>
-                                        <div class="relative">
+                                        <div class="relative flex flex-col h-full">
                                             <div class="flex items-start justify-between mb-4">
                                                 <div class="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl">
                                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,9 +158,9 @@
                                                     <span class="text-xs text-gray-600 font-medium">Active</span>
                                                 </div>
                                             </div>
-                                            <h4 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">{{ $event->name }}</h4>
-                                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $event->description }}</p>
-                                            <div class="space-y-2 mb-6">
+                                            <h4 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">{{ $event->name }}</h4>
+                                            <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-shrink-0">{{ $event->description }}</p>
+                                            <div class="space-y-2 mb-4 flex-grow">
                                                 <div class="flex items-center gap-2 text-sm text-gray-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -242,11 +243,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach($recentBookings as $booking)
                                 <div class="group relative bg-white p-6 rounded-2xl shadow-lg border border-gray-100
-                                            hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden">
+                                            hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden
+                                            flex flex-col min-h-[320px]">
                                         <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-blue-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                         <div class="absolute top-0 right-0 w-20 h-20 bg-blue-100/30 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-700"></div>
 
-                                        <div class="relative">
+                                        <div class="relative flex flex-col h-full">
                                             <div class="flex items-start justify-between mb-4">
                                                 <div class="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl">
                                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,7 +261,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="space-y-3 mb-6">
+                                            <div class="space-y-3 mb-4 flex-grow">
                                                 <div class="flex items-center gap-2 text-sm">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>

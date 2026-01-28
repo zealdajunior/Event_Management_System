@@ -71,8 +71,9 @@
                                         @if($featuredImage)
                                             <img src="{{ Storage::url($featuredImage->file_path) }}" 
                                                  alt="{{ $event->name }}" 
-                                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                                 class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                                                 style="object-fit: cover; object-position: center;">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                                         @else
                                             <div class="absolute inset-0 flex items-center justify-center">
                                                 <svg class="w-20 h-20 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +85,7 @@
                                         <!-- Category Badge -->
                                         @if($event->category)
                                             <div class="absolute top-3 left-3">
-                                                <span class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
+                                                <span class="px-3 py-1.5 bg-blue-600 text-white text-xs font-black rounded-full shadow-xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                                                     {{ strtoupper($event->category) }}
                                                 </span>
                                             </div>
@@ -92,7 +93,7 @@
                                         
                                         <!-- Status Badge -->
                                         <div class="absolute top-3 right-3">
-                                            <span class="px-3 py-1 text-xs font-bold rounded-full shadow-lg backdrop-blur-sm {{ $event->status == 'active' ? 'bg-green-500 text-white' : 'bg-red-500 text-white' }}">
+                                            <span class="px-3 py-1.5 text-xs font-black rounded-full shadow-xl {{ $event->status == 'active' ? 'bg-green-600 text-white' : 'bg-red-600 text-white' }}" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                                                 {{ ucfirst($event->status) }}
                                             </span>
                                         </div>
@@ -100,7 +101,7 @@
                                         <!-- Price Tag -->
                                         @if($event->price !== null)
                                             <div class="absolute bottom-3 right-3">
-                                                <span class="px-3 py-1 {{ $event->price == 0 ? 'bg-green-500' : 'bg-blue-500' }} text-white text-sm font-bold rounded-full shadow-lg">
+                                                <span class="px-3 py-1.5 {{ $event->price == 0 ? 'bg-green-600' : 'bg-blue-600' }} text-white text-sm font-black rounded-full shadow-xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                                                     {{ $event->price == 0 ? 'FREE' : '$' . number_format($event->price, 2) }}
                                                 </span>
                                             </div>
