@@ -20,15 +20,150 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 rounded-2xl shadow-xl overflow-hidden">
-                <div class="relative p-6">
-                    <!-- Event Title -->
-                    <div class="mb-8">
-                        <div class="flex justify-center mb-6">
-                            <div class="bg-white px-6 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                                <h3 class="text-3xl font-black text-gray-900 text-center">{{ $event->name }}</h3>
+            <!-- Hero Section with Featured Image -->
+            @php
+                $featuredImage = $event->images->first();
+            @endphp
+            <div class="relative h-96 overflow-hidden rounded-3xl shadow-2xl mb-8">
+                @if($featuredImage)
+                    <img src="{{ Storage::url($featuredImage->file_path) }}" 
+                         alt="{{ $event->name }}" 
+                         class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                @else
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800"></div>
+                @endif
+                
+                <!-- Event Title Overlay -->
+                <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="max-w-4xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            @if($event->category)
+                                <span class="px-4 py-2 bg-blue-500 text-white font-bold rounded-full text-sm uppercase">
+                                    {{ $event->category }}
+                                </span>
+                            @endif
+                            @if($event->price == 0)
+                                <span class="px-4 py-2 bg-green-500 text-white font-bold rounded-full text-sm">
+                                    🎉 FREE
+                                </span>
+                            @endif
+                        </div>
+                        <h1 class="text-5xl font-black text-white mb-4 drop-shadow-lg">
+                            {{ $event->name }}
+                        </h1>
+                        <div class="flex items-center gap-6 text-white/90">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="font-semibold">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('F j, Y • g:i A') : 'Date TBA' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="font-semibold">{{ $event->venue ? $event->venue->name : $event->location }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Bar (Sticky) -->
+            <div class="sticky top-20 z-40 bg-white/95 backdrop-blur-lg shadow-lg rounded-2xl p-4 mb-8 border border-gray-200" x-data="{ 
+                shareEvent() { 
+                    if (navigator.share) {
+                        navigator.share({
+                            title: '{{ $event->name }}',
+                            text: 'Check out this event: {{ $event->name }}',
+                            url: window.location.href
+                        });
+                    } else {
+                        navigator.clipboard.writeText(window.location.href);
+                        alert('Event link copied to clipboard!');
+                    }
+                } 
+            }">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center gap-4">
+                        @if($event->capacity)
+                            @php
+                                $bookingsCount = $event->bookings_count ?? 0;
+                                $spotsLeft = $event->capacity - $bookingsCount;
+                                $percentFilled = $event->capacity > 0 ? ($bookingsCount / $event->capacity) * 100 : 0;
+                            @endphp
+                            <!-- Attendee Count -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-semibold text-gray-700">
+                                    <span class="text-blue-600">{{ $bookingsCount }}</span> attending
+                                </span>
+                            </div>
+
+                            <!-- Spots Remaining -->
+                            <div class="h-6 w-px bg-gray-300"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="relative w-8 h-8">
+                                    <svg class="transform -rotate-90 w-8 h-8">
+                                        <circle cx="16" cy="16" r="14" stroke="#E5E7EB" stroke-width="4" fill="none"/>
+                                        <circle 
+                                            cx="16" cy="16" r="14" 
+                                            stroke="{{ $percentFilled > 80 ? '#EF4444' : '#3B82F6' }}" 
+                                            stroke-width="4" 
+                                            fill="none"
+                                            stroke-dasharray="{{ 2 * 3.14159 * 14 }}"
+                                            stroke-dashoffset="{{ 2 * 3.14159 * 14 * (1 - $percentFilled / 100) }}"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                    <span class="absolute inset-0 flex items-center justify-center text-xs font-bold {{ $percentFilled > 80 ? 'text-red-600' : 'text-blue-600' }}">
+                                        {{ $spotsLeft }}
+                                    </span>
+                                </div>
+                                <span class="text-sm font-semibold text-gray-700">spots left</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3">
+                        <!-- Share Button -->
+                        <button 
+                            @click="shareEvent()"
+                            class="px-4 py-2 border-2 border-blue-500 text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                            Share
+                        </button>
+
+                        @if($event->price !== null)
+                            @if($event->capacity && ($event->bookings_count ?? 0) >= $event->capacity)
+                                <div class="px-8 py-3 bg-gray-400 text-white font-bold rounded-xl cursor-not-allowed">
+                                    ❌ Sold Out
+                                </div>
+                            @else
+                                <a href="{{ route('bookings.create') }}?event={{ $event->id }}" 
+                                   class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                    🎫 Book Now
+                                    @if($event->price > 0)
+                                        <span class="ml-2">${{ number_format($event->price, 2) }}</span>
+                                    @else
+                                        <span class="ml-2 text-yellow-300">FREE</span>
+                                    @endif
+                                </a>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 rounded-2xl shadow-xl overflow-hidden">
+                <div class="relative p-6">
+                    <!-- Event Details -->
+                    <div class="mb-8">
                         
                         <!-- Event Details Grid -->
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -152,10 +287,98 @@
                         <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
                     </div>
 
-                    <!-- Media Gallery -->
-                    <div class="mb-8">
-                        <x-event-media-gallery :event="$event" />
-                    </div>
+                    <!-- Enhanced Image Gallery with Lightbox -->
+                    @if($event->images && $event->images->count() > 0)
+                        <div class="mb-8" x-data="{ 
+                            lightbox: false, 
+                            currentImage: 0,
+                            images: {{ $event->images->pluck('file_path')->toJson() }},
+                            captions: {{ $event->images->pluck('caption')->toJson() }}
+                        }">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                </svg>
+                                Event Gallery
+                            </h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                @foreach($event->images as $index => $image)
+                                    <div 
+                                        @click="lightbox = true; currentImage = {{ $index }}"
+                                        class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+                                    >
+                                        <img 
+                                            src="{{ Storage::url($image->file_path) }}" 
+                                            alt="{{ $image->caption }}" 
+                                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        />
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                                            <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        @if($image->caption)
+                                            <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
+                                                <p class="text-white text-xs font-semibold truncate">{{ $image->caption }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Lightbox Modal -->
+                            <div 
+                                x-show="lightbox" 
+                                x-cloak
+                                @click.self="lightbox = false"
+                                @keydown.escape.window="lightbox = false"
+                                class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+                                style="display: none;"
+                            >
+                                <button @click="lightbox = false" class="absolute top-4 right-4 text-white hover:text-gray-300 z-50">
+                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                
+                                <button 
+                                    @click="currentImage = currentImage > 0 ? currentImage - 1 : images.length - 1" 
+                                    class="absolute left-4 text-white hover:text-gray-300 z-50"
+                                >
+                                    <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                
+                                <div class="max-w-6xl mx-auto">
+                                    <img 
+                                        :src="'/storage/' + images[currentImage]" 
+                                        :alt="captions[currentImage]"
+                                        class="max-h-[85vh] max-w-full object-contain mx-auto"
+                                    />
+                                    <p 
+                                        x-show="captions[currentImage]"
+                                        x-text="captions[currentImage]"
+                                        class="text-white text-center mt-4 text-lg"
+                                    ></p>
+                                </div>
+                                
+                                <button 
+                                    @click="currentImage = currentImage < images.length - 1 ? currentImage + 1 : 0" 
+                                    class="absolute right-4 text-white hover:text-gray-300 z-50"
+                                >
+                                    <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                
+                                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white font-bold bg-black/50 px-4 py-2 rounded-lg">
+                                    <span x-text="currentImage + 1"></span> / <span x-text="images.length"></span>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Divider -->
                     <div class="my-6">
