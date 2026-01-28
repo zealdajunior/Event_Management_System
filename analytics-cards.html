@@ -1,0 +1,119 @@
+<!-- Total Revenue Card -->
+<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center justify-center group hover:scale-105">
+    <div class="relative">
+        <svg class="transform -rotate-90 w-32 h-32">
+            <circle cx="64" cy="64" r="56" stroke="#E0E7FF" stroke-width="8" fill="none" />
+            <circle cx="64" cy="64" r="56" stroke="url(#blueGradient1)" stroke-width="8" fill="none"
+                    stroke-dasharray="351.86"
+                    stroke-dashoffset="{{ 351.86 - (351.86 * min($totalRevenue / 100000, 1)) }}"
+                    stroke-linecap="round"
+                    class="transition-all duration-1000 ease-out" />
+            <defs>
+                <linearGradient id="blueGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">${{ number_format($totalRevenue, 0) }}</div>
+                <div class="text-xs text-blue-600 font-medium mt-1">{{ number_format(min($totalRevenue / 100000, 1) * 100, 0) }}%</div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 text-center">
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Total Revenue</h3>
+        <p class="text-sm text-gray-500">Target: $100,000</p>
+    </div>
+</div>
+
+<!-- Upcoming Events Card -->
+<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center justify-center group hover:scale-105">
+    <div class="relative">
+        <svg class="transform -rotate-90 w-32 h-32">
+            <circle cx="64" cy="64" r="56" stroke="#E0E7FF" stroke-width="8" fill="none" />
+            <circle cx="64" cy="64" r="56" stroke="url(#blueGradient2)" stroke-width="8" fill="none"
+                    stroke-dasharray="351.86"
+                    stroke-dashoffset="{{ $totalEvents > 0 ? 351.86 - (351.86 * ($upcomingEvents / $totalEvents)) : 351.86 }}"
+                    stroke-linecap="round"
+                    class="transition-all duration-1000 ease-out" />
+            <defs>
+                <linearGradient id="blueGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2563EB;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">{{ $upcomingEvents }}</div>
+                <div class="text-xs text-blue-600 font-medium mt-1">{{ $totalEvents > 0 ? number_format(($upcomingEvents / $totalEvents) * 100, 0) : 0 }}%</div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 text-center">
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Upcoming Events</h3>
+        <p class="text-sm text-gray-500">Out of {{ $totalEvents }} total</p>
+    </div>
+</div>
+
+<!-- Confirmed Bookings Card -->
+<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center justify-center group hover:scale-105">
+    <div class="relative">
+        <svg class="transform -rotate-90 w-32 h-32">
+            <circle cx="64" cy="64" r="56" stroke="#E0E7FF" stroke-width="8" fill="none" />
+            <circle cx="64" cy="64" r="56" stroke="url(#blueGradient3)" stroke-width="8" fill="none"
+                    stroke-dasharray="351.86"
+                    stroke-dashoffset="{{ $totalBookings > 0 ? 351.86 - (351.86 * ($confirmedBookings / $totalBookings)) : 351.86 }}"
+                    stroke-linecap="round"
+                    class="transition-all duration-1000 ease-out" />
+            <defs>
+                <linearGradient id="blueGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">{{ $confirmedBookings }}</div>
+                <div class="text-xs text-blue-600 font-medium mt-1">{{ $totalBookings > 0 ? number_format(($confirmedBookings / $totalBookings) * 100, 0) : 0 }}%</div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 text-center">
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Confirmed Bookings</h3>
+        <p class="text-sm text-gray-500">Out of {{ $totalBookings }} total</p>
+    </div>
+</div>
+
+<!-- Past Events Card -->
+<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center justify-center group hover:scale-105">
+    <div class="relative">
+        <svg class="transform -rotate-90 w-32 h-32">
+            <circle cx="64" cy="64" r="56" stroke="#E0E7FF" stroke-width="8" fill="none" />
+            <circle cx="64" cy="64" r="56" stroke="url(#blueGradient4)" stroke-width="8" fill="none"
+                    stroke-dasharray="351.86"
+                    stroke-dashoffset="{{ $totalEvents > 0 ? 351.86 - (351.86 * ($pastEvents / $totalEvents)) : 351.86 }}"
+                    stroke-linecap="round"
+                    class="transition-all duration-1000 ease-out" />
+            <defs>
+                <linearGradient id="blueGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">{{ $pastEvents }}</div>
+                <div class="text-xs text-blue-600 font-medium mt-1">{{ $totalEvents > 0 ? number_format(($pastEvents / $totalEvents) * 100, 0) : 0 }}%</div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-6 text-center">
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Past Events</h3>
+        <p class="text-sm text-gray-500">Out of {{ $totalEvents }} total</p>
+    </div>
+</div>

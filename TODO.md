@@ -1,6 +1,4 @@
-- Create migrations for events, venues, tickets, bookings, payments, event_requests
-- Edit migration files to add appropriate columns
-- Update models with fillable attributes and relationships
-- Add resource routes in web.php
-- Implement controller methods with basic CRUD
-- Create basic Blade views for listing, creating, editing resources
+- [x] Create default admin user (admin@example.com / admin123)
+- [x] Ensure event requests reach admin dashboard
+- [x] Ensure approved events appear on user dashboards as available events
+- [x] Test the full flow: user submits request -> admin sees and approves -> event appears for all users
