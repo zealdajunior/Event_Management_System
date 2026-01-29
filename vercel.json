@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/*.php": {
-      "runtime": "@vercel/php@0.6.0"
+    "api/index.php": {
+      "runtime": "@vercel/php@0.4.0"
     }
   },
   "routes": [
@@ -9,5 +9,9 @@
       "src": "/(.*)",
       "dest": "/api/index.php"
     }
-  ]
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false"
+  }
 }
