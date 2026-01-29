@@ -1,21 +1,19 @@
 #!/bin/bash
-# Railway deployment script
 
 # Install dependencies
 composer install --no-dev --optimize-autoloader
 
-# Generate application key if not set
+# Generate app key if needed
 if [ -z "$APP_KEY" ]; then
-    php artisan key:generate --no-interaction
+    php artisan key:generate --force
 fi
 
-# Clear and cache configurations
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Run database migrations
+# Run migrations
 php artisan migrate --force
 
-# Start the application
-php artisan serve --host=0.0.0.0 --port=$PORT
+# Cache configurations
+php artisan config:cache
+php artisan route:cache
+
+# Start the server
+exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
