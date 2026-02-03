@@ -436,7 +436,13 @@
                     <a href="{{ route('bookings.ticket.download', $ticket['booking_id']) }}" class="btn btn-primary">
                         💾 Download PDF
                     </a>
-                    <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">
+                    <form method="POST" action="{{ route('bookings.ticket.email', $ticket['booking_id']) }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">
+                            📧 Email Ticket
+                        </button>
+                    </form>
+                    <a href="@dashboardRoute" class="btn btn-secondary">
                         ← Dashboard
                     </a>
                 </div>

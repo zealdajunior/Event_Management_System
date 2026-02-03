@@ -40,6 +40,16 @@ new class extends Component
                        class="{{ request()->routeIs('dashboard') ? 'bg-white/20 text-white' : 'text-blue-100 hover:bg-white/10 hover:text-white' }} px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300">
                         Dashboard
                     </a>
+                    
+                    <a href="{{ route('calendar.index') }}" wire:navigate 
+                       class="{{ request()->routeIs('calendar.*') ? 'bg-white/20 text-white' : 'text-blue-100 hover:bg-white/10 hover:text-white' }} px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300">
+                        Calendar
+                    </a>
+                    
+                    <a href="{{ route('calendar.map') }}" wire:navigate 
+                       class="{{ request()->routeIs('calendar.map') ? 'bg-white/20 text-white' : 'text-blue-100 hover:bg-white/10 hover:text-white' }} px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300">
+                        Map
+                    </a>
                 </div>
             </div>
 
@@ -98,6 +108,52 @@ new class extends Component
                class="{{ request()->routeIs('dashboard') ? 'bg-white/20 text-white border-l-4 border-white' : 'text-blue-100 hover:bg-white/10 hover:text-white border-l-4 border-transparent' }} block ps-3 pe-4 py-2 text-base font-bold transition-all duration-300">
                 Dashboard
             </a>
+            
+            <a href="{{ route('calendar.index') }}" wire:navigate 
+               class="{{ request()->routeIs('calendar.*') ? 'bg-white/20 text-white border-l-4 border-white' : 'text-blue-100 hover:bg-white/10 hover:text-white border-l-4 border-transparent' }} block ps-3 pe-4 py-2 text-base font-bold transition-all duration-300">
+                Calendar
+            </a>
+            
+            <a href="{{ route('calendar.map') }}" wire:navigate 
+               class="{{ request()->routeIs('calendar.map') ? 'bg-white/20 text-white border-l-4 border-white' : 'text-blue-100 hover:bg-white/10 hover:text-white border-l-4 border-transparent' }} block ps-3 pe-4 py-2 text-base font-bold transition-all duration-300">
+                Map
+            </a>
+            
+            <!-- Quick Actions for Mobile -->
+            <div class="px-3 py-2">
+                <div class="text-xs font-bold text-blue-200 uppercase tracking-wider mb-2">Quick Actions</div>
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('events.create') }}" wire:navigate 
+                       class="flex items-center gap-3 text-blue-100 hover:bg-white/10 hover:text-white ps-2 pe-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 mb-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Create Event
+                    </a>
+                    <a href="{{ route('venues.create') }}" wire:navigate 
+                       class="flex items-center gap-3 text-blue-100 hover:bg-white/10 hover:text-white ps-2 pe-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                        Add Venue
+                    </a>
+                @else
+                    <a href="{{ route('events.create.user') }}" wire:navigate 
+                       class="flex items-center gap-3 text-blue-100 hover:bg-white/10 hover:text-white ps-2 pe-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 mb-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Create Event
+                    </a>
+                    <a href="{{ route('event-requests.create') }}" wire:navigate 
+                       class="flex items-center gap-3 text-blue-100 hover:bg-white/10 hover:text-white ps-2 pe-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Request Approval
+                    </a>
+                @endif
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->

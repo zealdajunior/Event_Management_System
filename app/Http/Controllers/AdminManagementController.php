@@ -21,14 +21,14 @@ class AdminManagementController extends Controller
         }
 
         $admins = User::where('role', 'admin')->latest()->get();
-        $regularUsers = User::where('role', 'user')->latest()->paginate(20);
+        $users = User::where('role', 'user')->latest()->paginate(20);
         $totalUsers = User::count();
         $totalAdmins = User::where('role', 'admin')->count();
         $superAdmins = User::where('is_super_admin', true)->get();
 
         return view('admin.management.index', compact(
             'admins',
-            'regularUsers',
+            'users',
             'totalUsers',
             'totalAdmins',
             'superAdmins'

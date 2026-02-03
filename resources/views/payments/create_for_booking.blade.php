@@ -104,7 +104,7 @@
 
                             <!-- Submit Button -->
                             <div class="mt-8 flex gap-4">
-                                <a href="{{ route('user.dashboard') }}" 
+                                <a href="@dashboardRoute" 
                                    class="flex-1 px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition-colors duration-200">
                                     Cancel
                                 </a>

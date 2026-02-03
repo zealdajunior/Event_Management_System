@@ -17,4 +17,150 @@
     .animate-slideIn {
         animation: slideIn 0.3s ease-out;
     }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.2s ease-out;
+    }
+}
+
+@layer components {
+    /* Sidebar Enhancements */
+    .sidebar-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Custom scrollbar for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 2px;
+    }
+
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: #4b5563;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+    }
+
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+
+    /* Navigation item hover effects */
+    .nav-item-hover {
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-item-hover:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s;
+    }
+
+    .nav-item-hover:hover:before {
+        left: 100%;
+    }
+
+    /* Badge animations */
+    .notification-badge {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: .7;
+        }
+    }
+
+    /* Logo glow effect */
+    .logo-glow {
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .logo-glow:hover {
+        box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+    }
+
+    /* Content area fade in */
+    .main-content {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Mobile sidebar overlay */
+    @media (max-width: 1023px) {
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-sidebar-open {
+            overflow: hidden;
+        }
+    }
+
+    /* Responsive navigation items */
+    @media (max-width: 1023px) {
+        .nav-item-mobile {
+            padding: 0.875rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 0.75rem;
+            margin: 0.125rem 0;
+        }
+    }
+
+    /* Content padding adjustments */
+    @media (max-width: 1023px) {
+        .main-content {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .main-content {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    }
 }

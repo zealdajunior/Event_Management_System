@@ -126,21 +126,22 @@
                                     </div>
 
                                     <div>
-                                        <x-input-label for="category" :value="__('Event Category *')" class="text-gray-700 font-semibold" />
-                                        <select id="category" class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" name="category" required>
+                                        <x-input-label for="category_id" :value="__('Event Category *')" class="text-gray-700 font-semibold" />
+                                        <select id="category_id" class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" name="category_id" required>
                                             <option value="">Select a category</option>
-                                            <option value="conference" {{ old('category') == 'conference' ? 'selected' : '' }}>Conference</option>
-                                            <option value="workshop" {{ old('category') == 'workshop' ? 'selected' : '' }}>Workshop</option>
-                                            <option value="concert" {{ old('category') == 'concert' ? 'selected' : '' }}>Concert</option>
-                                            <option value="sports" {{ old('category') == 'sports' ? 'selected' : '' }}>Sports</option>
-                                            <option value="exhibition" {{ old('category') == 'exhibition' ? 'selected' : '' }}>Exhibition</option>
-                                            <option value="networking" {{ old('category') == 'networking' ? 'selected' : '' }}>Networking</option>
-                                            <option value="seminar" {{ old('category') == 'seminar' ? 'selected' : '' }}>Seminar</option>
-                                            <option value="festival" {{ old('category') == 'festival' ? 'selected' : '' }}>Festival</option>
-                                            <option value="other" {{ old('category') == 'other' ? 'selected' : '' }}>Other</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}" 
+                                                        {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                                        style="color: {{ $category->color }}">
+                                                    @if($category->icon)
+                                                        <i class="fas fa-{{ $category->icon }}"></i> 
+                                                    @endif
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <p class="text-xs text-gray-500 mt-1">This helps attendees find your event when searching</p>
-                                        <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                                     </div>
                                 </div>
                             </div>

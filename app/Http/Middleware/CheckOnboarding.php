@@ -12,8 +12,8 @@ class CheckOnboarding
     {
         $user = $request->user();
 
-        // Skip check for admin users
-        if ($user && method_exists($user, 'isAdmin') && $user->isAdmin()) {
+        // Skip check for admin users and super admins
+        if ($user && ($user->role === 'admin' || ($user->is_super_admin ?? false))) {
             return $next($request);
         }
 

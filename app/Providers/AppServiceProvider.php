@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Event;
+use App\Observers\EventObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\TicketService::class, function ($app) {
             return new \App\Services\TicketService();
         });
+        
+        $this->app->bind(\App\Services\NotificationService::class, function ($app) {
+            return new \App\Services\NotificationService();
+        });
+
+        $this->app->bind(\App\Services\CalendarService::class, function ($app) {
+            return new \App\Services\CalendarService();
+        });
+
+        $this->app->bind(\App\Services\MapService::class, function ($app) {
+            return new \App\Services\MapService();
+        });
     }
 
     /**
@@ -21,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register model observers
+        Event::observe(EventObserver::class);
+        
+        // Add global helper for dashboard routing
+        \Blade::directive('dashboardRoute', function () {
+            return "<?php echo auth()->user()->role === 'admin' || auth()->user()->role === 'super_admin' ? route('admin.dashboard') : route('user.dashboard'); ?>";
+        });
     }
 }

@@ -99,20 +99,25 @@
                         <p class="font-semibold text-yellow-900 mb-2">📋 Important Notes:</p>
                         <ul class="space-y-1 text-sm text-yellow-800">
                             <li>• A confirmation email has been sent to <span class="font-semibold">{{ $payment->booking->user->email }}</span></li>
+                            <li>• Your ticket has been emailed to you as a PDF attachment</li>
                             <li>• Please arrive 15 minutes early on the event day</li>
-                            <li>• Bring your confirmation email or this receipt</li>
+                            <li>• Bring your ticket (printed or on your phone) to the event</li>
                             <li>• Your booking is confirmed and locked in</li>
                         </ul>
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="flex gap-4 mt-8 pt-8 border-t border-gray-200">
-                        <a href="{{ route('user.dashboard') }}" 
-                           class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-gray-200">
+                        <a href="@dashboardRoute" 
+                           class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg text-center">
                             Back to Dashboard
                         </a>
+                        <a href="{{ route('bookings.ticket', $payment->booking) }}" 
+                           class="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-md hover:shadow-lg text-center flex items-center justify-center gap-2">
+                            🎫 View Ticket
+                        </a>
                         <button onclick="window.print()" 
-                                class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-2">
+                                class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m4 0a2 2 0 100-4 2 2 0 000 4zm0 0a6 6 0 100-12 6 6 0 000 12z"></path>
                             </svg>

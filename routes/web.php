@@ -14,6 +14,8 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\TicketDownloadController;
+use App\Http\Controllers\WaitlistController;
+use App\Http\Controllers\CalendarController;
 
 Route::get('/', function () {
     $upcomingEvents = \App\Models\Event::where('date', '>=', now())->orderBy('date')->take(6)->get();
@@ -49,9 +51,13 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth')->get('/dashboard', function () {
     $user = Auth::user();
-    if ($user && method_exists($user, 'isAdmin') && $user->isAdmin()) {
+    
+    // Super admins and regular admins go to admin dashboard
+    if ($user && $user->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
+    
+    // Regular users go to user dashboard
     return redirect()->route('user.dashboard');
 })->name('dashboard');
 
@@ -72,7 +78,7 @@ Route::middleware('auth')->get('/dashboard', function () {
     });
 
     // User Dashboard Routes
-    Route::middleware(['role:user', 'verified', \App\Http\Middleware\CheckOnboarding::class])->group(function () {
+    Route::middleware(['role:user|admin', \App\Http\Middleware\CheckOnboarding::class])->group(function () {
         Route::get('/user-dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
         Route::get('/event-requests/create', [EventRequestController::class, 'create'])->name('event-requests.create');
         Route::post('/event-requests', [EventRequestController::class, 'store'])->name('event-requests.store');
@@ -85,6 +91,15 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::get('/bookings/create/{event}', [BookingController::class, 'createForEvent'])->name('bookings.create.for.event');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+        
+        // User waitlist routes
+        Route::get('/waitlist', [\App\Http\Controllers\WaitlistController::class, 'index'])->name('waitlist.index');
+        Route::post('/events/{event}/waitlist/join', [\App\Http\Controllers\WaitlistController::class, 'join'])->name('waitlist.join');
+        Route::delete('/events/{event}/waitlist/leave', [\App\Http\Controllers\WaitlistController::class, 'leave'])->name('waitlist.leave');
+        Route::get('/events/{event}/waitlist/status', [\App\Http\Controllers\WaitlistController::class, 'status'])->name('waitlist.status');
+        Route::get('/waitlist/{waitlist}/accept', [\App\Http\Controllers\WaitlistController::class, 'accept'])->name('waitlist.accept');
+        Route::post('/waitlist/{waitlist}/decline', [\App\Http\Controllers\WaitlistController::class, 'decline'])->name('waitlist.decline');
+        
         // User payment routes
         Route::get('/payments/create/{booking}', [PaymentController::class, 'createForBooking'])->name('payments.create.for.booking');
         Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
@@ -94,13 +109,33 @@ Route::middleware('auth')->get('/dashboard', function () {
         // User feedback routes
         Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
         Route::get('/events/{event}/feedback', [FeedbackController::class, 'getEventFeedback'])->name('events.feedback');
+        // User review routes
+        Route::get('/events/{event}/reviews', [\App\Http\Controllers\ReviewController::class, 'index'])->name('reviews.index');
+        Route::get('/events/{event}/reviews/create', [\App\Http\Controllers\ReviewController::class, 'create'])->name('reviews.create');
+        Route::post('/events/{event}/reviews', [\App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');
+        Route::get('/reviews/{review}/edit', [\App\Http\Controllers\ReviewController::class, 'edit'])->name('reviews.edit');
+        Route::put('/reviews/{review}', [\App\Http\Controllers\ReviewController::class, 'update'])->name('reviews.update');
+        Route::delete('/reviews/{review}', [\App\Http\Controllers\ReviewController::class, 'destroy'])->name('reviews.destroy');
+        Route::get('/events/{event}/rating-summary', [\App\Http\Controllers\ReviewController::class, 'ratingSummary'])->name('reviews.rating-summary');
         // Ticket download routes
         Route::get('/bookings/{booking}/ticket', [TicketDownloadController::class, 'show'])->name('bookings.ticket');
         Route::get('/bookings/{booking}/ticket/download', [TicketDownloadController::class, 'download'])->name('bookings.ticket.download');
+        Route::post('/bookings/{booking}/ticket/email', [TicketDownloadController::class, 'email'])->name('bookings.ticket.email');
+        
+        // Calendar and Map routes
+        Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+        Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
+        Route::get('/calendar/stats', [CalendarController::class, 'stats'])->name('calendar.stats');
+        Route::get('/calendar/events-for-date', [CalendarController::class, 'eventsForDate'])->name('calendar.events-for-date');
+        Route::get('/calendar/map', [CalendarController::class, 'mapView'])->name('calendar.map');
+        Route::get('/calendar/map-markers', [CalendarController::class, 'mapMarkers'])->name('calendar.map-markers');
+        Route::get('/calendar/events-nearby', [CalendarController::class, 'eventsNearby'])->name('calendar.events-nearby');
+        Route::get('/calendar/search', [CalendarController::class, 'search'])->name('calendar.search');
+        Route::get('/calendar/export', [CalendarController::class, 'export'])->name('calendar.export');
     });
 
     // Admin Dashboard Routes
-    Route::middleware(['role:admin', 'verified'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         // Admin event management (edit, delete only - create/store moved to auth group above)
         Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
@@ -128,6 +163,12 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::get('/attendance/scanner', [AttendanceController::class, 'scanner'])->name('attendance.scanner');
         Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
         Route::post('/attendance/verify', [AttendanceController::class, 'verify'])->name('attendance.verify');
+        
+        // Admin waitlist routes
+        Route::get('/admin/events/{event}/waitlist', [\App\Http\Controllers\WaitlistController::class, 'adminIndex'])->name('admin.waitlist.index');
+        Route::post('/admin/events/{event}/waitlist/promote', [\App\Http\Controllers\WaitlistController::class, 'promote'])->name('admin.waitlist.promote');
+        Route::get('/admin/events/{event}/waitlist/statistics', [\App\Http\Controllers\WaitlistController::class, 'statistics'])->name('admin.waitlist.statistics');
+        
         // Admin bulk email route
         Route::post('/admin/send-bulk-email', [AdminDashboardController::class, 'sendBulkEmail'])->name('admin.send-bulk-email');
         // Admin export routes
@@ -138,6 +179,9 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::get('/attendance/statistics/{event}', [AttendanceController::class, 'statistics'])->name('attendance.statistics');
         // Admin feedback routes
         Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
+        
+        // Notification Manager route
+        Route::get('/admin/notifications', \App\Livewire\Admin\NotificationManager::class)->name('admin.notifications');
         
         // Super Admin Management Routes
         Route::get('/admin/management', [\App\Http\Controllers\AdminManagementController::class, 'index'])->name('admin.management.index');
@@ -153,18 +197,38 @@ Route::middleware('auth')->get('/dashboard', function () {
     // Local-only helper to ensure a default admin user exists (safe in local environment only)
     if (app()->environment('local')) {
         Route::get('/_dev/ensure-admin', function () {
+            // Check if this will be the first admin
+            $existingAdmins = \App\Models\User::where('role', 'admin')->count();
+            $isFirstAdmin = $existingAdmins === 0;
+            
             $admin = \App\Models\User::firstOrCreate(
                 ['email' => 'admin@example.com'],
                 [
                     'name' => 'Admin User',
                     'password' => bcrypt('admin123'),
                     'role' => 'admin',
+                    'is_super_admin' => $isFirstAdmin, // First admin is super admin
                     'email_verified_at' => now(),
                 ]
             );
+            
+            // If this is the only admin and not super admin yet, promote them
+            if (!$admin->is_super_admin && \App\Models\User::where('role', 'admin')->count() === 1) {
+                $admin->update(['is_super_admin' => true]);
+            }
 
-            return response()->json(['status' => 'ok', 'email' => $admin->email]);
+            return response()->json([
+                'status' => 'ok', 
+                'email' => $admin->email,
+                'is_super_admin' => $admin->is_super_admin,
+                'message' => $admin->is_super_admin ? 'First admin created as Super Admin' : 'Admin created'
+            ]);
         })->name('dev.ensure-admin');
+
+        // Check all admins in the system
+        Route::get('/_dev/check-admins', function () {
+            return view('check-admins');
+        })->name('dev.check-admins');
 
         // Debug route to check current user role
         Route::middleware('auth')->get('/_dev/check-role', function () {
@@ -182,17 +246,24 @@ Route::middleware('auth')->get('/dashboard', function () {
         // Make current user an admin
         Route::middleware('auth')->get('/_dev/make-me-admin', function () {
             $user = Auth::user();
+            
+            // Check if this will be the first admin
+            $existingAdmins = \App\Models\User::where('role', 'admin')->where('id', '!=', $user->id)->count();
+            $isFirstAdmin = $existingAdmins === 0;
+            
             $user->role = 'admin';
+            $user->is_super_admin = $isFirstAdmin; // First admin is super admin
             $user->save();
             
             return response()->json([
                 'status' => 'success',
-                'message' => 'You are now an admin!',
+                'message' => $isFirstAdmin ? 'You are now a Super Admin!' : 'You are now an admin!',
                 'user' => [
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
+                    'is_super_admin' => $user->is_super_admin,
                 ]
             ]);
         })->name('dev.make-admin');

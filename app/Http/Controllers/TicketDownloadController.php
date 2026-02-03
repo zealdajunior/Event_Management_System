@@ -58,4 +58,25 @@ class TicketDownloadController extends Controller
         // Download PDF
         return $pdf->download($filename);
     }
+
+    /**
+     * Email ticket to user
+     */
+    public function email(Booking $booking)
+    {
+        // Ensure user owns this booking or is admin
+        if ($booking->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized');
+        }
+
+        try {
+            // Send ticket email
+            \Illuminate\Support\Facades\Mail::to($booking->user->email)
+                ->send(new \App\Mail\TicketDeliveryMail($booking));
+
+            return back()->with('status', 'Ticket has been sent to your email address: ' . $booking->user->email);
+        } catch (\Exception $e) {
+            return back()->withErrors(['email' => 'Failed to send ticket email. Please try again later.']);
+        }
+    }
 }

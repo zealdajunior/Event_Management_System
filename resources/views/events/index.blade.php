@@ -54,22 +54,22 @@
 
             <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div class="p-8">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8">
                         <div>
-                            <h3 class="text-3xl font-black text-gray-800 mb-2">
+                            <h3 class="text-2xl sm:text-3xl font-black text-gray-800 mb-2">
                                 All Events
                             </h3>
-                            <p class="text-gray-600 text-lg">Comprehensive list of all events in the system</p>
+                            <p class="text-gray-600 text-base sm:text-lg">Comprehensive list of all events in the system</p>
                         </div>
                         <a href="{{ route('events.create') }}"
-                           class="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800
+                           class="w-full sm:w-auto group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800
                                   active:scale-95 transition-all duration-300
-                                  text-white px-8 py-4 rounded-xl font-bold shadow-lg
-                                  hover:shadow-xl flex items-center gap-3">
-                            <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg
+                                  hover:shadow-xl flex items-center justify-center gap-3">
+                            <svg class="w-5 sm:w-6 h-5 sm:h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
-                            <span>Create New Event</span>
+                            <span class="text-sm sm:text-base">Create New Event</span>
                         </a>
                     </div>
 
@@ -180,17 +180,18 @@
                                                     </svg>
                                                 </div>
                                             @endif
-                                            <form method="POST" action="{{ route('events.destroy', $event) }}" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                        class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-bold rounded-lg transition-all duration-300"
-                                                        onclick="return confirm('Are you sure you want to delete this event?')">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                    </svg>
-                                                </button>
-                                            </form>
+                                            <button type="button" 
+                                                    class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-bold rounded-lg transition-all duration-300 delete-event-btn"
+                                                    data-event-id="{{ $event->id }}"
+                                                    data-event-name="{{ $event->name }}"
+                                                    data-event-date="{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('M d, Y') : 'TBD' }}"
+                                                    data-bookings-count="{{ $bookingsCount }}"
+                                                    data-venue="{{ $event->venue->name ?? 'TBD' }}"
+                                                    title="Delete Event">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -219,5 +220,222 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Enhanced Event Deletion Modal -->
+    <div id="delete-event-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95 opacity-0" id="delete-modal-content">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-t-3xl">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-white/20 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Delete Event</h3>
+                        <p class="text-red-100 text-sm">This action cannot be undone</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-gray-900 mb-3">Are you sure you want to delete this event?</h4>
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="text-sm text-red-800">
+                                <p class="font-semibold mb-1">This will permanently:</p>
+                                <ul class="list-disc list-inside space-y-1 text-red-700">
+                                    <li>Remove the event from the system</li>
+                                    <li id="delete-bookings-warning">Cancel all existing bookings</li>
+                                    <li>Delete all event media and files</li>
+                                    <li>Remove event from user favorites</li>
+                                    <li>Delete all event-related data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Details -->
+                <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                    <h5 class="font-semibold text-gray-900 mb-3">Event Details:</h5>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="font-medium text-gray-900" id="modal-event-name"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span id="modal-event-date"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            <span id="modal-event-venue"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                            <span id="modal-bookings-count"></span> current bookings
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Input -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        Type <span class="font-mono bg-gray-100 px-2 py-1 rounded text-red-600">DELETE</span> to confirm:
+                    </label>
+                    <input type="text" 
+                           id="delete-confirmation-input" 
+                           class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-red-500 focus:ring-4 focus:ring-red-100 transition-all duration-200" 
+                           placeholder="Type DELETE to confirm"
+                           autocomplete="off">
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button type="button" 
+                            id="cancel-delete-btn" 
+                            class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all duration-200 hover:scale-105">
+                        Cancel
+                    </button>
+                    <button type="button" 
+                            id="confirm-delete-btn" 
+                            class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" 
+                            disabled>
+                        Delete Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Form for Deletion -->
+    <form id="delete-event-form" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('delete-event-modal');
+            const modalContent = document.getElementById('delete-modal-content');
+            const deleteForm = document.getElementById('delete-event-form');
+            const confirmationInput = document.getElementById('delete-confirmation-input');
+            const confirmButton = document.getElementById('confirm-delete-btn');
+            const cancelButton = document.getElementById('cancel-delete-btn');
+            
+            // Elements to populate with event data
+            const modalEventName = document.getElementById('modal-event-name');
+            const modalEventDate = document.getElementById('modal-event-date');
+            const modalEventVenue = document.getElementById('modal-event-venue');
+            const modalBookingsCount = document.getElementById('modal-bookings-count');
+            const deleteBookingsWarning = document.getElementById('delete-bookings-warning');
+
+            // Open modal when delete button is clicked
+            document.querySelectorAll('.delete-event-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const eventId = this.getAttribute('data-event-id');
+                    const eventName = this.getAttribute('data-event-name');
+                    const eventDate = this.getAttribute('data-event-date');
+                    const eventVenue = this.getAttribute('data-venue');
+                    const bookingsCount = this.getAttribute('data-bookings-count');
+
+                    // Populate modal with event details
+                    modalEventName.textContent = eventName;
+                    modalEventDate.textContent = eventDate;
+                    modalEventVenue.textContent = eventVenue;
+                    modalBookingsCount.textContent = bookingsCount;
+
+                    // Update warning based on bookings
+                    if (parseInt(bookingsCount) > 0) {
+                        deleteBookingsWarning.innerHTML = `<strong>Cancel ${bookingsCount} existing booking${bookingsCount != 1 ? 's' : ''}</strong> (users will be notified)`;
+                        deleteBookingsWarning.className = 'text-red-800 font-semibold';
+                    } else {
+                        deleteBookingsWarning.textContent = 'No active bookings to cancel';
+                        deleteBookingsWarning.className = 'text-gray-600';
+                    }
+
+                    // Set form action
+                    deleteForm.action = `/events/${eventId}`;
+
+                    // Reset confirmation input
+                    confirmationInput.value = '';
+                    confirmButton.disabled = true;
+
+                    // Show modal with animation
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        modalContent.classList.remove('scale-95', 'opacity-0');
+                        modalContent.classList.add('scale-100', 'opacity-100');
+                    }, 50);
+                });
+            });
+
+            // Enable/disable confirm button based on input
+            confirmationInput.addEventListener('input', function() {
+                confirmButton.disabled = this.value.trim().toLowerCase() !== 'delete';
+            });
+
+            // Handle confirm delete
+            confirmButton.addEventListener('click', function() {
+                if (!this.disabled) {
+                    deleteForm.submit();
+                }
+            });
+
+            // Handle cancel
+            function closeModal() {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            cancelButton.addEventListener('click', closeModal);
+
+            // Close on backdrop click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+    
+    <!-- Mobile Floating Action Button - Only visible on mobile -->
+    <div class="fixed bottom-6 right-6 z-50 sm:hidden">
+        <a href="{{ route('events.create') }}"
+           class="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
+                  text-white w-14 h-14 rounded-full shadow-2xl hover:shadow-xl 
+                  flex items-center justify-center transition-all duration-300 
+                  hover:scale-110 active:scale-95 btn-no-select"
+           aria-label="Create New Event">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+        </a>
     </div>
 </x-app-layout>

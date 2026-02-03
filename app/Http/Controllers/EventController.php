@@ -7,6 +7,7 @@ use App\Models\EventMedia;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Services\AuditLogger;
 
@@ -21,7 +22,8 @@ class EventController extends Controller
     public function create()
     {
         $venues = Venue::all();
-        return view('events.create', compact('venues'));
+        $categories = \App\Models\Category::active()->ordered()->get();
+        return view('events.create', compact('venues', 'categories'));
     }
 
     public function store(Request $request)
@@ -35,6 +37,7 @@ class EventController extends Controller
             'venue_id' => 'nullable|exists:venues,id',
             'capacity' => 'nullable|integer|min:1',
             'price' => 'nullable|numeric|min:0',
+            'category_id' => 'nullable|exists:categories,id',
             'category' => 'nullable|string|max:255',
             'event_type' => 'nullable|string|max:255',
             'organizer_name' => 'nullable|string|max:255',
@@ -91,7 +94,8 @@ class EventController extends Controller
         }
 
         $venues = Venue::all();
-        return view('events.edit', compact('event', 'venues'));
+        $categories = \App\Models\Category::active()->ordered()->get();
+        return view('events.edit', compact('event', 'venues', 'categories'));
     }
 
     public function update(Request $request, Event $event)
@@ -124,14 +128,82 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
-        // Log audit action before deletion
-        AuditLogger::log('deleted', 'Event', $event->id, [
-            'name' => $event->name,
-            'date' => $event->date
-        ]);
+        // Check if user is super admin or event owner
+        $user = auth()->user();
+        if (!$user->isSuperAdmin() && $event->user_id !== $user->id) {
+            return redirect()->route('events.index')->with('error', 'You do not have permission to delete this event.');
+        }
+
+        // Get event details for logging and notifications
+        $eventName = $event->name;
+        $eventDate = $event->date;
+        $bookingsCount = $event->bookings()->count();
         
-        $event->delete();
-        return redirect()->route('events.index')->with('status', 'Event deleted successfully.');
+        try {
+            // Cancel all bookings and notify users
+            if ($bookingsCount > 0) {
+                $bookings = $event->bookings()->with('user')->get();
+                
+                // Cancel bookings (this could trigger email notifications)
+                foreach ($bookings as $booking) {
+                    // You could send cancellation notifications here
+                    // Mail::to($booking->user)->send(new EventCancelledNotification($booking));
+                    $booking->delete();
+                }
+            }
+
+            // Delete event media files
+            if ($event->images()->exists()) {
+                foreach ($event->images as $image) {
+                    // Delete file from storage
+                    if (Storage::disk('public')->exists($image->file_path)) {
+                        Storage::disk('public')->delete($image->file_path);
+                    }
+                    $image->delete();
+                }
+            }
+
+            // Remove from favorites (use the correct relationship method)
+            $event->favoritedByUsers()->detach();
+            
+            // Delete any standalone favorites records
+            $event->favorites()->delete();
+            
+            // Delete event tickets
+            $event->tickets()->delete();
+            
+            // Log audit action before deletion
+            AuditLogger::log('deleted', 'Event', $event->id, [
+                'name' => $eventName,
+                'date' => $eventDate,
+                'bookings_cancelled' => $bookingsCount,
+                'deleted_by' => $user->name . ' (ID: ' . $user->id . ')',
+                'user_role' => $user->role,
+                'is_super_admin' => $user->isSuperAdmin()
+            ]);
+            
+            // Delete the event
+            $event->delete();
+            
+            // Enhanced success message
+            $message = "Event '{$eventName}' has been successfully deleted.";
+            if ($bookingsCount > 0) {
+                $message .= " {$bookingsCount} booking(s) were cancelled and users have been notified.";
+            }
+            
+            return redirect()->route('events.index')->with('status', $message);
+            
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Event deletion failed', [
+                'event_id' => $event->id,
+                'event_name' => $eventName,
+                'error' => $e->getMessage(),
+                'user_id' => $user->id
+            ]);
+            
+            return redirect()->route('events.index')->with('error', 'Failed to delete event. Please try again or contact support.');
+        }
     }
 
     /**

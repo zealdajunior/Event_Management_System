@@ -12,7 +12,7 @@
      <?php $__env->slot('header', null, []); ?> 
         <div class="bg-white border-b border-blue-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 gap-4">
                     <div class="flex items-center space-x-4">
                         <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-50">
                             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,32 +20,37 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-black">Admin Dashboard</h1>
-                            <p class="text-sm text-gray-900">Manage events, users, and system analytics</p>
+                            <h1 class="text-xl sm:text-2xl font-bold text-blue-800">Admin Dashboard</h1>
+                            <p class="text-xs sm:text-sm text-blue-700">Manage events, users, and system analytics</p>
                         </div>
                     </div>
 
-                    <div class="flex items-center space-x-4">
-                        <div class="flex items-center space-x-2 text-sm text-blue-600">
+                    <div class="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                        <div class="hidden sm:flex items-center space-x-2 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
                             <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                             <span>Live</span>
                         </div>
 
-                        <a href="<?php echo e(route('events.create')); ?>"
-                           class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                            Create Event
-                        </a>
+                        <!-- Mobile: Stack buttons vertically on very small screens, horizontal on sm+ -->
+                        <div class="flex flex-col xs:flex-row gap-2 w-full sm:w-auto bg-white p-3 rounded-xl border border-blue-100">
+                            <a href="<?php echo e(route('events.create')); ?>"
+                               class="flex-1 sm:flex-none inline-flex items-center justify-center px-3 sm:px-5 py-2.5 border-2 border-blue-500 text-xs sm:text-sm font-bold rounded-xl text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-4 h-4 sm:mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <span class="hidden xs:inline sm:inline">Create Event</span>
+                                <span class="xs:hidden">Create</span>
+                            </a>
 
-                        <a href="<?php echo e(route('venues.create')); ?>"
-                           class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
-                            Add Venue
-                        </a>
+                            <a href="<?php echo e(route('venues.create')); ?>"
+                               class="flex-1 sm:flex-none inline-flex items-center justify-center px-3 sm:px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
+                                <svg class="w-4 h-4 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                                <span class="hidden xs:inline sm:inline">Add Venue</span>
+                                <span class="xs:hidden">Venue</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,9 +59,9 @@
 
     
     <div class="bg-gradient-to-br from-blue-50 via-white to-blue-50 min-h-screen py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             
-            <div class="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-sm border border-blue-50 p-8">
+            <div class="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-sm border border-blue-50 p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <?php
                     $stats = [
@@ -71,8 +76,8 @@
                     <div class="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition-all duration-200 group">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-black mb-1"><?php echo e($stat['label']); ?></p>
-                                <p class="text-3xl font-bold text-black"><?php echo e($stat['value']); ?></p>
+                                <p class="text-sm font-medium text-blue-600 mb-1"><?php echo e($stat['label']); ?></p>
+                                <p class="text-3xl font-bold text-blue-800"><?php echo e($stat['value']); ?></p>
                             </div>
                             <div class="p-3 rounded-lg <?php echo e($stat['bgColor']); ?> group-hover:scale-110 transition-transform duration-200">
                                 <svg class="w-6 h-6 <?php echo e($stat['textColor']); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,9 +115,9 @@
 
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="#<?php echo e($key); ?>" data-tab="<?php echo e($key); ?>"
-                   class="tab-link py-3 px-6 text-center rounded-2xl font-bold text-gray-700
+                   class="tab-link py-3 px-6 text-center rounded-2xl font-bold text-blue-700
                           bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100
-                          border border-gray-200 hover:border-blue-300
+                          border border-blue-200 hover:border-blue-300
                           transition-all duration-300 hover:shadow-lg hover:-translate-y-1
                           flex flex-col items-center gap-2 <?php echo e(isset($tab['superAdmin']) ? 'bg-gradient-to-r from-purple-50 to-blue-50 border-purple-300' : ''); ?>">
                     <svg class="w-6 h-6 <?php echo e(isset($tab['superAdmin']) ? 'text-purple-600' : 'text-blue-500'); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,14 +133,14 @@
                 <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-black mb-2">
+                            <h3 class="text-2xl font-black text-blue-800 mb-2">
                                 Recent Events
                             </h3>
-                            <p class="text-gray-600">Manage and monitor your events</p>
+                            <p class="text-blue-600">Manage and monitor your events</p>
                         </div>
                         <div class="flex gap-3">
                             <a href="<?php echo e(route('admin.export.events')); ?>"
-                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                 </svg>
@@ -169,34 +174,60 @@
                                                 </div>
                                                 <div class="flex items-center gap-1">
                                                     <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                                                    <span class="text-xs text-gray-600 font-medium">Active</span>
+                                                    <span class="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Active</span>
                                                 </div>
                                             </div>
-                                            <h4 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2"><?php echo e($event->name); ?></h4>
-                                            <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-shrink-0"><?php echo e($event->description); ?></p>
+                                            <h4 class="text-xl font-bold text-blue-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2"><?php echo e($event->name); ?></h4>
+                                            <p class="text-blue-600 text-sm mb-4 line-clamp-2 flex-shrink-0"><?php echo e($event->description); ?></p>
                                             <div class="space-y-2 mb-4 flex-grow">
-                                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                                <div class="flex items-center gap-2 text-sm text-blue-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                     </svg>
                                                     <span><?php echo e($event->date ? \Carbon\Carbon::parse($event->date)->format('M d, Y H:i') : 'N/A'); ?></span>
                                                 </div>
-                                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                                <div class="flex items-center gap-2 text-sm text-blue-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                                     </svg>
                                                     <span><?php echo e($event->venue->name ?? 'TBD'); ?></span>
                                                 </div>
                                             </div>
-                                            <a href="<?php echo e(route('events.show', $event)); ?>"
-                                               class="group/btn inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
-                                                      text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/30
-                                                      hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105 active:scale-95">
-                                                <span>View Details</span>
-                                                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                </svg>
-                                            </a>
+                                            
+                                            <!-- Admin Actions -->
+                                            <div class="flex gap-2">
+                                                <a href="<?php echo e(route('events.show', $event)); ?>"
+                                                   class="flex-1 group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                                                          text-white px-4 py-2.5 rounded-lg font-bold text-sm shadow-lg shadow-blue-500/30
+                                                          hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105 active:scale-95">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                    </svg>
+                                                    <span>View</span>
+                                                </a>
+                                                
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isSuperAdmin()): ?>
+                                                <a href="<?php echo e(route('events.edit', $event)); ?>"
+                                                   class="px-3 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg font-bold text-sm transition-all duration-300 hover:scale-105"
+                                                   title="Edit Event">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                    </svg>
+                                                </a>
+                                                
+                                                <button type="button" 
+                                                        class="px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-sm transition-all duration-300 hover:scale-105 open-delete-modal-dashboard"
+                                                        data-action="<?php echo e(route('events.destroy', $event)); ?>"
+                                                        data-title="<?php echo e($event->name); ?>"
+                                                        data-type="event"
+                                                        title="Delete Event">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                </button>
+                                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -208,8 +239,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <h4 class="text-2xl font-bold text-gray-900 mb-2">No Recent Events</h4>
-                                <p class="text-gray-600 text-lg mb-6">Start creating amazing events to see them here</p>
+                                <h4 class="text-2xl font-bold text-blue-900 mb-2">No Recent Events</h4>
+                                <p class="text-blue-600 text-lg mb-6">Start creating amazing events to see them here</p>
                                 <a href="<?php echo e(route('events.create')); ?>"
                                    class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                           text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-blue-500/30
@@ -230,14 +261,14 @@
                 <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-black mb-2">
+                            <h3 class="text-2xl font-black text-blue-800 mb-2">
                                 Recent Bookings
                             </h3>
-                            <p class="text-gray-600">Monitor ticket sales and booking activity</p>
+                            <p class="text-blue-600">Monitor ticket sales and booking activity</p>
                         </div>
                         <div class="flex gap-3">
                             <a href="<?php echo e(route('admin.export.bookings')); ?>"
-                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                 </svg>
@@ -271,7 +302,7 @@
                                                 </div>
                                                 <div class="flex items-center gap-1">
                                                     <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                                                    <span class="text-xs text-gray-600 font-medium">Confirmed</span>
+                                                    <span class="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Confirmed</span>
                                                 </div>
                                             </div>
 
@@ -280,21 +311,21 @@
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                                     </svg>
-                                                    <span class="font-semibold text-gray-900"><?php echo e($booking->user->name); ?></span>
+                                                    <span class="font-semibold text-blue-900"><?php echo e($booking->user->name); ?></span>
                                                 </div>
-                                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                                <div class="flex items-center gap-2 text-sm text-blue-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                     </svg>
                                                     <span><?php echo e($booking->event->name); ?></span>
                                                 </div>
-                                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                                <div class="flex items-center gap-2 text-sm text-blue-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
                                                     </svg>
                                                     <span><?php echo e($booking->ticket->type); ?> - <span class="font-semibold text-blue-600">$<?php echo e($booking->ticket->price); ?></span></span>
                                                 </div>
-                                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                                <div class="flex items-center gap-2 text-sm text-blue-600">
                                                     <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
@@ -322,8 +353,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
                                 </div>
-                                <h4 class="text-2xl font-bold text-gray-900 mb-2">No Recent Bookings</h4>
-                                <p class="text-gray-600 mb-6">Bookings will appear here once users start purchasing tickets</p>
+                                <h4 class="text-2xl font-bold text-blue-900 mb-2">No Recent Bookings</h4>
+                                <p class="text-blue-600 mb-6">Bookings will appear here once users start purchasing tickets</p>
                                 <a href="<?php echo e(route('events.index')); ?>"
                                    class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                           text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/30
@@ -344,14 +375,14 @@
                 <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-black mb-2">
+                            <h3 class="text-2xl font-black text-blue-800 mb-2">
                                 User Management
                             </h3>
-                            <p class="text-gray-600">Monitor and manage user accounts and roles</p>
+                            <p class="text-blue-600">Monitor and manage user accounts and roles</p>
                         </div>
                         <div class="flex gap-3">
                             <a href="<?php echo e(route('admin.export.users')); ?>"
-                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-black bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
+                               class="inline-flex items-center px-5 py-2.5 border-2 border-blue-500 text-sm font-bold rounded-xl text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transition-all duration-300 shadow-[0_4px_12px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_20px_rgba(59,130,246,0.4)] hover:scale-105 hover:-translate-y-0.5">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                 </svg>
@@ -378,13 +409,13 @@
                             <div class="group bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-700 text-sm font-medium mb-1">Total Users</p>
-                                        <p class="text-3xl font-black text-gray-900"><?php echo e($totalUsers); ?></p>
+                                        <p class="text-blue-700 text-sm font-medium mb-1">Total Users</p>
+                                        <p class="text-3xl font-black text-blue-900"><?php echo e($totalUsers); ?></p>
                                         <div class="flex items-center mt-2">
                                             <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            <span class="text-xs text-gray-600">Registered</span>
+                                            <span class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full">Registered</span>
                                         </div>
                                     </div>
                                     <div class="p-3 bg-blue-50 rounded-xl">
@@ -399,13 +430,13 @@
                             <div class="group bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-700 text-sm font-medium mb-1">Admin Users</p>
-                                        <p class="text-3xl font-black text-gray-900"><?php echo e(\App\Models\User::where('role', 'admin')->count()); ?></p>
+                                        <p class="text-blue-700 text-sm font-medium mb-1">Admin Users</p>
+                                        <p class="text-3xl font-black text-blue-800"><?php echo e(\App\Models\User::where('role', 'admin')->count()); ?></p>
                                         <div class="flex items-center mt-2">
                                             <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            <span class="text-xs text-gray-600">Privileged</span>
+                                            <span class="text-xs text-blue-600">Privileged</span>
                                         </div>
                                     </div>
                                     <div class="p-3 bg-blue-50 rounded-xl">
@@ -420,13 +451,13 @@
                             <div class="group bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-700 text-sm font-medium mb-1">Regular Users</p>
-                                        <p class="text-3xl font-black text-gray-900"><?php echo e(\App\Models\User::where('role', 'user')->count()); ?></p>
+                                        <p class="text-blue-700 text-sm font-medium mb-1">Regular Users</p>
+                                        <p class="text-3xl font-black text-blue-800"><?php echo e(\App\Models\User::where('role', 'user')->count()); ?></p>
                                         <div class="flex items-center mt-2">
                                             <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            <span class="text-xs text-gray-600">Active</span>
+                                            <span class="text-xs text-blue-600">Active</span>
                                         </div>
                                     </div>
                                     <div class="p-3 bg-blue-50 rounded-xl">
@@ -441,7 +472,7 @@
                 
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($recentUsers && $recentUsers->count() > 0): ?>
                         <div class="mt-8">
-                                <h4 class="text-xl font-bold text-gray-900 mb-4">Recent Users</h4>
+                                <h4 class="text-xl font-bold text-blue-800 mb-4">Recent Users</h4>
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $recentUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="group bg-white p-5 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
@@ -453,14 +484,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 min-w-0">
-                                                    <h5 class="text-gray-900 font-bold text-sm truncate"><?php echo e($user->name ?? 'N/A'); ?></h5>
-                                                    <p class="text-gray-600 text-xs truncate"><?php echo e($user->email ?? 'N/A'); ?></p>
+                                                    <h5 class="text-blue-700 font-bold text-sm truncate"><?php echo e($user->name ?? 'N/A'); ?></h5>
+                                                    <p class="text-blue-600 text-xs truncate"><?php echo e($user->email ?? 'N/A'); ?></p>
                                                     <div class="flex items-center gap-2 mt-2">
                                                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium <?php echo e(($user->role ?? 'user') === 'admin' ? 'bg-blue-100 text-blue-700' : 'bg-blue-50 text-blue-600'); ?>">
                                                             <?php echo e(ucfirst($user->role ?? 'user')); ?>
 
                                                         </span>
-                                                        <span class="text-gray-500 text-xs"><?php echo e($user->created_at ? $user->created_at->diffForHumans() : 'Recently'); ?></span>
+                                                        <span class="text-blue-500 text-xs"><?php echo e($user->created_at ? $user->created_at->diffForHumans() : 'Recently'); ?></span>
                                                     </div>
                                                 </div>
                                         </div>
@@ -477,7 +508,7 @@
                 <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
                         <div>
-                            <h3 class="text-2xl font-black text-black mb-2">
+                            <h3 class="text-2xl font-black text-blue-800 mb-2">
                                 Event Requests
                                     <span class="ml-3 inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold">
                                         <?php echo e($eventRequests->count()); ?> Total
@@ -488,7 +519,7 @@
                                         </span>
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </h3>
-                                <p class="text-sm text-gray-600">Review and manage event creation requests</p>
+                                <p class="text-sm text-blue-600">Review and manage event creation requests</p>
                             </div>
                             <a href="<?php echo e(route('admin.event_requests.index')); ?>"
                                class="group inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
@@ -581,7 +612,7 @@
                                                     Approved
                                                 </span>
                                             <?php elseif($request->status === 'rejected'): ?>
-                                                <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold text-sm">
+                                                <span class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-semibold text-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                                     </svg>
@@ -589,7 +620,7 @@
                                                 </span>
                                             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-                                            <button type="button" data-action="<?php echo e(route('admin.event_requests.destroy', $request->id)); ?>" data-title="<?php echo e($request->event_title); ?>" class="open-delete-modal-dashboard inline-flex items-center gap-2 bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300">
+                                            <button type="button" data-action="<?php echo e(route('admin.event_requests.destroy', $request->id)); ?>" data-title="<?php echo e($request->event_title); ?>" class="open-delete-modal-dashboard inline-flex items-center gap-2 bg-white hover:bg-blue-50 border border-blue-300 text-blue-700 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
@@ -749,7 +780,7 @@
                                     <span class="text-2xl font-black text-gray-500"><?php echo e($cancelledBookings); ?></span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gray-400 h-2 rounded-full" style="width: <?php echo e($totalBookings > 0 ? ($cancelledBookings / $totalBookings * 100) : 0); ?>%"></div>
+                                    <div class="bg-blue-300 h-2 rounded-full" style="width: <?php echo e($totalBookings > 0 ? ($cancelledBookings / $totalBookings * 100) : 0); ?>%"></div>
                                 </div>
                             </div>
                     </div>
@@ -775,7 +806,7 @@
                                                     <p class="text-2xl font-black text-blue-600"><?php echo e($event->bookings_count); ?></p>
                                                     <p class="text-gray-600 text-xs">bookings</p>
                                                 </div>
-                                                <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                <div class="w-24 h-2 bg-blue-100 rounded-full overflow-hidden">
                                                     <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600" style="width: <?php echo e(min(100, ($event->bookings_count / ($topEvents->max('bookings_count') ?: 1)) * 100)); ?>%"></div>
                                                 </div>
                                             </div>
@@ -819,7 +850,7 @@
                             
                             <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-md">
                                 <div class="flex items-center gap-4 mb-3">
-                                    <div class="p-3 bg-gray-100 rounded-xl">
+                                    <div class="p-3 bg-blue-50 rounded-xl">
                                         <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
@@ -1538,7 +1569,7 @@
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-50">
+                            <thead class="bg-blue-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Attendee</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Event</th>
@@ -1556,7 +1587,7 @@
                                         ->get();
                                 ?>
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $recentCheckIns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <tr class="hover:bg-gray-50">
+                                <tr class="hover:bg-blue-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
@@ -1971,7 +2002,7 @@
             if (approveForm) approveForm.submit();
         });
 
-        // Delete modal logic
+        // Delete modal logic - Enhanced
         const deleteModal = document.getElementById('delete-modal-dashboard');
         const deleteModalTitle = document.getElementById('delete-modal-title-dashboard');
         const deleteForm = document.getElementById('delete-form-dashboard');
@@ -1979,22 +2010,73 @@
         document.querySelectorAll('.open-delete-modal-dashboard').forEach(btn => {
             btn.addEventListener('click', function() {
                 const action = this.getAttribute('data-action');
-                const title = this.getAttribute('data-title') || 'this request';
+                const title = this.getAttribute('data-title') || 'this item';
+                const type = this.getAttribute('data-type') || 'item';
                 
                 if (deleteForm) deleteForm.setAttribute('action', action);
-                if (deleteModalTitle) deleteModalTitle.textContent = 'Delete "' + title + '"? This action cannot be undone.';
+                
+                // Enhanced deletion message based on type
+                let message = '';
+                if (type === 'event') {
+                    message = `Are you sure you want to permanently delete "${title}"?\\n\\nThis event will be completely removed from the system, including all bookings, media, and related data.`;
+                } else if (type === 'user') {
+                    message = `Are you sure you want to permanently delete the user "${title}"?\\n\\nThis will remove their account and all associated data.`;
+                } else {
+                    message = `Are you sure you want to permanently delete "${title}"?\\n\\nThis action cannot be undone.`;
+                }
+                
+                if (deleteModalTitle) deleteModalTitle.textContent = message;
                 
                 if (deleteModal) {
                     deleteModal.classList.remove('hidden');
                     deleteModal.classList.add('flex');
+                    
+                    // Add entrance animation
+                    const modalContent = deleteModal.querySelector('.bg-white');
+                    if (modalContent) {
+                        modalContent.style.transform = 'scale(0.9)';
+                        modalContent.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            modalContent.style.transform = 'scale(1)';
+                            modalContent.style.opacity = '1';
+                        }, 50);
+                    }
                 }
             });
         });
 
-        document.getElementById('delete-modal-cancel-dashboard')?.addEventListener('click', function() {
+        function closeDeleteModal() {
             if (deleteModal) {
-                deleteModal.classList.add('hidden');
-                deleteModal.classList.remove('flex');
+                const modalContent = deleteModal.querySelector('.bg-white');
+                if (modalContent) {
+                    modalContent.style.transform = 'scale(0.9)';
+                    modalContent.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        deleteModal.classList.add('hidden');
+                        deleteModal.classList.remove('flex');
+                    }, 200);
+                } else {
+                    deleteModal.classList.add('hidden');
+                    deleteModal.classList.remove('flex');
+                }
+            }
+        }
+
+        document.getElementById('delete-modal-cancel-dashboard')?.addEventListener('click', closeDeleteModal);
+
+        // Close on backdrop click
+        deleteModal?.addEventListener('click', function(e) {
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && deleteModal && !deleteModal.classList.contains('hidden')) {
+                closeDeleteModal();
             }
         });
 
@@ -2056,7 +2138,7 @@
         <h3 class="text-lg font-bold text-slate-900 mb-2">Approve Request</h3>
         <p id="approve-modal-title-dashboard" class="text-sm text-slate-700 mb-4"></p>
         <div class="flex justify-end gap-3">
-            <button id="approve-modal-cancel-dashboard" type="button" class="px-4 py-2 rounded-lg bg-gray-100 text-slate-700">Cancel</button>
+            <button id="approve-modal-cancel-dashboard" type="button" class="px-4 py-2 rounded-lg bg-blue-100 text-blue-700">Cancel</button>
             <button id="approve-modal-confirm-dashboard" type="button" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Confirm Approve</button>
         </div>
     </div>
@@ -2099,16 +2181,86 @@
 
 <form id="delete-form-dashboard" method="POST" style="display:none;"><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form>
 
-<div id="delete-modal-dashboard" class="hidden fixed inset-0 z-50 items-center justify-center">
-    <div class="fixed inset-0 bg-black/50"></div>
-    <div class="bg-white rounded-lg p-6 z-10 max-w-md w-full">
-        <h3 class="text-lg font-bold text-red-700 mb-2">Delete Request</h3>
-        <p id="delete-modal-title-dashboard" class="text-sm text-slate-700 mb-4"></p>
-        <div class="flex justify-end gap-3">
-            <button id="delete-modal-cancel-dashboard" type="button" class="px-4 py-2 rounded-lg bg-gray-100 text-slate-700">Cancel</button>
-            <button id="delete-modal-confirm-dashboard" type="button" class="px-4 py-2 rounded-lg bg-red-600 text-white">Confirm Delete</button>
+<div id="delete-modal-dashboard" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300">
+        <!-- Enhanced Header -->
+        <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-t-2xl">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-white/20 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold">Confirm Deletion</h3>
+                    <p class="text-red-100 text-sm">This action cannot be undone</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Content -->
+        <div class="p-6">
+            <div class="mb-6">
+                <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <p class="font-semibold text-red-800 mb-2">⚠️ Critical Action</p>
+                            <p id="delete-modal-title-dashboard" class="text-sm text-red-700"></p>
+                            <div class="mt-3 text-sm text-red-700">
+                                <p class="font-medium mb-1">This will also:</p>
+                                <ul class="list-disc list-inside space-y-1 pl-2">
+                                    <li>Remove all associated data permanently</li>
+                                    <li>Notify affected users if applicable</li>
+                                    <li>Update system records and logs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Actions -->
+            <div class="flex gap-3">
+                <button id="delete-modal-cancel-dashboard" 
+                        type="button" 
+                        class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all duration-200 hover:scale-105">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Cancel
+                    </div>
+                </button>
+                <button id="delete-modal-confirm-dashboard" 
+                        type="button" 
+                        class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-lg">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Confirm Delete
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Mobile Floating Action Button - Only visible on mobile -->
+<div class="fixed bottom-6 right-6 z-50 sm:hidden">
+    <a href="<?php echo e(route('events.create')); ?>"
+       class="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 
+              text-white w-14 h-14 rounded-full shadow-2xl hover:shadow-xl 
+              flex items-center justify-center transition-all duration-300 
+              hover:scale-110 active:scale-95 btn-no-select"
+       aria-label="Create Event">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+    </a>
 </div>
 
  <?php echo $__env->renderComponent(); ?>

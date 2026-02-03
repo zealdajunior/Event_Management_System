@@ -10,6 +10,9 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
         <!-- Trix Editor -->
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
@@ -17,6 +20,42 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Mobile-responsive utilities -->
+        <style>
+            /* Extra small screens (xs) breakpoint */
+            @media (min-width: 475px) {
+                .xs\\:flex-row { flex-direction: row !important; }
+                .xs\\:inline { display: inline !important; }
+                .xs\\:hidden { display: none !important; }
+            }
+            
+            /* Mobile button optimizations */
+            @media (max-width: 640px) {
+                .mobile-btn-stack {
+                    flex-direction: column;
+                    width: 100%;
+                }
+                .mobile-btn-stack > * {
+                    width: 100%;
+                    justify-content: center;
+                }
+                
+                /* Improved touch targets for mobile */
+                .btn-mobile {
+                    min-height: 44px;
+                    touch-action: manipulation;
+                }
+            }
+            
+            /* Prevent text selection on buttons */
+            .btn-no-select {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

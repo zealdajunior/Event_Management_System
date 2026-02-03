@@ -389,6 +389,146 @@
                         <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
                     </div>
 
+                    <!-- Reviews & Ratings Section -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-blue-100 mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl shadow-md">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">Reviews & Ratings</h3>
+                                    @if($event->rating_count > 0)
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <div class="flex text-yellow-500 text-lg">
+                                                {!! str_repeat('★', floor($event->average_rating)) !!}
+                                                @if($event->average_rating - floor($event->average_rating) >= 0.5)
+                                                    <span class="text-yellow-300">★</span>
+                                                @endif
+                                                {!! str_repeat('☆', 5 - ceil($event->average_rating)) !!}
+                                            </div>
+                                            <span class="text-gray-700 font-semibold">{{ number_format($event->average_rating, 1) }} out of 5</span>
+                                            <span class="text-gray-500">({{ $event->rating_count }} {{ Str::plural('review', $event->rating_count) }})</span>
+                                        </div>
+                                    @else
+                                        <p class="text-gray-500 mt-1">No reviews yet</p>
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            @if($event->canBeReviewedBy(auth()->user()))
+                                <a href="{{ route('reviews.create', $event) }}" 
+                                   class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600
+                                          text-white px-6 py-3 rounded-xl font-bold shadow-md hover:shadow-lg
+                                          transform hover:scale-105 transition-all duration-200
+                                          flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    Write a Review
+                                </a>
+                            @endif
+                        </div>
+
+                        @if($event->rating_count > 0)
+                            <!-- Rating Distribution -->
+                            <div class="mb-8">
+                                <h4 class="font-bold text-gray-900 mb-4">Rating Distribution</h4>
+                                @php $distribution = $event->rating_distribution; @endphp
+                                <div class="space-y-2">
+                                    @for($i = 5; $i >= 1; $i--)
+                                        @php
+                                            $count = $distribution[$i] ?? 0;
+                                            $percentage = $event->rating_count > 0 ? ($count / $event->rating_count) * 100 : 0;
+                                        @endphp
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm font-medium text-gray-700 w-12">{{ $i }} stars</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-3">
+                                                <div class="h-3 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full transition-all duration-500"
+                                                     style="width: {{ $percentage }}%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-12">{{ $count }}</span>
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
+
+                            <!-- Recent Reviews -->
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="font-bold text-gray-900">Recent Reviews</h4>
+                                    <a href="{{ route('reviews.index', $event) }}" 
+                                       class="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors">
+                                        View all reviews →
+                                    </a>
+                                </div>
+                                
+                                @php 
+                                    $recentReviews = $event->approvedReviews()->with('user')->latest()->take(3)->get(); 
+                                @endphp
+                                
+                                <div class="space-y-4">
+                                    @forelse($recentReviews as $review)
+                                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                                        {{ strtoupper(substr($review->author_name, 0, 1)) }}
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">{{ $review->author_name }}</p>
+                                                        <div class="flex items-center gap-2">
+                                                            <div class="flex text-yellow-500">
+                                                                {!! str_repeat('★', $review->rating) !!}
+                                                                {!! str_repeat('☆', 5 - $review->rating) !!}
+                                                            </div>
+                                                            <span class="text-xs text-gray-500">{{ $review->created_at->diffForHumans() }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                @if($review->canBeEditedBy(auth()->user()))
+                                                    <div class="flex items-center gap-2">
+                                                        <a href="{{ route('reviews.edit', $review) }}" 
+                                                           class="text-blue-600 hover:text-blue-700 text-sm">Edit</a>
+                                                        <form method="POST" action="{{ route('reviews.destroy', $review) }}" 
+                                                              class="inline" 
+                                                              onsubmit="return confirm('Are you sure you want to delete this review?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="text-red-600 hover:text-red-700 text-sm">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            @if($review->comment)
+                                                <p class="text-gray-700 text-sm">{{ $review->comment }}</p>
+                                            @endif
+                                        </div>
+                                    @empty
+                                        <div class="text-center py-8 text-gray-500">
+                                            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.13 8.13 0 01-2.939-.543l-3.7 1.443c-.78.297-1.522-.405-1.225-1.185l1.443-3.7A8.13 8.13 0 014 12 8 8 0 0112 4c4.418 0 8 3.582 8 8z"/>
+                                            </svg>
+                                            <p class="font-medium">No reviews yet</p>
+                                            <p class="text-sm">Be the first to share your experience!</p>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        @else
+                            <div class="text-center py-8 text-gray-500">
+                                <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                                </svg>
+                                <p class="font-medium">No reviews yet</p>
+                                <p class="text-sm">This event hasn't been reviewed yet. Check back after the event!</p>
+                            </div>
+                        @endif
+                    </div>
+
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap items-center justify-center gap-3">
                         @auth
@@ -407,7 +547,7 @@
                                 </button>
                             </form>
                         @endauth
-                        <a href="{{ route('user.dashboard') }}"
+                        <a href="@dashboardRoute"
                            class="group relative bg-blue-50 hover:bg-blue-100
                                   active:scale-95 transition-all duration-300
                                   text-gray-900 px-5 py-2.5 rounded-xl font-bold text-sm
@@ -416,7 +556,7 @@
                             <svg class="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                             </svg>
-                            <span>Back to Dashboard</span>
+                            <span>Back to {{ (auth()->user()->role === 'admin' || auth()->user()->role === 'super_admin') ? 'Admin' : 'User' }} Dashboard</span>
                         </a>
                     </div>
                 </div>

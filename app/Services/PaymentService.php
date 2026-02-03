@@ -70,6 +70,10 @@ class PaymentService
         // Send payment received notification
         $booking->user->notify(new \App\Notifications\PaymentReceivedNotification($payment));
 
+        // Send ticket email with PDF attachment
+        \Illuminate\Support\Facades\Mail::to($booking->user->email)
+            ->send(new \App\Mail\TicketDeliveryMail($booking));
+
         Log::info('Virtual payment processed successfully', [
             'payment_id' => $payment->id,
             'booking_id' => $booking->id,
@@ -139,6 +143,13 @@ class PaymentService
                     'status' => 'paid',
                     'payment_id' => $payment->id,
                 ]);
+
+                // Send payment received notification
+                $booking->user->notify(new \App\Notifications\PaymentReceivedNotification($payment));
+
+                // Send ticket email with PDF attachment
+                \Illuminate\Support\Facades\Mail::to($booking->user->email)
+                    ->send(new \App\Mail\TicketDeliveryMail($booking));
 
                 Log::info('Stripe payment processed successfully', [
                     'payment_id' => $payment->id,
