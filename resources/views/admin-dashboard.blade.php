@@ -1781,106 +1781,107 @@
     {{-- ================= MANAGEMENT TAB ================= --}}
     @if(auth()->user()->isSuperAdmin())
     <div id="management-tab" class="tab-content hidden animate-fadeIn">
-        <div class="bg-white rounded-3xl shadow-sm p-8 border border-purple-50">
-            <div class="flex justify-between items-center mb-8">
+        <div class="bg-white rounded-3xl shadow-sm p-4 sm:p-6 lg:p-8 border border-purple-50">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8">
                 <div>
-                    <h3 class="text-2xl font-black text-black mb-2">
+                    <h3 class="text-xl sm:text-2xl font-black text-black mb-1 sm:mb-2">
                         Super Admin Management
                     </h3>
-                    <p class="text-gray-600">Manage admins, users, and system-wide settings</p>
+                    <p class="text-sm sm:text-base text-gray-600">Manage admins, users, and system-wide settings</p>
                 </div>
                 <a href="{{ route('admin.management.index') }}"
-                   class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(147,51,234,0.3)] hover:shadow-[0_8px_20px_rgba(147,51,234,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                   class="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-[0_4px_12px_rgba(147,51,234,0.3)] hover:shadow-[0_8px_20px_rgba(147,51,234,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 w-full sm:w-auto">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path d="M15 8a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    Full Management Panel
+                    <span class="hidden sm:inline">Full Management Panel</span>
+                    <span class="sm:hidden">Manage</span>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 <!-- Quick Stats -->
-                <div class="bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-lg font-bold">Total Admins</h4>
-                        <svg class="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <h4 class="text-base sm:text-lg font-bold">Total Admins</h4>
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
                         </svg>
                     </div>
-                    <p class="text-4xl font-black">{{ \App\Models\User::where('role', 'admin')->count() }}</p>
+                    <p class="text-3xl sm:text-4xl font-black">{{ \App\Models\User::where('role', 'admin')->count() }}</p>
                 </div>
 
-                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-lg font-bold">Total Users</h4>
-                        <svg class="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <h4 class="text-base sm:text-lg font-bold">Total Users</h4>
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
                         </svg>
                     </div>
-                    <p class="text-4xl font-black">{{ \App\Models\User::where('role', 'user')->count() }}</p>
+                    <p class="text-3xl sm:text-4xl font-black">{{ \App\Models\User::where('role', 'user')->count() }}</p>
                 </div>
 
-                <div class="bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-lg font-bold">Super Admins</h4>
-                        <svg class="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <h4 class="text-base sm:text-lg font-bold">Super Admins</h4>
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                     </div>
-                    <p class="text-4xl font-black">{{ \App\Models\User::where('is_super_admin', true)->count() }}</p>
+                    <p class="text-3xl sm:text-4xl font-black">{{ \App\Models\User::where('is_super_admin', true)->count() }}</p>
                 </div>
             </div>
 
             <!-- Quick Actions -->
-            <div class="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
-                <h4 class="text-lg font-bold text-gray-900 mb-4">Quick Actions</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a href="{{ route('admin.management.index') }}" class="flex items-center p-4 bg-white rounded-xl border border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all duration-300">
-                        <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-white">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mt-6 sm:mt-8 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-200">
+                <h4 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Quick Actions</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <a href="{{ route('admin.management.index') }}" class="flex items-center p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all duration-300">
+                        <div class="flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-white">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                         </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-bold text-gray-900">Manage Users</p>
-                            <p class="text-xs text-gray-600">Promote, demote, or delete users</p>
+                        <div class="ml-3 sm:ml-4">
+                            <p class="text-xs sm:text-sm font-bold text-gray-900">Manage Users</p>
+                            <p class="text-[10px] sm:text-xs text-gray-600">Promote, demote, or delete users</p>
                         </div>
                     </a>
 
-                    <a href="{{ route('admin.management.index') }}#create-admin" class="flex items-center p-4 bg-white rounded-xl border border-green-200 hover:border-green-400 hover:shadow-lg transition-all duration-300">
-                        <div class="flex-shrink-0 h-12 w-12 rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('admin.management.index') }}#create-admin" class="flex items-center p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-green-200 hover:border-green-400 hover:shadow-lg transition-all duration-300">
+                        <div class="flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12 rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                             </svg>
                         </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-bold text-gray-900">Create New Admin</p>
-                            <p class="text-xs text-gray-600">Add a new administrator account</p>
+                        <div class="ml-3 sm:ml-4">
+                            <p class="text-xs sm:text-sm font-bold text-gray-900">Create New Admin</p>
+                            <p class="text-[10px] sm:text-xs text-gray-600">Add a new administrator account</p>
                         </div>
                     </a>
                 </div>
             </div>
 
             <!-- System Info -->
-            <div class="mt-8 bg-gray-50 rounded-2xl p-6 border border-gray-200">
-                <h4 class="text-lg font-bold text-gray-900 mb-4">System Information</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div class="mt-6 sm:mt-8 bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-200">
+                <h4 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">System Information</h4>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-center">
                     <div>
-                        <p class="text-2xl font-bold text-blue-600">{{ \App\Models\Event::count() }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Total Events</p>
+                        <p class="text-xl sm:text-2xl font-bold text-blue-600">{{ \App\Models\Event::count() }}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 mt-1">Total Events</p>
                     </div>
                     <div>
-                        <p class="text-2xl font-bold text-green-600">{{ \App\Models\Booking::count() }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Total Bookings</p>
+                        <p class="text-xl sm:text-2xl font-bold text-green-600">{{ \App\Models\Booking::count() }}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 mt-1">Total Bookings</p>
                     </div>
                     <div>
-                        <p class="text-2xl font-bold text-purple-600">{{ \App\Models\Payment::sum('amount') }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Total Revenue</p>
+                        <p class="text-xl sm:text-2xl font-bold text-purple-600">{{ \App\Models\Payment::sum('amount') }}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 mt-1">Total Revenue</p>
                     </div>
                     <div>
-                        <p class="text-2xl font-bold text-orange-600">{{ \App\Models\EventRequest::where('status', 'pending')->count() }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Pending Requests</p>
+                        <p class="text-xl sm:text-2xl font-bold text-orange-600">{{ \App\Models\EventRequest::where('status', 'pending')->count() }}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 mt-1">Pending Requests</p>
                     </div>
                 </div>
             </div>

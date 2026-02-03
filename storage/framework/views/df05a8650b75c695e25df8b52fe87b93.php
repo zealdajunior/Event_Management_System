@@ -787,29 +787,29 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links animate-fadeIn" style="animation-delay: 0.2s;">
-                @auth
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a>
-                    @else
-                        <a href="{{ route('user.dashboard') }}"><i class="fas fa-user"></i> Dashboard</a>
-                    @endif
-                    <a href="{{ route('profile.show') }}"><i class="fas fa-cog"></i> Settings</a>
-                    <a href="{{ route('logout') }}" 
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isAdmin()): ?>
+                        <a href="<?php echo e(route('admin.dashboard')); ?>"><i class="fas fa-chart-line"></i> Dashboard</a>
+                    <?php else: ?>
+                        <a href="<?php echo e(route('user.dashboard')); ?>"><i class="fas fa-user"></i> Dashboard</a>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    <a href="<?php echo e(route('profile.show')); ?>"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="<?php echo e(route('logout')); ?>" 
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                        class="btn btn-outline">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
+                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                        <?php echo csrf_field(); ?>
                     </form>
-                @else
+                <?php else: ?>
                     <a href="#features">Features</a>
                     <a href="#modules">Modules</a>
                     <a href="#architecture">Architecture</a>
-                    <a href="{{ route('login') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('login')); ?>" class="btn btn-primary">
                         <i class="fas fa-sign-in-alt"></i> Sign In
                     </a>
-                @endauth
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
         </div>
     </nav>
@@ -827,24 +827,24 @@
                     from small workshops to large conferences and festivals.
                 </p>
                 <div class="hero-actions animate-fadeInUp" style="animation-delay: 0.3s;">
-                    @auth
-                        @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isAdmin()): ?>
+                            <a href="<?php echo e(route('admin.dashboard')); ?>" class="btn btn-primary">
                                 <i class="fas fa-tachometer-alt"></i> Admin Dashboard
                             </a>
-                        @else
-                            <a href="{{ route('user.dashboard') }}" class="btn btn-primary">
+                        <?php else: ?>
+                            <a href="<?php echo e(route('user.dashboard')); ?>" class="btn btn-primary">
                                 <i class="fas fa-calendar-check"></i> My Dashboard
                             </a>
-                        @endif
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-primary">
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    <?php else: ?>
+                        <a href="<?php echo e(route('login')); ?>" class="btn btn-primary">
                             <i class="fas fa-sign-in-alt"></i> Sign In
                         </a>
-                        <a href="{{ route('register') }}" class="btn btn-outline">
+                        <a href="<?php echo e(route('register')); ?>" class="btn btn-outline">
                             <i class="fas fa-user-plus"></i> Create Account
                         </a>
-                    @endauth
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </div>
             </div>
 
@@ -1144,21 +1144,21 @@
             streamlines registration processes, and provides powerful analytics. It reduces manual effort, improves accuracy, 
             enhances security, and delivers an exceptional user experience for administrators, organizers, and attendees alike.</p>
             <div style="margin-top: 2rem; text-align: center;">
-                @auth
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isAdmin()): ?>
+                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="btn btn-primary">
                             <i class="fas fa-rocket"></i> Go to Dashboard
                         </a>
-                    @else
-                        <a href="{{ route('user.dashboard') }}" class="btn btn-primary">
+                    <?php else: ?>
+                        <a href="<?php echo e(route('user.dashboard')); ?>" class="btn btn-primary">
                             <i class="fas fa-rocket"></i> Go to Dashboard
                         </a>
-                    @endif
-                @else
-                    <a href="{{ route('register') }}" class="btn btn-primary">
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                <?php else: ?>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-primary">
                         <i class="fas fa-rocket"></i> Get Started Now
                     </a>
-                @endauth
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
         </div>
     </section>
@@ -1261,7 +1261,7 @@
                     <li><a href="#features">Features</a></li>
                     <li><a href="#modules">Modules</a></li>
                     <li><a href="#architecture">Architecture</a></li>
-                    <li><a href="{{ route('register') }}">Pricing</a></li>
+                    <li><a href="<?php echo e(route('register')); ?>">Pricing</a></li>
                 </ul>
             </div>
 
@@ -1287,7 +1287,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} EventHub. All rights reserved. Built with ❤️ for event organizers worldwide.</p>
+            <p>&copy; <?php echo e(date('Y')); ?> EventHub. All rights reserved. Built with ❤️ for event organizers worldwide.</p>
         </div>
     </footer>
 
@@ -1324,3 +1324,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\Users\Zealda Junior\Desktop\Event\event_management\resources\views/welcome.blade.php ENDPATH**/ ?>

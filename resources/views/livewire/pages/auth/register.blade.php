@@ -44,6 +44,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         $validated['password'] = Hash::make($validated['password']);
         $validated['role'] = 'user'; // Set default role for new users
+        $validated['onboarding_completed'] = true; // Skip onboarding for new users
 
         $user = User::create($validated);
         event(new Registered($user));

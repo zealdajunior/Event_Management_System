@@ -179,28 +179,43 @@ class PaymentService
      */
     public function getAvailablePaymentMethods(): array
     {
-        $methods = [
-            [
-                'id' => 'virtual',
-                'name' => 'Virtual Card (Demo)',
-                'description' => 'Test payment method for development',
-                'icon' => 'credit-card',
-                'available' => true,
-            ],
-        ];
+        $isSandbox = config('payments.sandbox_mode', true);
+        $methods = [];
 
-        // Add Stripe if configured
-        if (config('services.stripe.public')) {
+        foreach (config('payments.payment_methods', []) as $methodId => $methodConfig) {
+            // Skip if method is not enabled
+            if (!($methodConfig['enabled'] ?? false)) {
+                continue;
+            }
+
+            // Skip sandbox-only methods in production
+            if (($methodConfig['sandbox_only'] ?? false) && !$isSandbox) {
+                continue;
+            }
+
             $methods[] = [
-                'id' => 'stripe',
-                'name' => 'Credit/Debit Card',
-                'description' => 'Powered by Stripe',
-                'icon' => 'stripe',
+                'id' => $methodId,
+                'name' => $methodConfig['name'] ?? ucfirst($methodId),
+                'description' => $methodConfig['description'] ?? '',
+                'icon' => $this->getMethodIcon($methodId),
                 'available' => true,
+                'sandbox' => $isSandbox && ($methodConfig['sandbox_only'] ?? false),
             ];
         }
 
         return $methods;
+    }
+
+    /**
+     * Get icon for payment method
+     */
+    protected function getMethodIcon(string $method): string
+    {
+        return match($method) {
+            'stripe' => 'stripe',
+            'virtual' => 'credit-card',
+            default => 'credit-card',
+        };
     }
 
     /**

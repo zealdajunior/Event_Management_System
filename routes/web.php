@@ -16,12 +16,43 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\TicketDownloadController;
 use App\Http\Controllers\WaitlistController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\WebhookController;
 
+// Home page - welcome page for guests, landing page for authenticated users
 Route::get('/', function () {
+    // Show welcome page (redesigned) for guests BEFORE login
+    if (!auth()->check()) {
+        $upcomingEvents = \App\Models\Event::where('date', '>=', now())->orderBy('date')->take(6)->get();
+        $pastEvents     = \App\Models\Event::past()->with('venue','bookings')->orderByDesc('date')->take(3)->get();
+        return view('welcome', compact('upcomingEvents', 'pastEvents'));
+    }
+    
+    // Show landing page for authenticated users AFTER login
+    $upcomingEvents = \App\Models\Event::where('date', '>=', now())
+        ->with(['venue', 'bookings'])
+        ->orderBy('date')
+        ->take(6)
+        ->get();
+    
+    $recentEvents = \App\Models\Event::where('date', '<', now())
+        ->with(['venue', 'bookings'])
+        ->orderByDesc('date')
+        ->take(3)
+        ->get();
+    
+    return view('landing', compact('upcomingEvents', 'recentEvents'));
+})->name('home');
+
+// Events browse page (authenticated users only)
+Route::get('/events', function () {
     $upcomingEvents = \App\Models\Event::where('date', '>=', now())->orderBy('date')->take(6)->get();
     $pastEvents     = \App\Models\Event::past()->with('venue','bookings')->orderByDesc('date')->take(3)->get();
     return view('welcome', compact('upcomingEvents', 'pastEvents'));
-})->name('home');
+})->middleware('auth')->name('events.browse');
+
+// Webhook Routes (No authentication - Payment gateways need direct access)
+Route::post('/webhooks/stripe', [WebhookController::class, 'stripe'])->name('webhooks.stripe');
+Route::post('/webhooks/test', [WebhookController::class, 'test'])->name('webhooks.test');
 
 // Password Reset Routes - Using Livewire for modern SPA-like experience
 Route::view('forgot-password', 'auth.forgot-password')->name('password.request');
@@ -61,13 +92,13 @@ Route::middleware('auth')->get('/dashboard', function () {
     return redirect()->route('user.dashboard');
 })->name('dashboard');
 
-    // Profile route (legacy)
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
-
     // Settings pages (wrappers that mount settings Livewire components)
     Route::middleware('auth')->group(function () {
+        // Profile route (legacy)
+        Route::get('/profile', function () {
+            return view('profile');
+        })->name('profile');
+        
         Route::get('/settings/profile', fn () => view('settings.profile'))->name('profile.edit');
         Route::get('/settings/password', fn () => view('settings.password'))->name('user-password.edit');
         // two-factor requires password confirmation
@@ -192,6 +223,14 @@ Route::middleware('auth')->get('/dashboard', function () {
         Route::post('/admin/users/{user}/toggle-super', [\App\Http\Controllers\AdminManagementController::class, 'toggleSuperAdmin'])->name('admin.users.toggle-super');
         Route::post('/feedback/{id}/approve', [FeedbackController::class, 'approve'])->name('feedback.approve');
         Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
+        
+        // Payment Reconciliation Routes (Admin only)
+        Route::get('/admin/payments/reconciliation', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'index'])->name('admin.payments.reconciliation');
+        Route::post('/admin/payments/{payment}/verify', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'verifyPayment'])->name('admin.payments.verify');
+        Route::get('/admin/payments/export', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'export'])->name('admin.payments.export');
+        Route::post('/admin/payments/{payment}/reconcile', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'reconcile'])->name('admin.payments.reconcile');
+        Route::post('/admin/payments/auto-reconcile', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'autoReconcile'])->name('admin.payments.auto-reconcile');
+        Route::get('/admin/payments/webhook-logs', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'webhookLogs'])->name('admin.payments.webhook-logs');
     });
 
     // Local-only helper to ensure a default admin user exists (safe in local environment only)
