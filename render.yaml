@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: event-management-system
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_KEY
+        value: base64:F+4L1u6Zc2aTvaBjBVxUDnyu5Rs6+Xk3fPBEeshSeLs=
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+
+databases:
+  - name: event-management-db
+    databaseName: event_management
+    user: event_user
+    plan: free
