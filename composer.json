@@ -20,7 +20,7 @@
         "livewire/flux": "^2.1.1",
         "livewire/livewire": "^3.6.4",
         "livewire/volt": "^1.7.0",
-        "stripe/stripe-php": "^19.2"
+        "stripe/stripe-php": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

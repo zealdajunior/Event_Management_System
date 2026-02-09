@@ -30,11 +30,20 @@ class EventController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
+            'summary' => 'nullable|string|max:500',
             'description' => 'nullable|string',
             'date' => 'required|date',
             'end_date' => 'nullable|date|after:date',
             'location' => 'required|string|max:255',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'city' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'country_code' => 'nullable|string|max:2',
             'venue_id' => 'nullable|exists:venues,id',
+            'venue_name' => 'nullable|string|max:255',
+            'room_details' => 'nullable|string|max:255',
+            'event_format' => 'nullable|in:physical,online,hybrid',
             'capacity' => 'nullable|integer|min:1',
             'price' => 'nullable|numeric|min:0',
             'category_id' => 'nullable|exists:categories,id',
@@ -43,15 +52,34 @@ class EventController extends Controller
             'organizer_name' => 'nullable|string|max:255',
             'organizer_email' => 'nullable|email|max:255',
             'organizer_phone' => 'nullable|string|max:255',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB max per image
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg,bmp,tiff,tif,heic,heif|max:10240', // 10MB max per image
             'image_captions.*' => 'nullable|string|max:500', // Caption for each image
-            'videos.*' => 'nullable|mimes:mp4,mov,avi,wmv,flv|max:102400', // 100MB max per video
+            'videos.*' => 'nullable|mimes:mp4,mov,avi,wmv,flv,webm,mkv,mpeg,mpg|max:102400', // 100MB max per video
         ]);
 
         $data['user_id'] = auth()->id();
         $data['status'] = 'active';
 
         $event = Event::create($data);
+
+        // Create a default ticket if the event has a price or capacity
+        if (!$event->tickets()->exists()) {
+            if ($event->price && $event->price > 0) {
+                // Paid event - create General Admission ticket
+                $event->tickets()->create([
+                    'type' => 'General Admission',
+                    'price' => $event->price,
+                    'quantity' => $event->capacity ?? 100,
+                ]);
+            } elseif ($event->capacity && $event->capacity > 0) {
+                // Free event with capacity - create free ticket
+                $event->tickets()->create([
+                    'type' => 'Free Entry',
+                    'price' => 0,
+                    'quantity' => $event->capacity,
+                ]);
+            }
+        }
 
         // Handle image uploads with captions
         if ($request->hasFile('images')) {

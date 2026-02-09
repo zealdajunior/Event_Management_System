@@ -25,6 +25,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Platform Fee Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure the platform commission percentage taken from each ticket sale.
+    | This amount is deducted from event organizer earnings.
+    |
+    */
+    'platform_fee_percentage' => env('PLATFORM_FEE_PERCENTAGE', 10.00), // Platform takes 10% by default
+    'payout_delay_days' => env('PAYOUT_DELAY_DAYS', 7), // Days after event before payout is available
+
+    /*
+    |--------------------------------------------------------------------------
     | Webhook Configuration
     |--------------------------------------------------------------------------
     |

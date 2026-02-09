@@ -54,9 +54,62 @@ Route::get('/events', function () {
 Route::post('/webhooks/stripe', [WebhookController::class, 'stripe'])->name('webhooks.stripe');
 Route::post('/webhooks/test', [WebhookController::class, 'test'])->name('webhooks.test');
 
-// Password Reset Routes - Using Livewire for modern SPA-like experience
-Route::view('forgot-password', 'auth.forgot-password')->name('password.request');
-Route::view('verify-code', 'auth.verify-code')->name('password.verify-code');
+// Ticket purchase and payment routes
+Route::middleware('auth')->group(function () {
+    Route::get('/events/{event}/checkout', [\App\Http\Controllers\TicketController::class, 'checkout'])->name('tickets.checkout');
+    Route::post('/events/{event}/checkout', [\App\Http\Controllers\TicketController::class, 'processCheckout'])->name('tickets.process-checkout');
+    Route::get('/payment/{payment}/success', [\App\Http\Controllers\TicketController::class, 'success'])->name('payment.success');
+    Route::get('/payment/{payment}/cancel', [\App\Http\Controllers\TicketController::class, 'cancel'])->name('payment.cancel');
+    Route::get('/my-tickets', [\App\Http\Controllers\TicketController::class, 'myTickets'])->name('tickets.my-tickets');
+    Route::get('/tickets/{ticket}', [\App\Http\Controllers\TicketController::class, 'show'])->name('tickets.show');
+    
+    // Check-in routes
+    Route::get('/events/{event}/scanner', [\App\Http\Controllers\TicketController::class, 'scannerPage'])->name('tickets.scanner');
+    Route::post('/tickets/check-in', [\App\Http\Controllers\TicketController::class, 'checkIn'])->name('tickets.check-in');
+    Route::get('/events/{event}/check-in-stats', [\App\Http\Controllers\TicketController::class, 'checkInStats'])->name('tickets.check-in-stats');
+});
+
+// AI Chat routes
+Route::post('/chat/send', [\App\Http\Controllers\ChatController::class, 'sendMessage'])->name('chat.send');
+Route::get('/chat/history', [\App\Http\Controllers\ChatController::class, 'getHistory'])->name('chat.history');
+Route::post('/chat/clear', [\App\Http\Controllers\ChatController::class, 'clearHistory'])->name('chat.clear');
+
+// API Routes for event creation
+Route::get('/api/venues/search', [\App\Http\Controllers\Api\VenueSearchController::class, 'search'])->name('api.venues.search');
+
+// User verification and earnings routes
+Route::middleware('auth')->group(function () {
+    Route::get('/verification', [\App\Http\Controllers\VerificationController::class, 'showVerificationForm'])->name('verification.form');
+    Route::post('/verification', [\App\Http\Controllers\VerificationController::class, 'submitVerification'])->name('verification.submit');
+    Route::post('/events/{event}/verification-document', [\App\Http\Controllers\VerificationController::class, 'uploadEventDocument'])->name('verification.event-document');
+    Route::get('/earnings', [\App\Http\Controllers\VerificationController::class, 'earnings'])->name('verification.earnings');
+    Route::post('/payouts/request', [\App\Http\Controllers\VerificationController::class, 'requestPayout'])->name('payouts.request');
+});
+
+// Admin approval routes
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/approvals', [\App\Http\Controllers\Admin\ApprovalController::class, 'dashboard'])->name('approval.dashboard');
+    
+    // Event approval
+    Route::get('/events/{event}/review', [\App\Http\Controllers\Admin\ApprovalController::class, 'reviewEvent'])->name('events.review');
+    Route::post('/events/{event}/approve', [\App\Http\Controllers\Admin\ApprovalController::class, 'approveEvent'])->name('events.approve');
+    Route::post('/events/{event}/reject', [\App\Http\Controllers\Admin\ApprovalController::class, 'rejectEvent'])->name('events.reject');
+    
+    // User verification approval
+    Route::get('/users/{user}/review', [\App\Http\Controllers\Admin\ApprovalController::class, 'reviewUser'])->name('users.review');
+    Route::post('/users/{user}/approve', [\App\Http\Controllers\Admin\ApprovalController::class, 'approveUser'])->name('users.approve');
+    Route::post('/users/{user}/reject', [\App\Http\Controllers\Admin\ApprovalController::class, 'rejectUser'])->name('users.reject');
+    
+    // Payout approval
+    Route::get('/payouts/{payout}/review', [\App\Http\Controllers\Admin\ApprovalController::class, 'reviewPayout'])->name('payouts.review');
+    Route::post('/payouts/{payout}/approve', [\App\Http\Controllers\Admin\ApprovalController::class, 'approvePayout'])->name('payouts.approve');
+    Route::post('/payouts/{payout}/reject', [\App\Http\Controllers\Admin\ApprovalController::class, 'rejectPayout'])->name('payouts.reject');
+    
+    // Revenue report
+    Route::get('/revenue', [\App\Http\Controllers\Admin\ApprovalController::class, 'revenueReport'])->name('revenue');
+});
+
+// Password reset routes are handled by routes/auth.php
 
 // Event creation (accessible to both users and admins) - MUST be before {event} route
 Route::middleware('auth')->group(function () {
@@ -86,6 +139,11 @@ Route::middleware('auth')->get('/dashboard', function () {
     // Super admins and regular admins go to admin dashboard
     if ($user && $user->role === 'admin') {
         return redirect()->route('admin.dashboard');
+    }
+    
+    // Check if regular user needs to complete onboarding
+    if ($user && !$user->onboarding_completed) {
+        return redirect()->route('onboarding.step1');
     }
     
     // Regular users go to user dashboard

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Test</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .status {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Maps API Test</h1>
+    <div id="status" class="status">Loading map...</div>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            console.log('initMap called successfully!');
+            document.getElementById('status').className = 'status success';
+            document.getElementById('status').innerHTML = '✅ Google Maps API loaded successfully!';
+            
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.7128, lng: -74.0060 },
+                zoom: 12
+            });
+
+            new google.maps.Marker({
+                position: { lat: 40.7128, lng: -74.0060 },
+                map: map,
+                title: 'Test Marker'
+            });
+        }
+
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            document.getElementById('status').className = 'status error';
+            document.getElementById('status').innerHTML = '❌ Error: ' + msg;
+            console.error('Error:', msg, error);
+            return false;
+        };
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZM60j346yA-2O7f_zhPUV2yhd3YEsGos&callback=initMap" async defer></script>
+</body>
+</html>

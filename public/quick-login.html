@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Login - Admin</title>
+    <style>
+        body { font-family: Arial; max-width: 400px; margin: 100px auto; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { margin: 0 0 20px; color: #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background: #45a049; }
+        .accounts { margin: 20px 0; padding: 15px; background: #f0f0f0; border-radius: 5px; font-size: 13px; }
+        .accounts div { margin: 5px 0; padding: 8px; background: white; border-radius: 3px; cursor: pointer; }
+        .accounts div:hover { background: #e8f5e9; }
+        #result { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; font-size: 14px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🔐 Admin Login</h2>
+        
+        <div class="accounts">
+            <strong>Quick Select:</strong>
+            <div onclick="setLogin('admin@example.com')">👑 Super Admin</div>
+            <div onclick="setLogin('zealdajunior4@gmail.com')">👑 Your Admin</div>
+        </div>
+        
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" value="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function setLogin(email) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = 'password';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.className = '';
+            result.textContent = 'Logging in...';
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                // Get CSRF token
+                const pageResponse = await fetch('/login');
+                const pageText = await pageResponse.text();
+                const csrfMatch = pageText.match(/<meta name="csrf-token" content="([^"]+)"/);
+                const csrfToken = csrfMatch ? csrfMatch[1] : '';
+                
+                if (!csrfToken) {
+                    throw new Error('CSRF token not found');
+                }
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('email', email);
+                formData.append('password', password);
+                
+                // Submit login
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    },
+                    body: formData,
+                    credentials: 'same-origin',
+                    redirect: 'manual'
+                });
+                
+                if (response.type === 'opaqueredirect' || response.status === 302 || response.status === 0) {
+                    result.className = 'success';
+                    result.textContent = '✅ Login successful! Redirecting...';
+                    setTimeout(() => window.location.href = '/dashboard', 1000);
+                } else if (response.ok) {
+                    result.className = 'success';
+                    result.textContent = '✅ Login successful! Redirecting...';
+                    setTimeout(() => window.location.href = '/dashboard', 1000);
+                } else {
+                    const data = await response.json().catch(() => ({ message: 'Unknown error' }));
+                    result.className = 'error';
+                    result.textContent = '❌ ' + (data.message || data.errors?.email?.[0] || 'Login failed');
+                }
+            } catch (error) {
+                result.className = 'error';
+                result.textContent = '❌ Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -14,11 +14,19 @@ class Event extends Model
 
     protected $fillable = [
         'name',
+        'summary',
         'description',
         'date',
         'end_date',
         'venue_id',
+        'venue_name',
+        'room_details',
         'location',
+        'city',
+        'country',
+        'country_code',
+        'latitude',
+        'longitude',
         'user_id',
         'status',
         'capacity',
@@ -36,6 +44,8 @@ class Event extends Model
         'registration_deadline',
         'additional_info',
         'event_type',
+        'event_format',
+        'online_event_link',
         'min_age',
         'max_age',
         'language',
@@ -43,6 +53,8 @@ class Event extends Model
         'contact_person',
         'website',
         'category_id',
+        'terms',
+        'cancellation_policy',
     ];
 
     protected $casts = [
@@ -136,6 +148,21 @@ class Event extends Model
     public function approvedReviews(): HasMany
     {
         return $this->hasMany(Review::class)->where('is_approved', true);
+    }
+
+    public function revenues(): HasMany
+    {
+        return $this->hasMany(EventRevenue::class);
+    }
+
+    public function verification()
+    {
+        return $this->hasOne(EventVerification::class);
+    }
+
+    public function approver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     // Scopes

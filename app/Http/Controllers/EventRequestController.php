@@ -35,7 +35,8 @@ class EventRequestController extends Controller
      */
     public function create()
     {
-        return view('event_requests.create');
+        $categories = \App\Models\Category::all();
+        return view('event_requests.create', compact('categories'));
     }
 
     /**
@@ -44,41 +45,67 @@ class EventRequestController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'event_title'          => 'required|string|max:255',
-            'event_description'    => 'required|string',
-            'start_date'           => 'required|date',
-            'end_date'             => 'required|date|after_or_equal:start_date',
-            'venue'                => 'required|string|max:255',
-            'expected_attendance'  => 'nullable|integer|min:1',
-            'event_category'       => 'nullable|string|max:255',
-            'target_audience'      => 'nullable|string',
-            'budget_estimate'      => 'nullable|numeric|min:0',
-            'ticket_pricing'       => 'nullable|string|max:255',
-            'special_requirements' => 'nullable|string',
-            'marketing_plan'       => 'nullable|string',
-            'contact_phone'        => 'nullable|string|max:255',
-            'contact_email'        => 'nullable|email|max:255',
-            'additional_notes'     => 'nullable|string',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB max per image
-            'videos.*' => 'nullable|mimes:mp4,mov,avi,wmv,flv|max:102400', // 100MB max per video
+            // Basic Information
+            'name'                 => 'required|string|max:255',
+            'category_id'          => 'required|exists:categories,id',
+            'summary'              => 'required|string|max:200',
+            'description'          => 'required|string',
+            
+            // Date and Time
+            'date'                 => 'required|date',
+            'end_date'             => 'required|date|after_or_equal:date',
+            
+            // Location Details
+            'event_format'         => 'required|in:physical,online,hybrid',
+            'location'             => 'nullable|string|max:500',
+            'latitude'             => 'nullable|numeric',
+            'longitude'            => 'nullable|numeric',
+            'country_code'         => 'nullable|string|max:2',
+            'venue_name'           => 'nullable|string|max:255',
+            'room_details'         => 'nullable|string|max:255',
+            'online_event_link'    => 'nullable|url|max:500',
+            
+            // Capacity and Pricing
+            'capacity'             => 'required|integer|min:1',
+            'price'                => 'required|numeric|min:0',
+            'event_type'           => 'required|in:public,private,vip,corporate',
+            
+            // Organizer Information
+            'organizer_name'       => 'nullable|string|max:255',
+            'organizer_email'      => 'required|email|max:255',
+            'organizer_phone'      => 'nullable|string|max:255',
+            
+            // Publish Settings
+            'status'               => 'nullable|in:draft,published',
+            'terms'                => 'accepted',
+            'cancellation_policy'  => 'accepted',
+            
+            // Media Files
+            'images.*'             => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg,bmp,tiff,tif,heic,heif|max:10240',
+            'image_captions.*'     => 'nullable|string|max:200',
+            'videos.*'             => 'nullable|mimes:mp4,mov,avi,wmv,flv,webm,mkv,mpeg,mpg|max:102400',
         ]);
 
-        $data['user_id'] = Auth::check() ? Auth::id() : null;
-        $data['status']  = 'pending';
+        // Set user_id and override status to pending (user submissions always need approval)
+        $data['user_id'] = Auth::id();
+        $data['status'] = 'pending';
 
         $eventRequest = EventRequest::create($data);
 
-        // Handle image uploads
+        // Handle image uploads with captions
         if ($request->hasFile('images')) {
+            $imageCaptions = $request->input('image_captions', []);
             foreach ($request->file('images') as $index => $image) {
-                $this->storeMedia($eventRequest, $image, 'image', $index);
+                $caption = $imageCaptions[$index] ?? null;
+                $this->storeMedia($eventRequest, $image, 'image', $index, $caption);
             }
         }
 
         // Handle video uploads
         if ($request->hasFile('videos')) {
+            $imageCount = count($request->file('images') ?? []);
             foreach ($request->file('videos') as $index => $video) {
-                $this->storeMedia($eventRequest, $video, 'video', $index + count($request->file('images') ?? []));
+                $this->storeMedia($eventRequest, $video, 'video', $index + $imageCount);
             }
         }
 
@@ -90,7 +117,7 @@ class EventRequestController extends Controller
 
         return redirect()
             ->route('event-requests.index')
-            ->with('status', 'Your event request has been submitted with media files and is pending approval.');
+            ->with('status', 'Your event request has been submitted successfully! Our team will review it within 24-48 hours.');
     }
 
     /**
@@ -237,7 +264,7 @@ class EventRequestController extends Controller
     /**
      * Store media file for an event request.
      */
-    private function storeMedia($eventRequest, $file, $type, $order)
+    private function storeMedia($eventRequest, $file, $type, $order, $caption = null)
     {
         $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
         $filePath = $file->storeAs('event_requests/' . $eventRequest->id . '/' . $type . 's', $fileName, 'public');
@@ -251,6 +278,7 @@ class EventRequestController extends Controller
             'file_size' => $file->getSize(),
             'order' => $order,
             'is_featured' => $order === 0,
+            'caption' => $caption,
         ]);
     }
 }

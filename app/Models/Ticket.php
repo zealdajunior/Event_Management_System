@@ -15,10 +15,17 @@ class Ticket extends Model
         'price',
         'quantity',
         'user_id',
+        'payment_id',
+        'ticket_number',
+        'qr_code',
+        'status',
+        'check_in_at',
+        'checked_in_by',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
+        'check_in_at' => 'datetime',
     ];
 
     public function event(): BelongsTo

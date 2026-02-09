@@ -39,20 +39,43 @@
                                 <h3 class="text-2xl font-black text-white">Select Ticket Type</h3>
                             </div>
                             <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                                <div>
-                                    <x-input-label for="ticket_id" :value="__('Available Tickets')" class="text-white font-semibold" />
-                                    <select id="ticket_id" class="block mt-1 w-full bg-white/10 border-white/20 text-white focus:border-purple-400 focus:ring-purple-400 rounded-xl" name="ticket_id" required>
-                                        <option value="" class="bg-gray-800">Choose a ticket type</option>
-                                        @foreach($event->tickets as $ticket)
-                                            @if($ticket->quantity > 0)
-                                                <option value="{{ $ticket->id }}" class="bg-gray-800">
-                                                    {{ $ticket->type }} - ${{ $ticket->price }} ({{ $ticket->quantity }} available)
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <x-input-error :messages="$errors->get('ticket_id')" class="mt-2 text-red-300" />
-                                </div>
+                                @if($event->tickets->count() > 0)
+                                    <div>
+                                        <x-input-label for="ticket_id" :value="__('Available Tickets')" class="text-white font-semibold" />
+                                        <select id="ticket_id" class="block mt-1 w-full bg-white/10 border-white/20 text-white focus:border-purple-400 focus:ring-purple-400 rounded-xl" name="ticket_id" required>
+                                            <option value="" class="bg-gray-800">Choose a ticket type</option>
+                                            @foreach($event->tickets as $ticket)
+                                                @if($ticket->quantity > 0)
+                                                    <option value="{{ $ticket->id }}" class="bg-gray-800">
+                                                        {{ $ticket->type }} - ${{ number_format($ticket->price, 2) }} ({{ $ticket->quantity }} available)
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('ticket_id')" class="mt-2 text-red-300" />
+                                    </div>
+                                @else
+                                    <div class="text-center py-8">
+                                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-yellow-500/20 mb-4">
+                                            <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-white mb-2">No Tickets Available</h3>
+                                        <p class="text-white/70 mb-4">This event doesn't have any ticket types yet.</p>
+                                        @if(Auth::id() === $event->user_id)
+                                            <a href="{{ route('tickets.create') }}?event_id={{ $event->id }}" 
+                                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
+                                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                                </svg>
+                                                Create Tickets
+                                            </a>
+                                        @else
+                                            <p class="text-white/60 text-sm">Please contact the event organizer to create tickets.</p>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                         </div>
 

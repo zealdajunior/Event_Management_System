@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Event;
+use App\Models\Payment;
 use App\Observers\EventObserver;
+use App\Observers\PaymentObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Register model observers
         Event::observe(EventObserver::class);
+        Payment::observe(PaymentObserver::class);
         
         // Add global helper for dashboard routing
         \Blade::directive('dashboardRoute', function () {

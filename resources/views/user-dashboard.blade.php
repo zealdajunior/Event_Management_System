@@ -2,27 +2,238 @@
     {{-- Chart.js CDN for interactive charts --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    {{-- ================= ANIMATIONS ================= --}}
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.6s ease-out forwards;
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-soft {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        .stagger-animation > * {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #667eea 0%, #764ba2 100%) border-box;
+            border: 2px solid transparent;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            33% { transform: translateY(-8px) translateX(8px); }
+            66% { transform: translateY(8px) translateX(-8px); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        .animate-rotate {
+            animation: rotate 20s linear infinite;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .animate-wave {
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .animate-gradient-shift {
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: glow 1.5s ease-in-out infinite;
+        }
+    </style>
+
     {{-- ================= HEADER ================= --}}
     <x-slot name="header">
-        <div class="bg-white dark:bg-blue-800 border-b border-blue-200 dark:border-blue-700 shadow-sm">
+        <div class="bg-white border-b border-blue-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 sm:py-8 gap-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-6 sm:pt-4 pb-0 gap-4">
                     <div class="flex items-center space-x-4">
-                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20">
-                            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 animate-pulse-soft">
+                            <svg class="w-6 h-6 text-blue-600 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-xl sm:text-2xl font-bold text-blue-900 dark:text-blue-100">Dashboard</h1>
-                            <p class="text-xs sm:text-sm text-blue-600 dark:text-blue-400">Welcome back! Here's your event overview</p>
+                            <h1 class="text-xl sm:text-2xl font-bold text-blue-800">Dashboard</h1>
+                            <p class="text-xs sm:text-sm text-blue-600">Welcome back! Here's your event overview</p>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
                         <div class="hidden sm:flex items-center space-x-2 text-sm text-blue-600">
-                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                            <span>Live</span>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse animate-glow"></div>
+                            <span class="animate-pulse-soft">Live</span>
                         </div>
 
                         <!-- Request Event Button -->
@@ -42,7 +253,7 @@
 
     {{-- ================= EMAIL VERIFICATION REMINDER ================= --}}
     @if(session('verification_reminder'))
-        <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mx-4 mt-4 rounded-r-lg">
+        <div class="bg-amber-50 border-l-4 border-amber-400 p-6 mx-4 rounded-r-lg">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
@@ -60,7 +271,7 @@
     @endif
 
     @if(auth()->user() && !auth()->user()->hasVerifiedEmail() && !(auth()->user()->is_super_admin ?? false))
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mx-4 mt-4 rounded-r-lg">
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-6 mx-4 rounded-r-lg">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
@@ -79,50 +290,50 @@
     @endif
 
     {{-- ================= PAGE CONTAINER ================= --}}
-    <div class="bg-blue-50 dark:bg-blue-900 min-h-screen py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(!$hasCreatedEvents)
             {{-- ================= ENCOURAGE EVENT CREATION ================= --}}
-            <div class="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-blue-900/20 dark:via-blue-800 dark:to-purple-900/20 rounded-xl shadow-sm border border-blue-200 dark:border-blue-700 p-8 text-center">
-                <div class="mb-6">
+            <div class="bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-xl shadow-sm border border-blue-50 p-6 text-center animate-fade-in-up">
+                <div class="mb-2">
                     <div class="flex items-center justify-center mb-4">
-                        <div class="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
-                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg animate-float animate-glow">
+                            <svg class="w-12 h-12 text-white animate-wave" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2">🚀 Ready to Host Amazing Events?</h2>
-                    <p class="text-blue-600 dark:text-blue-400 mb-6">Submit your event request and get approved to start hosting!</p>
+                    <h2 class="text-2xl font-bold text-blue-800 mb-4">🚀 Ready to Host Amazing Events?</h2>
+                    <p class="text-blue-600 mb-4">Submit your event request and get approved to start hosting!</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
-                        <div class="text-blue-500 text-3xl mb-3">📊</div>
-                        <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Analytics Dashboard</h3>
-                        <p class="text-sm text-blue-600 dark:text-blue-400">Track registrations, revenue, and event performance</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4 stagger-animation">
+                    <div class="bg-white rounded-lg p-6 border border-blue-50 card-hover">
+                        <div class="text-blue-500 text-3xl mb-3 animate-bounce-slow">📊</div>
+                        <h3 class="font-semibold text-blue-800 mb-4">Analytics Dashboard</h3>
+                        <p class="text-sm text-blue-600">Track registrations, revenue, and event performance</p>
                     </div>
-                    <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
-                        <div class="text-purple-500 text-3xl mb-3">👥</div>
-                        <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Attendee Management</h3>
-                        <p class="text-sm text-blue-600 dark:text-blue-400">Manage registrations and attendee engagement</p>
+                    <div class="bg-white rounded-lg p-6 border border-blue-50 card-hover">
+                        <div class="text-purple-500 text-3xl mb-3 animate-wave">👥</div>
+                        <h3 class="font-semibold text-blue-800 mb-4">Attendee Management</h3>
+                        <p class="text-sm text-blue-600">Manage registrations and attendee engagement</p>
                     </div>
-                    <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
-                        <div class="text-green-500 text-3xl mb-3">💰</div>
-                        <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Revenue Tracking</h3>
-                        <p class="text-sm text-blue-600 dark:text-blue-400">Monitor ticket sales and revenue growth</p>
+                    <div class="bg-white rounded-lg p-6 border border-blue-50 card-hover">
+                        <div class="text-green-500 text-3xl mb-3 animate-heartbeat">💰</div>
+                        <h3 class="font-semibold text-blue-800 mb-4">Revenue Tracking</h3>
+                        <p class="text-sm text-blue-600">Monitor ticket sales and revenue growth</p>
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('event-requests.create') }}" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <a href="{{ route('event-requests.create') }}" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-6 px-8 rounded-xl transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
                         Request Your First Event
                     </a>
-                    <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-400 hover:bg-blue-50 text-blue-700 font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg">
+                    <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-400 hover:bg-blue-50 text-blue-700 font-bold py-6 px-8 rounded-xl transition-all duration-300 hover:shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
@@ -134,44 +345,48 @@
 
             {{-- ================= PERSONALIZED RECOMMENDATIONS ================= --}}
             @if($recommendedEvents && $recommendedEvents->count() > 0)
-            <div class="bg-white dark:bg-blue-800 rounded-xl p-8 shadow-sm border border-blue-200 dark:border-blue-700">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-blue-50 animate-slide-in-left">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-md animate-pulse-soft animate-glow">
+                        <svg class="w-6 h-6 text-white animate-rotate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-blue-900 dark:text-blue-100">Just For You</h3>
-                        <p class="text-sm text-blue-600 dark:text-blue-400">Based on your interests</p>
+                        <h3 class="text-2xl font-bold text-blue-800">Just For You</h3>
+                        <p class="text-sm text-blue-600 animate-pulse-soft">Based on your interests</p>
                     </div>
                 </div>
 
                 <div class="max-w-6xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-animation">
                     @foreach($recommendedEvents as $event)
-                    <div class="bg-white dark:bg-blue-800 rounded-xl p-6 shadow-sm hover:shadow-lg dark:hover:shadow-blue-900/20 transition-all duration-300 hover:-translate-y-1 border border-blue-200 dark:border-blue-800/50 flex flex-col" style="height: 520px;">
+                    <div class="bg-white rounded-xl p-6 shadow-sm card-hover border border-blue-200 border-blue-100/50 flex flex-col gradient-border" style="height: 520px;">
                         <div class="flex justify-between items-start mb-3" style="height: 28px;">
                             <div class="flex flex-wrap gap-1">
-                                @if($event->category)
+                                @if($event->category && is_object($event->category))
                                     <span class="text-xs font-bold px-2 py-1 rounded-full" 
-                                          style="background-color: {{ $event->category->color }}20; color: {{ $event->category->color }};">
-                                        @if($event->category->icon)
+                                          style="background-color: {{ $event->category->color ?? '#3B82F6' }}20; color: {{ $event->category->color ?? '#3B82F6' }};">
+                                        @if(isset($event->category->icon) && $event->category->icon)
                                             <i class="fas fa-{{ $event->category->icon }} mr-1"></i>
                                         @endif
-                                        {{ $event->category->name }}
+                                        {{ $event->category->name ?? $event->category }}
+                                    </span>
+                                @elseif($event->category && is_string($event->category))
+                                    <span class="text-xs font-bold px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                                        {{ $event->category }}
                                     </span>
                                 @endif
                             </div>
-                            <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">✨ Recommended</span>
+                            <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse-soft animate-glow">✨ Recommended</span>
                         </div>
                         
-                        <h4 class="font-bold text-xl text-blue-900 dark:text-blue-100 leading-tight line-clamp-2 mb-3" style="height: 56px;">{{ $event->name }}</h4>
+                        <h4 class="font-bold text-xl text-blue-800 leading-tight line-clamp-2 mb-3" style="height: 56px;">{{ $event->name }}</h4>
                         
-                        <p class="text-sm text-blue-600 dark:text-blue-400 leading-relaxed line-clamp-3 mb-4" style="height: 63px;">{{ $event->description }}</p>
+                        <p class="text-sm text-blue-600 leading-relaxed line-clamp-3 mb-4" style="height: 63px;">{{ $event->description }}</p>
                         
                         <div class="mb-4 flex-shrink-0" style="height: 50px;">
-                            <div class="flex items-center gap-2 text-sm text-blue-600 mb-2" style="height: 20px;">
+                            <div class="flex items-center gap-2 text-sm text-blue-600 mb-4" style="height: 20px;">
                                 <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
@@ -213,9 +428,9 @@
 
             {{-- ================= TRENDING EVENTS ================= --}}
             @if($trendingEvents && $trendingEvents->count() > 0)
-            <div class="bg-gradient-to-br from-blue-50 via-white to-blue-100 rounded-2xl p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-md">
+            <div class="bg-gradient-to-br from-blue-50 via-white to-blue-100 rounded-2xl p-6 shadow-lg animate-slide-in-right">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-md animate-pulse-soft">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                         </svg>
@@ -227,18 +442,22 @@
                 </div>
 
                 <div class="max-w-6xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-animation">
                     @foreach($trendingEvents as $event)
-                    <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-100 flex flex-col" style="height: 520px;">
+                    <div class="bg-white rounded-xl p-6 shadow-sm card-hover border border-blue-100 flex flex-col" style="height: 520px;">
                         <div class="flex justify-between items-start mb-3" style="height: 28px;">
                             <div class="flex flex-wrap gap-1">
-                                @if($event->category)
+                                @if($event->category && is_object($event->category))
                                     <span class="text-xs font-bold px-2 py-1 rounded-full" 
-                                          style="background-color: {{ $event->category->color }}20; color: {{ $event->category->color }};">
-                                        @if($event->category->icon)
+                                          style="background-color: {{ $event->category->color ?? '#F59E0B' }}20; color: {{ $event->category->color ?? '#F59E0B' }};">
+                                        @if(isset($event->category->icon) && $event->category->icon)
                                             <i class="fas fa-{{ $event->category->icon }} mr-1"></i>
                                         @endif
-                                        {{ $event->category->name }}
+                                        {{ $event->category->name ?? $event->category }}
+                                    </span>
+                                @elseif($event->category && is_string($event->category))
+                                    <span class="text-xs font-bold px-2 py-1 rounded-full bg-orange-100 text-orange-700">
+                                        {{ $event->category }}
                                     </span>
                                 @endif
                             </div>
@@ -253,7 +472,7 @@
                         <p class="text-sm text-blue-600 leading-relaxed line-clamp-3 mb-4" style="height: 63px;">{{ $event->description }}</p>
                         
                         <div class="mb-4 flex-shrink-0" style="height: 50px;">
-                            <div class="flex items-center gap-2 text-sm text-blue-600 mb-2" style="height: 20px;">
+                            <div class="flex items-center gap-2 text-sm text-blue-600 mb-4" style="height: 20px;">
                                 <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
@@ -295,34 +514,34 @@
             @endif
 
             {{-- ================= FUN USER STATS ================= --}}
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 shadow-xl text-white">
-                <div class="text-center mb-8">
-                    <h3 class="text-3xl font-black mb-2">Your Journey 🎉</h3>
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 shadow-xl text-white animate-scale-in shimmer">
+                <div class="text-center mb-4">
+                    <h3 class="text-3xl font-black mb-4">Your Journey 🎉</h3>
                     <p class="text-blue-100">Member since {{ $userStats['member_since'] }}</p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-black mb-2">{{ $userStats['events_attended'] }}</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-animation">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-110 card-hover">
+                        <div class="text-4xl font-black mb-4">{{ $userStats['events_attended'] }}</div>
                         <div class="text-sm text-blue-100 font-semibold">Events Booked</div>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-black mb-2">{{ $userStats['upcoming_bookings'] }}</div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-110 card-hover">
+                        <div class="text-4xl font-black mb-4 animate-pulse-soft">{{ $userStats['upcoming_bookings'] }}</div>
                         <div class="text-sm text-blue-100 font-semibold">Upcoming</div>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-black mb-2">{{ $userStats['favorites_count'] }}</div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-110 card-hover">
+                        <div class="text-4xl font-black mb-4">{{ $userStats['favorites_count'] }}</div>
                         <div class="text-sm text-blue-100 font-semibold">Favorites</div>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-black mb-2">{{ count(auth()->user()->interests ?? []) }}</div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-110 card-hover">
+                        <div class="text-4xl font-black mb-4">{{ count(auth()->user()->interests ?? []) }}</div>
                         <div class="text-sm text-blue-100 font-semibold">Interests</div>
                     </div>
                 </div>
             </div>
 
             {{-- ================= TAB NAVIGATION ================= --}}
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 stagger-animation">
                 @php
                 $tabs = [
                     'events' => ['label' => 'Events', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
@@ -337,7 +556,7 @@
                 <a href="#{{ $key }}" data-tab="{{ $key }}"
                    class="tab-link py-5 px-6 text-center rounded-2xl font-bold text-blue-700
                           bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
-                          border border-gray-200 hover:border-blue-300
+                          border border-blue-100 hover:border-blue-300
                           transition-all duration-300 hover:shadow-lg hover:-translate-y-1
                           flex flex-col items-center gap-3">
                     <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -351,10 +570,10 @@
             {{-- ================= ANALYTICS TAB ================= --}}
             <div id="analytics-tab" class="tab-content animate-fadeIn hidden">
                 {{-- ================= USER ANALYTICS OVERVIEW ================= --}}
-                <div class="bg-white dark:bg-blue-800 rounded-xl shadow-sm border border-blue-200 dark:border-blue-700 p-6 mb-6">
-                    <div class="mb-6">
-                        <h2 class="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">Your Event Analytics</h2>
-                        <p class="text-sm text-blue-600 dark:text-blue-400">Track your event activity and engagement</p>
+                <div class="bg-white rounded-xl shadow-sm border border-blue-50 p-6 mb-4">
+                    <div class="mb-4">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Your Event Analytics</h2>
+                        <p class="text-sm text-blue-600">Track your event activity and engagement</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -396,20 +615,20 @@
                         @endphp
 
                         @foreach($enhancedStats as $stat)
-                        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-blue-800 dark:to-blue-900 rounded-xl p-6 border border-gray-200 dark:border-blue-700 hover:shadow-lg dark:hover:shadow-blue-900/20 transition-all duration-300 group">
+                        <div class="bg-gradient-to-br from-white to-gray-50  rounded-xl p-6 border border-blue-50 hover:shadow-lg transition-all duration-300 group">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-xl bg-{{ $stat['color'] }}-50 dark:bg-{{ $stat['color'] }}-900/20 group-hover:scale-110 transition-transform duration-200">
-                                    <svg class="w-6 h-6 text-{{ $stat['color'] }}-600 dark:text-{{ $stat['color'] }}-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}"></path>
+                                <div class="p-3 rounded-xl bg-{{ $stat['color'] }}-50  group-hover:scale-110 transition-transform duration-200">
+                                    <svg class="w-6 h-6 text-{{ $stat['color'] }}-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{!! $stat['icon'] !!}"></path>
                                     </svg>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-3xl font-bold text-blue-900 dark:text-blue-100 group-hover:scale-105 transition-transform duration-200">{{ $stat['value'] }}</p>
-                                    <p class="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1">{{ $stat['label'] }}</p>
+                                    <p class="text-3xl font-bold text-blue-800 group-hover:scale-105 transition-transform duration-200">{{ $stat['value'] }}</p>
+                                    <p class="text-sm font-medium text-blue-600 mt-1">{{ $stat['label'] }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
-                                <div class="h-1 bg-gradient-to-r from-{{ $stat['color'] }}-200 to-{{ $stat['color'] }}-400 dark:from-{{ $stat['color'] }}-700 dark:to-{{ $stat['color'] }}-500 rounded-full flex-1"></div>
+                                <div class="h-1 bg-gradient-to-r from-{{ $stat['color'] }}-200 to-{{ $stat['color'] }}-400  rounded-full flex-1"></div>
                                 <span class="text-xs {{ $stat['changeColor'] }} font-medium ml-2">{{ $stat['change'] }}</span>
                             </div>
                         </div>
@@ -419,7 +638,7 @@
                 
                 {{-- ================= EVENT CREATOR ANALYTICS (Conditional Display) ================= --}}
                 @if($hasCreatedEvents)
-                <div class="bg-gradient-to-br from-green-50 via-white to-green-100 dark:from-green-900/20 dark:via-blue-800 dark:to-green-900/20 rounded-xl shadow-sm border border-green-200 dark:border-green-700 p-6 mb-6">
+                <div class="bg-gradient-to-br from-green-50 via-white to-green-100  rounded-xl shadow-sm border border-green-200 border-green-200 p-6 mb-4">
                     <div class="mb-6 text-center">
                         <div class="flex items-center justify-center mb-4">
                             <div class="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-md">
@@ -428,12 +647,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <h2 class="text-2xl font-bold text-green-900 dark:text-green-100 mb-2">📊 Event Creator Analytics</h2>
-                        <p class="text-sm text-green-600 dark:text-green-400">Your event management performance dashboard</p>
+                        <h2 class="text-2xl font-bold text-green-900 text-green-800 mb-4">📊 Event Creator Analytics</h2>
+                        <p class="text-sm text-green-600 text-green-600">Your event management performance dashboard</p>
                     </div>
 
                     {{-- Creator Stats Grid --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
                         @php
                         $creatorStats = [
                             [
@@ -472,20 +691,20 @@
                         @endphp
 
                         @foreach($creatorStats as $stat)
-                        <div class="bg-white dark:bg-green-800/20 rounded-xl p-6 border border-green-200 dark:border-green-700/50 hover:shadow-lg dark:hover:shadow-green-900/20 transition-all duration-300 group">
+                        <div class="bg-white  rounded-xl p-6 border border-green-200 border-green-200/50 hover:shadow-lg  transition-all duration-300 group">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-xl bg-{{ $stat['color'] }}-50 dark:bg-{{ $stat['color'] }}-900/20 group-hover:scale-110 transition-transform duration-200">
-                                    <svg class="w-6 h-6 text-{{ $stat['color'] }}-600 dark:text-{{ $stat['color'] }}-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}"></path>
+                                <div class="p-3 rounded-xl bg-{{ $stat['color'] }}-50  group-hover:scale-110 transition-transform duration-200">
+                                    <svg class="w-6 h-6 text-{{ $stat['color'] }}-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{!! $stat['icon'] !!}"></path>
                                     </svg>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-3xl font-bold text-green-900 dark:text-green-100 group-hover:scale-105 transition-transform duration-200">{{ $stat['value'] }}</p>
-                                    <p class="text-sm font-medium text-green-600 dark:text-green-400 mt-1">{{ $stat['label'] }}</p>
+                                    <p class="text-3xl font-bold text-green-900 text-green-800 group-hover:scale-105 transition-transform duration-200">{{ $stat['value'] }}</p>
+                                    <p class="text-sm font-medium text-green-600 text-green-600 mt-1">{{ $stat['label'] }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
-                                <div class="h-1 bg-gradient-to-r from-{{ $stat['color'] }}-200 to-{{ $stat['color'] }}-400 dark:from-{{ $stat['color'] }}-700 dark:to-{{ $stat['color'] }}-500 rounded-full flex-1"></div>
+                                <div class="h-1 bg-gradient-to-r from-{{ $stat['color'] }}-200 to-{{ $stat['color'] }}-400  rounded-full flex-1"></div>
                                 <span class="text-xs {{ $stat['changeColor'] }} font-medium ml-2">{{ $stat['change'] }}</span>
                             </div>
                         </div>
@@ -493,12 +712,12 @@
                     </div>
 
                     {{-- Creator Performance Charts --}}
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <div class="bg-white dark:bg-green-800/20 rounded-xl shadow-sm border border-green-200 dark:border-green-700/50 p-6">
-                            <div class="flex items-center justify-between mb-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
+                        <div class="bg-white  rounded-xl shadow-sm border border-green-200 border-green-200/50 p-6">
+                            <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 class="text-lg font-bold text-green-900 dark:text-green-100">Events Created</h3>
-                                    <p class="text-sm text-green-600 dark:text-green-400">Monthly event creation trend</p>
+                                    <h3 class="text-lg font-bold text-green-900 text-green-800">Events Created</h3>
+                                    <p class="text-sm text-green-600 text-green-600">Monthly event creation trend</p>
                                 </div>
                                 <div class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
                                     <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -511,13 +730,13 @@
                             </div>
                         </div>
 
-                        <div class="bg-white dark:bg-green-800/20 rounded-xl shadow-sm border border-green-200 dark:border-green-700/50 p-6">
-                            <div class="flex items-center justify-between mb-6">
+                        <div class="bg-white  rounded-xl shadow-sm border border-green-200 border-green-200/50 p-6">
+                            <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 class="text-lg font-bold text-green-900 dark:text-green-100">Event Registrations</h3>
-                                    <p class="text-sm text-green-600 dark:text-green-400">Monthly registration performance</p>
+                                    <h3 class="text-lg font-bold text-green-900 text-green-800">Event Registrations</h3>
+                                    <p class="text-sm text-green-600 text-green-600">Monthly registration performance</p>
                                 </div>
-                                <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                <div class="p-2 bg-blue-50 rounded-lg">
                                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
@@ -531,8 +750,8 @@
                 </div>
                 @else
                 {{-- ================= ENCOURAGE EVENT CREATION ================= --}}
-                <div class="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-blue-900/20 dark:via-blue-800 dark:to-purple-900/20 rounded-xl shadow-sm border border-blue-200 dark:border-blue-700 p-8 text-center mb-6">
-                    <div class="mb-6">
+                <div class="bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-xl shadow-sm border border-blue-50 p-6 text-center mb-4">
+                    <div class="mb-4">
                         <div class="flex items-center justify-center mb-4">
                             <div class="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
                                 <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -540,36 +759,36 @@
                                 </svg>
                             </div>
                         </div>
-                        <h2 class="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2">🚀 Ready to Create Amazing Events?</h2>
-                        <p class="text-blue-600 dark:text-blue-400 mb-6">Start your event management journey and unlock powerful analytics!</p>
+                        <h2 class="text-2xl font-bold text-blue-800 mb-4">🚀 Ready to Create Amazing Events?</h2>
+                        <p class="text-blue-600 mb-4">Start your event management journey and unlock powerful analytics!</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                        <div class="bg-white rounded-lg p-6 border border-blue-50">
                             <div class="text-blue-500 text-3xl mb-3">📊</div>
-                            <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Analytics Dashboard</h3>
-                            <p class="text-sm text-blue-600 dark:text-blue-400">Track registrations, revenue, and event performance</p>
+                            <h3 class="font-semibold text-blue-800 mb-4">Analytics Dashboard</h3>
+                            <p class="text-sm text-blue-600">Track registrations, revenue, and event performance</p>
                         </div>
-                        <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
+                        <div class="bg-white rounded-lg p-6 border border-blue-50">
                             <div class="text-purple-500 text-3xl mb-3">👥</div>
-                            <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Attendee Management</h3>
-                            <p class="text-sm text-blue-600 dark:text-blue-400">Manage registrations and attendee engagement</p>
+                            <h3 class="font-semibold text-blue-800 mb-4">Attendee Management</h3>
+                            <p class="text-sm text-blue-600">Manage registrations and attendee engagement</p>
                         </div>
-                        <div class="bg-white dark:bg-blue-800/20 rounded-lg p-6 border border-blue-100 dark:border-blue-700/50">
+                        <div class="bg-white rounded-lg p-6 border border-blue-50">
                             <div class="text-green-500 text-3xl mb-3">💰</div>
-                            <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Revenue Tracking</h3>
-                            <p class="text-sm text-blue-600 dark:text-blue-400">Monitor ticket sales and revenue growth</p>
+                            <h3 class="font-semibold text-blue-800 mb-4">Revenue Tracking</h3>
+                            <p class="text-sm text-blue-600">Monitor ticket sales and revenue growth</p>
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="{{ route('event-requests.create') }}" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="{{ route('event-requests.create') }}" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-6 px-8 rounded-xl transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
                             Request Your First Event
                         </a>
-                        <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-400 hover:bg-blue-50 text-blue-700 font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg">
+                        <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-400 hover:bg-blue-50 text-blue-700 font-bold py-6 px-8 rounded-xl transition-all duration-300 hover:shadow-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
@@ -583,8 +802,8 @@
             {{-- ================= EVENTS TAB ================= --}}
             <div id="events-tab" class="tab-content animate-fadeIn">
                 {{-- ================= GOOGLE MAPS WITH EVENT MARKERS ================= --}}
-                <div class="bg-white rounded-3xl shadow-sm p-6 border border-blue-50 mb-6">
-                    <div class="flex items-center justify-between mb-6">
+                <div class="bg-white rounded-3xl shadow-sm p-6 border border-blue-50 mb-4">
+                    <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-md">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -593,28 +812,39 @@
                             </div>
                             <div>
                                 <h3 class="text-2xl font-black text-blue-900">Find Events Near You</h3>
-                                <p class="text-sm text-blue-600">Discover events happening around you</p>
+                                <p class="text-sm text-blue-600" id="map-event-count">Discovering events with valid locations...</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div id="map" class="w-full h-[500px] rounded-2xl border-2 border-blue-100 overflow-hidden shadow-inner relative">
+                    <div id="map" class="w-full h-[500px] rounded-2xl border-2 border-blue-100 overflow-hidden shadow-inner relative bg-blue-50">
+                        <!-- Loading indicator -->
+                        <div id="map-loading" class="absolute inset-0 flex items-center justify-center bg-blue-50">
+                            <div class="text-center p-8">
+                                <svg class="w-16 h-16 text-blue-500 mx-auto mb-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <h4 class="text-lg font-bold text-blue-800 mb-2">Loading Map...</h4>
+                                <p class="text-sm text-blue-600">Please wait while we load the events map</p>
+                            </div>
+                        </div>
+                        
                         @if(!config('services.google_maps.api_key'))
-                        <div class="absolute inset-0 flex items-center justify-center bg-blue-50">
+                        <div class="absolute inset-0 flex items-center justify-center bg-blue-50 z-10">
                             <div class="text-center p-8">
                                 <svg class="w-16 h-16 text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <h4 class="text-lg font-bold text-gray-700 mb-2">Google Maps API Key Required</h4>
-                                <p class="text-sm text-gray-600 mb-4">To view events on the map, please add your Google Maps API key to the .env file.</p>
-                                <code class="text-xs bg-gray-100 px-3 py-1 rounded">GOOGLE_MAPS_API_KEY=your_key_here</code>
+                                <h4 class="text-lg font-bold text-blue-800 mb-4">Google Maps API Key Required</h4>
+                                <p class="text-sm text-blue-600 mb-4">To view events on the map, please add your Google Maps API key to the .env file.</p>
+                                <code class="text-xs bg-blue-50 px-3 py-1 rounded">GOOGLE_MAPS_API_KEY=your_key_here</code>
                             </div>
                         </div>
                         @endif
                     </div>
                     
                     <div class="mt-4 flex items-center justify-between">
-                        <div class="flex items-center gap-4 text-sm text-gray-600">
+                        <div class="flex items-center gap-6 text-sm text-blue-600">
                             <div class="flex items-center gap-2">
                                 <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
                                 <span>Featured Events</span>
@@ -624,7 +854,7 @@
                                 <span>Regular Events</span>
                             </div>
                         </div>
-                        <button onclick="centerMapOnUserLocation()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm transition-all duration-300 flex items-center gap-2">
+                        <button onclick="centerMapOnUserLocation()" class="px-4 py-6 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm transition-all duration-300 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             </svg>
@@ -635,8 +865,8 @@
 
                 {{-- ================= FEATURED EVENTS ================= --}}
                 @if($featuredEvents->count())
-            <div class="bg-white rounded-3xl shadow-sm p-8 border border-blue-50 animate-fadeInUp animate-on-scroll">
-                <div class="flex items-center gap-3 mb-8">
+            <div class="bg-white rounded-3xl shadow-sm p-6 border border-blue-50 animate-fadeInUp animate-on-scroll">
+                <div class="flex items-center gap-3 mb-4">
                     <div class="p-3 bg-gradient-to-r from-sky-500 to-blue-600 rounded-2xl shadow-md">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
@@ -670,7 +900,7 @@
                                 {{ Str::limit($event->description, 80) }}
                             </p>
 
-                            <div class="space-y-2 mb-6">
+                            <div class="space-y-2 mb-4">
                                 <div class="flex items-center gap-2 text-sm text-blue-700 group-hover:translate-x-1 transition-transform duration-300">
                                     <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -804,11 +1034,11 @@
                                     <div class="grid grid-cols-2 gap-2">
                                         <div class="relative">
                                             <input type="date" name="date_from" value="{{ request('date_from') }}"
-                                                   class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
+                                                   class="w-full px-3 py-6 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
                                         </div>
                                         <div class="relative">
                                             <input type="date" name="date_to" value="{{ request('date_to') }}"
-                                                   class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
+                                                   class="w-full px-3 py-6 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -820,12 +1050,12 @@
                                         <div class="relative">
                                             <input type="number" name="price_min" value="{{ request('price_min') }}" placeholder="Min"
                                                    min="0" step="0.01"
-                                                   class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
+                                                   class="w-full px-3 py-6 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
                                         </div>
                                         <div class="relative">
                                             <input type="number" name="price_max" value="{{ request('price_max') }}" placeholder="Max"
                                                    min="0" step="0.01"
-                                                   class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
+                                                   class="w-full px-3 py-6 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -839,7 +1069,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
                                         <input type="text" name="location" value="{{ request('location') }}" placeholder="City, venue, or address..."
-                                               class="w-full pl-10 pr-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
+                                               class="w-full pl-10 pr-3 py-6 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm">
                                     </div>
                                 </div>
                             </div>
@@ -858,7 +1088,7 @@
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         @foreach($availableEvents as $event)
-            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fadeInUp flex flex-col" style="animation-delay: {{ $loop->index * 0.1 }}s; height: 520px;">
+            <div class="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fadeInUp flex flex-col" style="animation-delay: {{ $loop->index * 0.1 }}s; height: 520px;">
                     
                     <!-- Status Badge -->
                     <div class="flex justify-end mb-3" style="height: 28px;">
@@ -886,7 +1116,7 @@
                     <!-- Event Details -->
                     <div class="mb-4 flex-shrink-0" style="height: 50px;">
                         <!-- Date -->
-                        <div class="flex items-center gap-2 text-sm text-blue-600 mb-2" style="height: 20px;">
+                        <div class="flex items-center gap-2 text-sm text-blue-600 mb-4" style="height: 20px;">
                             <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -960,7 +1190,7 @@
             {{-- ================= TICKETS TAB ================= --}}
             <div id="tickets-tab" class="tab-content hidden animate-fadeIn">
                 <div class="">
-                    <h3 class="text-xl font-bold text-blue-900 mb-6">My Tickets ({{ $myTickets->count() }})</h3>
+                    <h3 class="text-xl font-bold text-blue-900 mb-4">My Tickets ({{ $myTickets->count() }})</h3>
                     
                     @if($myTickets->count() > 0)
                     <div class="space-y-4">
@@ -971,13 +1201,13 @@
                                     transition-all duration-500 bg-white
                                     group animate-fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s">
                             <div class="flex-1">
-                                <p class="font-bold text-lg text-black mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                                <p class="font-bold text-lg text-black mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                     {{ $booking->event->name }}
                                 </p>
-                                <p class="text-sm text-gray-900 mb-1">
+                                <p class="text-sm text-blue-800 mb-3">
                                     Ticket Type: <span class="font-semibold text-black">{{ $booking->ticket->type }}</span>
                                 </p>
-                                <p class="text-sm text-gray-900">
+                                <p class="text-sm text-blue-800">
                                     Booked: {{ $booking->booking_date ? \Carbon\Carbon::parse($booking->booking_date)->format('M d, Y') : $booking->created_at->format('M d, Y') }}
                                 </p>
                             </div>
@@ -996,8 +1226,8 @@
                         @endforeach
                     </div>
                     @else
-                        <div class="text-center py-12 bg-gray-50 rounded-lg">
-                            <p class="text-gray-600">No tickets purchased yet. <a href="#events" class="text-blue-600 font-bold">Browse events</a> to get started!</p>
+                        <div class="text-center py-6 bg-blue-50 rounded-lg">
+                            <p class="text-blue-600">No tickets purchased yet. <a href="#events" class="text-blue-600 font-bold">Browse events</a> to get started!</p>
                         </div>
                     @endif
                 </div>
@@ -1006,7 +1236,7 @@
             {{-- ================= FAVORITES TAB ================= --}}
             <div id="favorites-tab" class="tab-content hidden animate-fadeIn">
                 <div class="">
-                    <h3 class="text-xl font-bold text-black">My Favorites</h3>
+                    <h3 class="text-xl font-bold text-blue-800">My Favorites</h3>
 
                     @if($myFavorites->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1027,11 +1257,11 @@
                         {{ $event->name }}
                     </h4>
 
-                    <p class="text-sm text-gray-900 leading-relaxed mb-4 line-clamp-2">
+                    <p class="text-sm text-blue-800 leading-relaxed mb-4 line-clamp-2">
                         {{ Str::limit($event->description, 80) }}
                     </p>
 
-                    <div class="space-y-2 mb-6">
+                    <div class="space-y-2 mb-4">
                         <div class="flex items-center gap-2 text-sm text-black group-hover:translate-x-1 transition-transform duration-300">
                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -1079,14 +1309,14 @@
                             @endforeach
                         </div>
                     @else
-                        <div class="text-center py-16">
-                            <div class="p-6 bg-gradient-to-r from-sky-100/40 to-blue-100/40 rounded-3xl inline-block mb-6 border border-blue-50">
+                        <div class="text-center py-4">
+                            <div class="p-6 bg-gradient-to-r from-sky-100/40 to-blue-100/40 rounded-3xl inline-block mb-4 border border-blue-50">
                                 <svg class="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                 </svg>
                             </div>
-                            <h4 class="text-2xl font-bold text-black mb-2">No Favorites Yet</h4>
-                            <p class="text-gray-900 text-lg mb-6">Start adding events to your favorites to see them here</p>
+                            <h4 class="text-2xl font-bold text-blue-800 mb-4">No Favorites Yet</h4>
+                            <p class="text-blue-600 text-lg mb-4">Start adding events to your favorites to see them here</p>
                             <a href="#events"
                                class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                                       text-white px-8 py-4 rounded-xl font-bold 
@@ -1108,17 +1338,17 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Calendar Section -->
                         <div class="lg:col-span-2">
-                            <div class="bg-gradient-to-br from-blue-50 via-white to-blue-50 rounded-2xl p-8 shadow-lg border border-blue-100">
+                            <div class="bg-gradient-to-br from-blue-50 via-white to-blue-50 rounded-2xl p-6 shadow-lg border border-blue-100">
                                 <!-- Calendar Header -->
-                                <div class="flex justify-between items-center mb-6">
-                                    <h3 class="text-3xl font-black text-gray-900" id="calendar-month"></h3>
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-3xl font-black text-blue-800" id="calendar-month"></h3>
                                     <div class="flex gap-2">
                                         <button onclick="previousMonth()" class="p-3 bg-white hover:bg-blue-50 text-blue-600 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg border border-blue-200">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                             </svg>
                                         </button>
-                                        <button onclick="goToToday()" class="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg">
+                                        <button onclick="goToToday()" class="px-4 py-6 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg">
                                             Today
                                         </button>
                                         <button onclick="nextMonth()" class="p-3 bg-white hover:bg-blue-50 text-blue-600 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg border border-blue-200">
@@ -1131,13 +1361,13 @@
                                 
                                 <!-- Day Headers -->
                                 <div class="grid grid-cols-7 gap-2 mb-3">
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">SUN</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">MON</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">TUE</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">WED</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">THU</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">FRI</div>
-                                    <div class="text-center font-black text-sm text-gray-600 py-3">SAT</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">SUN</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">MON</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">TUE</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">WED</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">THU</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">FRI</div>
+                                    <div class="text-center font-black text-sm text-blue-600 py-3">SAT</div>
                                 </div>
                                 
                                 <!-- Calendar Grid -->
@@ -1147,18 +1377,18 @@
 
                                 <!-- Selected Date Info -->
                                 <div id="selected-date-info" class="mt-6 pt-6 border-t border-blue-200">
-                                    <p class="text-center text-sm text-gray-500">Click on a date to view events for that day</p>
+                                    <p class="text-center text-sm text-blue-500">Click on a date to view events for that day</p>
                                 </div>
 
                                 <!-- Legend -->
                                 <div class="mt-4 flex items-center justify-center gap-6">
                                     <div class="flex items-center gap-2">
                                         <div class="w-3 h-3 rounded-full bg-blue-500"></div>
-                                        <span class="text-sm text-gray-600 font-medium">Today / Selected</span>
+                                        <span class="text-sm text-blue-600 font-medium">Today / Selected</span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <div class="w-3 h-3 rounded-full bg-blue-200"></div>
-                                        <span class="text-sm text-gray-600 font-medium">Has Events</span>
+                                        <span class="text-sm text-blue-600 font-medium">Has Events</span>
                                     </div>
                                 </div>
                             </div>
@@ -1166,26 +1396,26 @@
                         
                         <!-- Events for Selected Date Sidebar -->
                         <div class="lg:col-span-1">
-                            <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 sticky top-6">
-                                <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-white rounded-2xl p-6 shadow-lg border border-blue-100 sticky top-6">
+                                <div class="flex items-center gap-3 mb-4">
                                     <div class="p-2 bg-blue-500 rounded-lg">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
                                     </div>
-                                    <h4 class="font-black text-lg text-gray-900" id="sidebar-title">All Events</h4>
+                                    <h4 class="font-black text-lg text-blue-800" id="sidebar-title">All Events</h4>
                                 </div>
                                 <div id="events-list" class="space-y-3 max-h-[600px] overflow-y-auto">
                                     @forelse($availableEvents->sortBy('date')->take(10) as $event)
                                         @if($event->date && \Carbon\Carbon::parse($event->date)->isFuture())
                                         <div class="group p-4 bg-gradient-to-br from-blue-50 to-white hover:from-blue-100 hover:to-blue-50 rounded-xl transition-all duration-300 border border-blue-200 hover:shadow-md" data-event-date="{{ \Carbon\Carbon::parse($event->date)->format('Y-m-d') }}">
-                                            <div class="flex items-start justify-between mb-2">
-                                                <p class="font-bold text-gray-900 text-sm line-clamp-2 flex-1">{{ $event->name }}</p>
+                                            <div class="flex items-start justify-between mb-4">
+                                                <p class="font-bold text-blue-800 text-sm line-clamp-2 flex-1">{{ $event->name }}</p>
                                                 <span class="ml-2 px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">
                                                     {{ \Carbon\Carbon::parse($event->date)->format('M d') }}
                                                 </span>
                                             </div>
-                                            <div class="flex items-center gap-2 text-xs text-gray-600 mb-3">
+                                            <div class="flex items-center gap-2 text-xs text-blue-600 mb-3">
                                                 <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
@@ -1200,11 +1430,11 @@
                                         </div>
                                         @endif
                                     @empty
-                                        <div class="text-center py-8">
+                                        <div class="text-center py-4">
                                             <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                             </svg>
-                                            <p class="text-gray-600 text-sm">No upcoming events</p>
+                                            <p class="text-blue-600 text-sm">No upcoming events</p>
                                         </div>
                                     @endforelse
                                 </div>
@@ -1289,15 +1519,15 @@
             if (totalEvents > 0) {
                 infoDiv.innerHTML = `
                     <div class="text-center">
-                        <p class="text-lg font-bold text-blue-600 mb-1">${formattedDate}</p>
-                        <p class="text-sm text-gray-600">${totalEvents} event${totalEvents > 1 ? 's' : ''} on this date</p>
+                        <p class="text-lg font-bold text-blue-600 mb-3">${formattedDate}</p>
+                        <p class="text-sm text-blue-600">${totalEvents} event${totalEvents > 1 ? 's' : ''} on this date</p>
                     </div>
                 `;
             } else {
                 infoDiv.innerHTML = `
                     <div class="text-center">
-                        <p class="text-lg font-bold text-gray-700 mb-1">${formattedDate}</p>
-                        <p class="text-sm text-gray-500">No events on this date</p>
+                        <p class="text-lg font-bold text-blue-800 mb-3">${formattedDate}</p>
+                        <p class="text-sm text-blue-500">No events on this date</p>
                     </div>
                 `;
             }
@@ -1343,7 +1573,7 @@
                     <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    <p class="text-gray-600 text-sm mb-3">No events on this date</p>
+                    <p class="text-blue-600 text-sm mb-3">No events on this date</p>
                     <button onclick="clearDateSelection()" class="text-blue-600 hover:text-blue-700 text-sm font-bold">View All Events</button>
                 `;
                 eventsList.appendChild(emptyDiv);
@@ -1353,7 +1583,7 @@
         function clearDateSelection() {
             selectedDate = null;
             const infoDiv = document.getElementById('selected-date-info');
-            infoDiv.innerHTML = '<p class="text-center text-sm text-gray-500">Click on a date to view events for that day</p>';
+            infoDiv.innerHTML = '<p class="text-center text-sm text-blue-500">Click on a date to view events for that day</p>';
             filterEventsByDate(null);
             renderCalendar();
         }
@@ -1384,7 +1614,7 @@
                 const isCurrentMonth = date.getMonth() === currentDate.getMonth();
 
                 const day = document.createElement('div');
-                day.className = 'relative text-center p-3 rounded-xl cursor-pointer min-h-16 flex flex-col items-center justify-center transition-all duration-300';
+                day.className = 'relative text-center p-6 rounded-xl cursor-pointer min-h-16 flex flex-col items-center justify-center transition-all duration-300';
                 day.onclick = () => isCurrentMonth && selectDate(dateString);
 
                 if (isCurrentMonth) {
@@ -1393,10 +1623,10 @@
                     } else if (hasEvent) {
                         day.classList.add('bg-blue-100', 'text-blue-900', 'font-bold', 'border-2', 'border-blue-400', 'hover:bg-blue-200', 'hover:scale-105', 'hover:shadow-md');
                     } else {
-                        day.classList.add('bg-white', 'text-gray-700', 'font-semibold', 'border', 'border-gray-200', 'hover:bg-blue-50', 'hover:border-blue-300', 'hover:scale-105');
+                        day.classList.add('bg-white', 'text-blue-800', 'font-semibold', 'border', 'border-blue-100', 'hover:bg-blue-50', 'hover:border-blue-300', 'hover:scale-105');
                     }
                 } else {
-                    day.classList.add('text-gray-400', 'bg-gray-50', 'cursor-not-allowed');
+                    day.classList.add('text-gray-400', 'bg-blue-50', 'cursor-not-allowed');
                     day.onclick = null;
                 }
 
@@ -2208,22 +2438,40 @@
     </script>
 
     {{-- ================= GOOGLE MAPS INTEGRATION ================= --}}
-    @if(config('services.google_maps.api_key'))
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places" async defer></script>
-    @endif
     <script>
         let map;
         let markers = [];
         let userMarker = null;
         let infoWindow;
 
-        // Event data with locations from Laravel
+        // Event data with locations from Laravel - Only events with valid coordinates
         const eventLocations = [
             @foreach($availableEvents->filter(function($event) {
-                return $event->venue && 
-                       ($event->venue->latitude && $event->venue->longitude) || 
-                       ($event->latitude && $event->longitude);
+                // Get latitude and longitude
+                $lat = null;
+                $lng = null;
+                
+                if ($event->venue) {
+                    $lat = $event->venue->latitude ?? null;
+                    $lng = $event->venue->longitude ?? null;
+                }
+                
+                // Fallback to event's own coordinates if venue doesn't have them
+                if (!$lat || !$lng) {
+                    $lat = $event->latitude ?? null;
+                    $lng = $event->longitude ?? null;
+                }
+                
+                // Only include events with valid, non-zero coordinates
+                return $lat && $lng && 
+                       is_numeric($lat) && is_numeric($lng) &&
+                       abs($lat) > 0.0001 && abs($lng) > 0.0001 &&
+                       abs($lat) <= 90 && abs($lng) <= 180;
             }) as $event)
+            @php
+                $lat = $event->venue ? ($event->venue->latitude ?? $event->latitude ?? 0) : ($event->latitude ?? 0);
+                $lng = $event->venue ? ($event->venue->longitude ?? $event->longitude ?? 0) : ($event->longitude ?? 0);
+            @endphp
             {
                 id: {{ $event->id }},
                 name: @json($event->name),
@@ -2231,36 +2479,37 @@
                 location: @json($event->venue ? $event->venue->name : ($event->location ?? 'Location TBD')),
                 category: @json($event->category->name ?? 'General'),
                 is_featured: {{ $event->is_featured ? 'true' : 'false' }},
-                latitude: {{ $event->venue ? ($event->venue->latitude ?? $event->latitude ?? 0) : ($event->latitude ?? 0) }},
-                longitude: {{ $event->venue ? ($event->venue->longitude ?? $event->longitude ?? 0) : ($event->longitude ?? 0) }},
+                latitude: {{ $lat }},
+                longitude: {{ $lng }},
                 url: @json(route('events.show', $event)),
-                price: @json($event->price ? '$' . number_format($event->price, 2) : 'Free')
+                price: @json($event->price ? '$' . number_format($event->price, 2) : 'Free'),
+                venue_name: @json($event->venue ? $event->venue->name : 'TBD'),
+                address: @json($event->venue ? ($event->venue->address ?? 'Address not available') : ($event->location ?? 'Location TBD'))
             },
             @endforeach
         ];
-Check if map div exists
-            const mapDiv = document.getElementById('map');
-            if (!mapDiv) {
-                console.error('Map container not found');
-                return;
-            }
 
-            // Check if Google Maps API is loaded
-            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                console.error('Google Maps API not loaded');
-                return;
+        console.log('Initializing Google Maps with', eventLocations.length, 'event locations');
+        
+        // Update event count in the UI
+        const updateEventCount = (count) => {
+            const countElement = document.getElementById('map-event-count');
+            if (countElement) {
+                const eventWord = count === 1 ? 'event' : 'events';
+                countElement.textContent = `${count} ${eventWord} with valid locations displayed on the map`;
             }
-
-            // Don't reinitialize if map already exists
-            if (map) {
-                console.log('Map already initialized');
-                return;
-            }
-
-            console.log('Initializing Google Maps with', eventLocations.length, 'event locations');
+        };
+        
+        // Make initMap globally accessible for Google Maps callback
+        window.initMap = function() {
+            console.log('initMap called - starting map initialization');
             
-            // 
-        function initMap() {
+            // Hide loading indicator
+            const loadingDiv = document.getElementById('map-loading');
+            if (loadingDiv) {
+                loadingDiv.style.display = 'none';
+            }
+            
             // Default center (you can change this to your preferred location)
             const defaultCenter = { lat: 40.7128, lng: -74.0060 }; // New York City
             
@@ -2282,10 +2531,22 @@ Check if map div exists
 
             infoWindow = new google.maps.InfoWindow();
 
-            // Add markers for each event
-            eventLocations.forEach(event => {
-                if (event.latitude && event.longitude && event.latitude !== 0 && event.longitude !== 0) {
-                    const position = { lat: parseFloat(event.latitude), lng: parseFloat(event.longitude) };
+            console.log('Adding markers for', eventLocations.length, 'events with valid locations');
+
+            // Add markers for each event with valid coordinates
+            let validMarkerCount = 0;
+            eventLocations.forEach((event, index) => {
+                // Double-check coordinates are valid
+                const lat = parseFloat(event.latitude);
+                const lng = parseFloat(event.longitude);
+                
+                if (!isNaN(lat) && !isNaN(lng) && 
+                    Math.abs(lat) > 0.0001 && Math.abs(lng) > 0.0001 &&
+                    Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
+                    
+                    const position = { lat: lat, lng: lng };
+                    
+                    console.log(`Marker ${index + 1}: ${event.name} at (${lat}, ${lng})`);
                     
                     const marker = new google.maps.Marker({
                         position: position,
@@ -2293,22 +2554,23 @@ Check if map div exists
                         title: event.name,
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
-                            scale: 10,
+                            scale: 12,
                             fillColor: event.is_featured ? '#3B82F6' : '#10B981',
-                            fillOpacity: 0.9,
+                            fillOpacity: 0.95,
                             strokeColor: '#ffffff',
                             strokeWeight: 2,
                         },
                         animation: google.maps.Animation.DROP,
                     });
 
-                    // Info window content
+                    // Info window content with event details
                     const contentString = `
-                        <div style="padding: 10px; max-width: 250px;">
+                        <div style="padding: 12px; max-width: 280px;">
                             <h3 style="font-weight: bold; color: #1e40af; margin-bottom: 8px; font-size: 16px;">${event.name}</h3>
                             <div style="space-y: 4px; color: #4b5563; font-size: 14px;">
                                 <p style="margin: 4px 0;"><strong>📅</strong> ${event.date}</p>
-                                <p style="margin: 4px 0;"><strong>📍</strong> ${event.location}</p>
+                                <p style="margin: 4px 0;"><strong>📍</strong> ${event.venue_name}</p>
+                                <p style="margin: 4px 0;"><strong>🗺️</strong> ${event.address}</p>
                                 <p style="margin: 4px 0;"><strong>🏷️</strong> ${event.category}</p>
                                 <p style="margin: 4px 0;"><strong>💵</strong> ${event.price}</p>
                                 ${event.is_featured ? '<p style="margin: 4px 0; color: #3b82f6; font-weight: bold;">⭐ Featured Event</p>' : ''}
@@ -2317,7 +2579,7 @@ Check if map div exists
                                style="display: inline-block; margin-top: 12px; padding: 8px 16px; 
                                       background: linear-gradient(to right, #3b82f6, #2563eb);
                                       color: white; text-decoration: none; border-radius: 8px; 
-                                      font-weight: 600; font-size: 14px; text-align: center;">
+                                      font-weight: 600; font-size: 14px; text-align: center; width: 100%;">
                                 View Details →
                             </a>
                         </div>
@@ -2329,8 +2591,30 @@ Check if map div exists
                     });
 
                     markers.push(marker);
+                    validMarkerCount++;
+                } else {
+                    console.warn(`Skipped invalid coordinates for event: ${event.name} (${event.latitude}, ${event.longitude})`);
                 }
             });
+
+            console.log(`Successfully added ${validMarkerCount} markers to the map`);
+
+            // Show message if no events with locations
+            if (validMarkerCount === 0) {
+                const noEventsDiv = document.getElementById('map-loading');
+                if (noEventsDiv) {
+                    noEventsDiv.style.display = 'flex';
+                    noEventsDiv.innerHTML = `
+                        <div class="text-center p-8">
+                            <svg class="w-16 h-16 text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <h4 class="text-lg font-bold text-blue-800 mb-2">No Events with Locations</h4>
+                            <p class="text-sm text-blue-600">Events will appear here once they have valid venue locations</p>
+                        </div>
+                    `;
+                }
+            }
 
             // If there are markers, fit bounds to show all
             if (markers.length > 0) {
@@ -2345,6 +2629,9 @@ Check if map div exists
                     }
                 });
             }
+
+            // Update the event count display
+            updateEventCount(validMarkerCount);
 
             // Try to center on user's location
             if (navigator.geolocation) {
@@ -2554,4 +2841,16 @@ Check if map div exists
         }
     </script>
 
+    {{-- Load Google Maps API --}}
+    @if(config('services.google_maps.api_key'))
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places&callback=initMap&loading=async" async defer></script>
+    @endif
+
 </x-app-layout>
+
+
+
+
+
+
+

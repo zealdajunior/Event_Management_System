@@ -144,6 +144,29 @@
                                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                                     </div>
                                 </div>
+
+                                <!-- Event Summary (NEW MVP FIELD) -->
+                                <div class="mt-6">
+                                    <x-input-label for="summary" :value="__('Event Summary *')" class="text-gray-700 font-semibold" />
+                                    <textarea 
+                                        id="summary" 
+                                        name="summary" 
+                                        rows="2" 
+                                        maxlength="200"
+                                        class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full resize-none" 
+                                        placeholder="A brief 1-2 line summary of your event (max 200 characters)"
+                                        x-data="{ count: {{ strlen(old('summary', '')) }} }"
+                                        @input="count = $el.value.length"
+                                        required
+                                    >{{ old('summary') }}</textarea>
+                                    <div class="flex justify-between items-center mt-1">
+                                        <p class="text-xs text-gray-500">📝 Quick overview displayed in event listings</p>
+                                        <p class="text-xs" :class="count > 180 ? 'text-red-600 font-bold' : 'text-gray-500'">
+                                            <span x-text="count"></span>/200
+                                        </p>
+                                    </div>
+                                    <x-input-error :messages="$errors->get('summary')" class="mt-2" />
+                                </div>
                             </div>
                         </div>
 
@@ -331,13 +354,146 @@
                                     <p class="text-sm text-gray-600">Where will attendees need to go?</p>
                                 </div>
                             </div>
-                            <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200">
-                                <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200" x-data="{ 
+                                eventFormat: '{{ old('event_format', 'physical') }}' 
+                            }">
+                                <!-- Event Format Selection -->
+                                <div class="mb-6">
+                                    <x-input-label :value="__('Event Format *')" class="text-gray-700 font-semibold mb-3" />
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <label class="relative flex items-center p-4 bg-white border-2 rounded-xl cursor-pointer transition-all duration-200"
+                                               :class="eventFormat === 'physical' ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400'">
+                                            <input type="radio" name="event_format" value="physical" x-model="eventFormat" class="sr-only" required>
+                                            <div class="w-full text-center">
+                                                <svg class="w-8 h-8 mx-auto mb-2" :class="eventFormat === 'physical' ? 'text-blue-600' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                                </svg>
+                                                <p class="font-bold text-sm" :class="eventFormat === 'physical' ? 'text-blue-600' : 'text-gray-700'">Physical</p>
+                                                <p class="text-xs text-gray-500 mt-1">In-person venue</p>
+                                            </div>
+                                        </label>
+
+                                        <label class="relative flex items-center p-4 bg-white border-2 rounded-xl cursor-pointer transition-all duration-200"
+                                               :class="eventFormat === 'online' ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400'">
+                                            <input type="radio" name="event_format" value="online" x-model="eventFormat" class="sr-only">
+                                            <div class="w-full text-center">
+                                                <svg class="w-8 h-8 mx-auto mb-2" :class="eventFormat === 'online' ? 'text-blue-600' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                                </svg>
+                                                <p class="font-bold text-sm" :class="eventFormat === 'online' ? 'text-blue-600' : 'text-gray-700'">Online</p>
+                                                <p class="text-xs text-gray-500 mt-1">Virtual event</p>
+                                            </div>
+                                        </label>
+
+                                        <label class="relative flex items-center p-4 bg-white border-2 rounded-xl cursor-pointer transition-all duration-200"
+                                               :class="eventFormat === 'hybrid' ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400'">
+                                            <input type="radio" name="event_format" value="hybrid" x-model="eventFormat" class="sr-only">
+                                            <div class="w-full text-center">
+                                                <svg class="w-8 h-8 mx-auto mb-2" :class="eventFormat === 'hybrid' ? 'text-blue-600' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                <p class="font-bold text-sm" :class="eventFormat === 'hybrid' ? 'text-blue-600' : 'text-gray-700'">Hybrid</p>
+                                                <p class="text-xs text-gray-500 mt-1">Both formats</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">💡 Choose how attendees will participate in your event</p>
+                                </div>
+
+                                <!-- Physical/Hybrid Location Fields -->
+                                <div x-show="eventFormat === 'physical' || eventFormat === 'hybrid'" class="space-y-6" x-data="{ 
+                                    latitude: '{{ old('latitude') }}', 
+                                    longitude: '{{ old('longitude') }}',
+                                    hasCoordinates: {{ old('latitude') && old('longitude') ? 'true' : 'false' }}
+                                }">
                                     <div>
                                         <x-input-label for="location" :value="__('Full Address *')" class="text-gray-700 font-semibold" />
-                                        <x-text-input id="location" class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" type="text" name="location" :value="old('location')" required autocomplete="location" placeholder="e.g., 123 Main Street, City, State, ZIP Code" />
-                                        <p class="text-xs text-gray-500 mt-1">Provide the complete address so attendees can find your event</p>
+                                        <x-text-input 
+                                            id="location" 
+                                            class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" 
+                                            type="text" 
+                                            name="location" 
+                                            :value="old('location')" 
+                                            :required="old('event_format', 'physical') !== 'online'" 
+                                            autocomplete="off" 
+                                            placeholder="Start typing address... (autocomplete enabled)" 
+                                        />
+                                        <p class="text-xs text-gray-500 mt-1">📍 Start typing and select from suggestions for automatic map coordinates</p>
                                         <x-input-error :messages="$errors->get('location')" class="mt-2" />
+                                    </div>
+
+                                    <!-- Latitude & Longitude (Auto-filled by Google Maps) -->
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <x-input-label for="latitude" :value="__('Latitude')" class="text-gray-700 font-semibold" />
+                                            <input 
+                                                id="latitude" 
+                                                type="number" 
+                                                step="any" 
+                                                name="latitude" 
+                                                x-model="latitude"
+                                                :value="old('latitude')"
+                                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
+                                                placeholder="Auto-filled" 
+                                                readonly
+                                            />
+                                            <p class="text-xs text-gray-500 mt-1">🗺️ Auto-filled</p>
+                                            <x-input-error :messages="$errors->get('latitude')" class="mt-2" />
+                                        </div>
+
+                                        <div>
+                                            <x-input-label for="longitude" :value="__('Longitude')" class="text-gray-700 font-semibold" />
+                                            <input 
+                                                id="longitude" 
+                                                type="number" 
+                                                step="any" 
+                                                name="longitude" 
+                                                x-model="longitude"
+                                                :value="old('longitude')"
+                                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full" 
+                                                placeholder="Auto-filled" 
+                                                readonly
+                                            />
+                                            <p class="text-xs text-gray-500 mt-1">🗺️ Auto-filled</p>
+                                            <x-input-error :messages="$errors->get('longitude')" class="mt-2" />
+                                        </div>
+                                        
+                                        <div>
+                                            <x-input-label for="country_code" :value="__('Country Code')" class="text-gray-700 font-semibold" />
+                                            <input 
+                                                id="country_code" 
+                                                type="text" 
+                                                name="country_code" 
+                                                value="{{ old('country_code') }}"
+                                                maxlength="2"
+                                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm block mt-1 w-full uppercase" 
+                                                placeholder="US" 
+                                                readonly
+                                            />
+                                            <p class="text-xs text-gray-500 mt-1">🌍 Auto-filled</p>
+                                            <x-input-error :messages="$errors->get('country_code')" class="mt-2" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Coordinate Status Indicator -->
+                                    <div x-show="latitude && longitude" class="p-4 bg-green-50 border-2 border-green-300 rounded-xl flex items-center gap-3">
+                                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <div>
+                                            <p class="text-sm font-bold text-green-800">✓ Location coordinates captured!</p>
+                                            <p class="text-xs text-green-700">Your event will be displayed on the map at (<span x-text="parseFloat(latitude).toFixed(4)"></span>, <span x-text="parseFloat(longitude).toFixed(4)"></span>)</p>
+                                        </div>
+                                    </div>
+
+                                    <div x-show="!latitude || !longitude" class="p-4 bg-amber-50 border-2 border-amber-300 rounded-xl flex items-center gap-3">
+                                        <svg class="w-6 h-6 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <div>
+                                            <p class="text-sm font-bold text-amber-800">⚠️ Select address from autocomplete suggestions</p>
+                                            <p class="text-xs text-amber-700">This ensures your event appears on the map with accurate location</p>
+                                        </div>
                                     </div>
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -354,6 +510,26 @@
                                             <p class="text-xs text-gray-500 mt-1">Specific room or area within the venue</p>
                                             <x-input-error :messages="$errors->get('room_details')" class="mt-2" />
                                         </div>
+                                    </div>
+                                </div>
+
+                                <!-- Online/Hybrid Event Link -->
+                                <div x-show="eventFormat === 'online' || eventFormat === 'hybrid'" class="space-y-4">
+                                    <div>
+                                        <x-input-label for="online_event_link" :value="__('Event Link *')" class="text-gray-700 font-semibold" />
+                                        <x-text-input id="online_event_link" class="block mt-1 w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg" type="url" name="online_event_link" :value="old('online_event_link')" placeholder="https://zoom.us/j/123456789 or https://meet.google.com/abc-defg-hij" />
+                                        <p class="text-xs text-gray-500 mt-1">🔗 Zoom, Google Meet, Teams, or any other meeting platform link</p>
+                                        <x-input-error :messages="$errors->get('online_event_link')" class="mt-2" />
+                                    </div>
+
+                                    <div class="bg-blue-100 border border-blue-300 rounded-lg p-4">
+                                        <p class="text-sm text-blue-800 font-semibold mb-2">💡 Online Event Tips:</p>
+                                        <ul class="text-xs text-blue-700 space-y-1 list-disc list-inside">
+                                            <li>Test your link before the event starts</li>
+                                            <li>Consider sending the link via email before the event</li>
+                                            <li>Have a backup communication method ready</li>
+                                            <li>For hybrid events, ensure online attendees can participate fully</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -466,6 +642,7 @@
                                                 <button 
                                                     @click.prevent="price = 0"
                                                     type="button"
+                                                    data-price-suggestion
                                                     class="px-3 py-2 bg-white border-2 border-blue-300 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors text-center"
                                                 >
                                                     <div class="text-blue-600 font-bold">FREE</div>
@@ -474,6 +651,8 @@
                                                 <button 
                                                     @click.prevent="price = 10"
                                                     type="button"
+                                                    data-price-suggestion
+                                                    data-price="10"
                                                     class="px-3 py-2 bg-white border-2 border-blue-300 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors text-center"
                                                 >
                                                     <div class="text-blue-600 font-bold">$10</div>
@@ -482,11 +661,28 @@
                                                 <button 
                                                     @click.prevent="price = 25"
                                                     type="button"
+                                                    data-price-suggestion
+                                                    data-price="25"
                                                     class="px-3 py-2 bg-white border-2 border-blue-300 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors text-center"
                                                 >
                                                     <div class="text-blue-600 font-bold">$25</div>
                                                     <div class="text-gray-600 text-xs mt-0.5">Premium</div>
                                                 </button>
+                                            </div>
+                                            
+                                            <!-- Platform Fee & Profit Calculator -->
+                                            <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                                <p class="text-xs font-bold text-gray-700 mb-2">💼 Profit After Platform Fee (10%)</p>
+                                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                                    <div>
+                                                        <span class="text-gray-600">Platform Fee:</span>
+                                                        <span class="font-bold text-red-600">-$<span x-text="(calculateRevenue() * 0.10).toFixed(2)"></span></span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="text-gray-600">Your Profit:</span>
+                                                        <span class="font-bold text-green-600">$<span x-text="(calculateRevenue() * 0.90).toFixed(2)"></span></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -813,11 +1009,68 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl font-bold text-gray-800">Terms & Conditions</h3>
-                                    <p class="text-sm text-gray-600">Please review and agree to the terms</p>
+                                    <h3 class="text-2xl font-bold text-gray-800">Publish Settings & Terms</h3>
+                                    <p class="text-sm text-gray-600">Choose how to publish and review terms</p>
                                 </div>
                             </div>
                             <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200">
+                                <!-- Publish Status Selection (NEW MVP FEATURE) -->
+                                <div class="mb-6" x-data="{ publishStatus: '{{ old('status', 'draft') }}' }">
+                                    <x-input-label :value="__('Publication Status *')" class="text-gray-700 font-semibold mb-3" />
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <label class="relative flex items-center p-5 bg-white border-2 rounded-xl cursor-pointer transition-all duration-200"
+                                               :class="publishStatus === 'draft' ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-gray-300 hover:border-blue-400'">
+                                            <input type="radio" name="status" value="draft" x-model="publishStatus" class="sr-only" required>
+                                            <div class="w-full">
+                                                <div class="flex items-center gap-3 mb-2">
+                                                    <svg class="w-6 h-6" :class="publishStatus === 'draft' ? 'text-blue-600' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                    </svg>
+                                                    <div>
+                                                        <p class="font-bold text-sm" :class="publishStatus === 'draft' ? 'text-blue-600' : 'text-gray-700'">Save as Draft</p>
+                                                        <p class="text-xs text-gray-500 mt-0.5">Review & edit later before publishing</p>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-9">
+                                                    <p class="text-xs text-gray-600">✓ Not visible to public</p>
+                                                    <p class="text-xs text-gray-600">✓ Can edit anytime</p>
+                                                    <p class="text-xs text-gray-600">✓ Publish when ready</p>
+                                                </div>
+                                            </div>
+                                        </label>
+
+                                        <label class="relative flex items-center p-5 bg-white border-2 rounded-xl cursor-pointer transition-all duration-200"
+                                               :class="publishStatus === 'published' ? 'border-green-600 bg-green-50 ring-2 ring-green-200' : 'border-gray-300 hover:border-green-400'">
+                                            <input type="radio" name="status" value="published" x-model="publishStatus" class="sr-only">
+                                            <div class="w-full">
+                                                <div class="flex items-center gap-3 mb-2">
+                                                    <svg class="w-6 h-6" :class="publishStatus === 'published' ? 'text-green-600' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    <div>
+                                                        <p class="font-bold text-sm" :class="publishStatus === 'published' ? 'text-green-600' : 'text-gray-700'">Publish Immediately</p>
+                                                        <p class="text-xs text-gray-500 mt-0.5">Event goes live right away</p>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-9">
+                                                    <p class="text-xs text-gray-600">✓ Visible to everyone</p>
+                                                    <p class="text-xs text-gray-600">✓ Accepts registrations</p>
+                                                    <p class="text-xs text-gray-600">✓ Appears in search</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div x-show="publishStatus === 'published'" class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                        <p class="text-sm text-green-800 font-semibold flex items-center gap-2">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                            </svg>
+                                            Ready to publish? Make sure all information is correct!
+                                        </p>
+                                        <p class="text-xs text-green-700 mt-1">Your event will be visible to everyone and start accepting registrations immediately.</p>
+                                    </div>
+                                </div>
+
                                 <div class="space-y-4">
                                     <div class="bg-white rounded-lg p-4 border border-blue-200">
                                         <h4 class="font-bold text-gray-800 mb-2">Event Terms & Conditions:</h4>
@@ -835,14 +1088,14 @@
                                         <input type="checkbox" id="terms" name="terms" required class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                                         <label for="terms" class="text-sm text-gray-700">
                                             I have read and agree to the <span class="font-semibold text-blue-600">Terms and Conditions</span>. 
-                                            I confirm that all information provided is accurate and I understand my responsibilities as an event organizer.
+                                            I confirm that all information provided is accurate and I understand my responsibilities as an event organizer. <span class="text-red-600">*</span>
                                         </label>
                                     </div>
 
                                     <div class="flex items-start gap-3">
                                         <input type="checkbox" id="cancellation_policy" name="cancellation_policy" required class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                                         <label for="cancellation_policy" class="text-sm text-gray-700">
-                                            I acknowledge that I will provide a clear <span class="font-semibold text-blue-600">cancellation and refund policy</span> to all attendees.
+                                            I acknowledge that I will provide a clear <span class="font-semibold text-blue-600">cancellation and refund policy</span> to all attendees. <span class="text-red-600">*</span>
                                         </label>
                                     </div>
                                 </div>
@@ -850,12 +1103,27 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="flex items-center justify-between">
-                            <p class="text-sm text-gray-600">
-                                <span class="text-red-600">*</span> Required fields
-                            </p>
-                            <button type="submit" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                                Create Event
+                        <div class="flex items-center justify-between gap-4" x-data="{ showPreview: false }">
+                            <div class="flex items-center gap-4">
+                                <p class="text-sm text-gray-600">
+                                    <span class="text-red-600 text-lg">*</span> Required fields
+                                </p>
+                                <button 
+                                    @click.prevent="showPreview = !showPreview" 
+                                    type="button" 
+                                    class="px-6 py-3 bg-white border-2 border-blue-600 text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <span x-text="showPreview ? 'Hide Preview' : 'Preview Event'"></span>
+                                </button>
+                            </div>
+                            <button type="submit" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span x-text="document.querySelector('input[name=status]:checked')?.value === 'published' ? 'Publish Event' : 'Save Draft'"></span>
                             </button>
                         </div>
 
@@ -864,4 +1132,94 @@
             </div>
         </div>
     </div>
+
+    {{-- Google Maps Places Autocomplete Script --}}
+    @if(config('services.google_maps.api_key'))
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places&loading=async" async defer></script>
+    <script src="{{ asset('js/event-form-enhancements.js') }}" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for Google Maps to load
+            function initAutocomplete() {
+                const locationInput = document.getElementById('location');
+                if (!locationInput) return;
+
+                // Initialize autocomplete
+                const autocomplete = new google.maps.places.Autocomplete(locationInput, {
+                    types: ['establishment', 'geocode'],
+                    fields: ['formatted_address', 'geometry', 'name', 'address_components', 'place_id']
+                });
+
+                // Listen for place selection
+                autocomplete.addListener('place_changed', function() {
+                    const place = autocomplete.getPlace();
+                    
+                    if (!place.geometry) {
+                        console.warn('No geometry found for selected place');
+                        return;
+                    }
+
+                    // Extract coordinates
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+
+                    // Update hidden latitude and longitude fields
+                    const latInput = document.getElementById('latitude');
+                    const lngInput = document.getElementById('longitude');
+                    
+                    if (latInput && lngInput) {
+                        latInput.value = lat;
+                        lngInput.value = lng;
+                        
+                        // Extract country code from address components
+                        let countryCode = '';
+                        if (place.address_components) {
+                            place.address_components.forEach(component => {
+                                if (component.types.includes('country')) {
+                                    countryCode = component.short_name;
+                                }
+                            });
+                        }
+                        
+                        // Update country code field
+                        const countryCodeInput = document.getElementById('country_code');
+                        if (countryCodeInput && countryCode) {
+                            countryCodeInput.value = countryCode;
+                        }
+                        
+                        // Trigger Alpine.js update if using Alpine
+                        latInput.dispatchEvent(new Event('input'));
+                        lngInput.dispatchEvent(new Event('input'));
+                        
+                        console.log('✅ Location coordinates captured:', lat, lng, 'Country:', countryCode);
+                        
+                        // Show notification
+                        const notification = document.createElement('div');
+                        notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                        notification.textContent = '✓ Location coordinates & country captured! Event will appear on map';
+                        document.body.appendChild(notification);
+                        setTimeout(() => notification.remove(), 3000);
+                    }
+
+                    // Update location input with formatted address
+                    locationInput.value = place.formatted_address || place.name;
+                });
+            }
+
+            // Check if Google Maps is loaded
+            if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+                initAutocomplete();
+            } else {
+                // Wait for Google Maps to load
+                window.addEventListener('load', function() {
+                    setTimeout(initAutocomplete, 500);
+                });
+            }
+        });
+    </script>
+    @else
+    <script>
+        console.warn('⚠️ Google Maps API key not configured. Address autocomplete disabled.');
+    </script>
+    @endif
 </x-app-layout>

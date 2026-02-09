@@ -13,13 +13,45 @@ class EventRequest extends Model
 
     protected $fillable = [
         'user_id',
+        // Basic Information
+        'name',
+        'category_id',
+        'summary',
+        'description',
+        
+        // Date and Time
+        'date',
+        'end_date',
+        
+        // Location Details
+        'event_format',
+        'location',
+        'latitude',
+        'longitude',
+        'country_code',
+        'venue_name',
+        'room_details',
+        'online_event_link',
+        
+        // Capacity and Pricing
+        'capacity',
+        'price',
+        'event_type',
+        
+        // Organizer Information
+        'organizer_name',
+        'organizer_email',
+        'organizer_phone',
+        
+        // Status
+        'status',
+        'rejection_reason',
+        
+        // Legacy fields (for backward compatibility)
         'event_title',
         'event_description',
         'start_date',
-        'end_date',
         'venue',
-        'status',
-        'rejection_reason',
         'expected_attendance',
         'event_category',
         'target_audience',
@@ -38,6 +70,14 @@ class EventRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category of the event.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

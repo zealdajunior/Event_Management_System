@@ -46,13 +46,8 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn () => view('auth.login'));
-        Fortify::verifyEmailView(fn () => view('auth.verify-email'));
-        Fortify::twoFactorChallengeView(fn () => view('auth.two-factor-challenge'));
-        Fortify::confirmPasswordView(fn () => view('auth.confirm-password'));
-        Fortify::registerView(fn () => view('auth.register'));
-        Fortify::resetPasswordView(fn () => view('auth.reset-password'));
-        Fortify::requestPasswordResetLinkView(fn () => view('auth.forgot-password'));
+        // Views are handled by Volt/Livewire components through routes/auth.php
+        // Fortify only handles the authentication logic, not the views
     }
 
     /**
